@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Channel form is the source of truth: Tailwind can only inject an alpha
+       (bg-primary/90) into a colour function, not a bare var holding a hex.
+       11 79 74 = #0b4f4a (teal), 200 155 60 = #c89b3c (gold). */
+    --color-primary-rgb: 11 79 74;
+    --color-primary-deep-rgb: 6 46 43;
+    --color-gold-rgb: 200 155 60;
+    /* Brand gold is only 2.6:1 on white; this darker gold is 5.3:1 for text. */
+    --color-gold-ink-rgb: 138 101 22;
+    --color-primary: rgb(var(--color-primary-rgb));
+    --color-gold: rgb(var(--color-gold-rgb));
+    /* AA-safe link colour (9.4:1 on white). */
+    --link-rgb: 11 79 74;
+
+    /* Surface / text scale */
+    --surface: #ffffff;
+    --surface-muted: #f7faf9;
+    --surface-raised: #eef4f3;
+    --border-muted: #e3ecea;
+    --ink: #102220;
+    /* 6.9:1 on white */
+    --ink-muted: #4b5d5b;
+    /* 4.9:1 on white */
+    --ink-subtle: #5f716f;
+    --card-shadow: 0 1px 2px 0 rgb(16 34 32 / 0.04), 0 8px 24px -8px rgb(16 34 32 / 0.12);
+
+    /* shadcn/ui tokens (HSL channels). primary / ring stay on the brand teal. */
+    --background: 160 23% 97%;
+    --foreground: 173 36% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 173 36% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 173 36% 10%;
+    --primary: 175 76% 18%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 41 57% 51%;
+    --secondary-foreground: 173 36% 10%;
+    --muted: 168 20% 94%;
+    --muted-foreground: 172 11% 33%;
+    --accent: 168 20% 94%;
+    --accent-foreground: 173 36% 10%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 168 18% 88%;
+    --input: 168 18% 88%;
+    --ring: 175 76% 18%;
+    --radius: 0.75rem;
+  }
+}

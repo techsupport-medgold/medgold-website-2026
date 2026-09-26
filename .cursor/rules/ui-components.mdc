@@ -1,0 +1,44 @@
+---
+description: shadcn/ui is the standard component layer for all new UI
+globs:
+  - src/components/**
+  - src/app/**
+---
+
+# UI Component Standard
+
+Build all new UI from shadcn/ui. The project is configured in `components.json`:
+`new-york` style, `zinc` base colour, `lucide` icons, `@@/components/ui` alias.
+
+## Rules
+
+- Compose from `@@/components/ui/*`. Add a missing primitive with
+  `npx shadcn@latest add <name>` instead of hand-rolling the markup.
+- Do not add `antd`, `@ant-design/icons`, or other component libraries.
+- Icons come from `lucide-react`. Decorative icons get `aria-hidden="true"`.
+- Style with brand tokens only, never raw hex values in components:
+  `bg-primary`, `bg-primary-deep`, `bg-gold`, `text-gold-ink`, `bg-surface`,
+  `surface-muted`, `surface-raised`, `text-ink`, `ink-muted`, `ink-subtle`,
+  `border-border`, `border-border-muted`, `shadow-card`, `text-link`.
+- `gold` (#c89b3c) is only 2.6:1 on white: use it for fills, rules, and accents.
+  Use `text-gold-ink` for gold text on light backgrounds (AA 5.3:1).
+- Tailwind only scans `src/pages`, `src/components`, and `src/app` (see `tailwind.config.ts`).
+  Keep class-string tables under `src/components`, not `src/lib`.
+- Page-scoped SCSS lives in `src/styles/pages/<page>.scss` under a page class
+  (e.g. `.coming-soon-page`) and is forwarded from `src/styles/globals.scss`.
+
+## Buttons
+
+`variant="default"` for the primary action, `variant="secondary"` for secondary actions,
+`variant="outline"` for low-emphasis actions, `variant="ghost"` for icon-only actions.
+Use `asChild` with `<a>` / `<Link>` when the button navigates.
+
+## UX / accessibility baseline (WCAG 2.2 AA, Laws of UX)
+
+- One `h1` per page; each `<section>` has one `h2` and `aria-labelledby`.
+- One primary CTA per scroll depth.
+- Touch targets at least 24x24px (prefer 44px, `min-h-11`).
+- Rely on the global `:focus-visible` outline; never remove it without a replacement.
+- Animations must respect `prefers-reduced-motion` (handled globally in `base/typography.scss`).
+- Meaningful `alt` on informative images; `alt=""` + `aria-hidden` for decorative ones.
+- Forms: visible or `sr-only` labels, `aria-invalid` + `aria-describedby` on errors.

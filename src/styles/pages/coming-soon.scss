@@ -1,0 +1,49 @@
+.coming-soon-page {
+  .coming-soon-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+      radial-gradient(60rem 30rem at 85% -10%, rgb(var(--color-gold-rgb) / 0.22), transparent 60%),
+      radial-gradient(40rem 24rem at -10% 110%, rgb(255 255 255 / 0.08), transparent 60%),
+      linear-gradient(160deg, rgb(var(--color-primary-rgb)) 0%, rgb(var(--color-primary-deep-rgb)) 100%);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    }
+  }
+
+  .status-dot {
+    position: relative;
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: rgb(var(--color-gold-rgb));
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: inherit;
+      animation: status-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  }
+}
+
+@keyframes status-ping {
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,12 @@
+---
+description: Do not add skip-to-content / skip navigation links
+alwaysApply: true
+---
+
+# No Skip-to-Content Links
+
+Do not add "Skip to content", "Skip to main content", or any `skip-to-content` / skip-nav link or component.
+
+- Do not create or restore `SkipToContent` components.
+- Do not add `className="skip-to-content"` or equivalent CSS.
+- Do not add `#main-content` / `#dashboard-main` anchors solely for skip links.
