@@ -30,7 +30,7 @@ export default function ContactSection() {
             className="group flex flex-col gap-3 rounded-lg border border-border-muted bg-surface-muted p-6 transition-colors hover:border-primary/40 sm:col-span-2"
           >
             <Mail className="size-6 text-primary" aria-hidden="true" />
-            <span className="text-sm font-medium text-ink-subtle">Email</span>
+            <span className="text-sm font-medium text-ink-muted">Email</span>
             <span className="font-semibold text-link [overflow-wrap:anywhere] group-hover:underline">
               {SITE.contact.email}
             </span>
@@ -40,14 +40,14 @@ export default function ContactSection() {
             className="group flex flex-col gap-3 rounded-lg border border-border-muted bg-surface-muted p-6 transition-colors hover:border-primary/40"
           >
             <Phone className="size-6 text-primary" aria-hidden="true" />
-            <span className="text-sm font-medium text-ink-subtle">Phone</span>
+            <span className="text-sm font-medium text-ink-muted">Phone</span>
             <span className="font-semibold text-link group-hover:underline">
               {SITE.contact.phone}
             </span>
           </a>
           <div className="flex flex-col gap-3 rounded-lg border border-border-muted bg-surface-muted p-6">
             <MapPin className="size-6 text-primary" aria-hidden="true" />
-            <span className="text-sm font-medium text-ink-subtle">Location</span>
+            <span className="text-sm font-medium text-ink-muted">Location</span>
             <span className="font-semibold text-ink">
               {address.addressLocality}, {address.addressRegion}
             </span>

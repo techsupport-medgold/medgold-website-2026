@@ -25,7 +25,7 @@ export const SITE = {
   ],
   locale: "en_IN",
   language: "en",
-  logo: "/images/med-gold-logo.svg",
+  logo: "/images/logo-medgold.svg",
   launchYear: 2026,
   contact: {
     email: "hello@medgold.com",
@@ -43,9 +43,12 @@ export const SITE = {
 } as const;
 
 export const BRAND_COLORS = {
-  primary: "#0b4f4a",
-  gold: "#c89b3c",
-  background: "#f7faf9",
+  primary: "#0B6376",
+  gold: "#D4AF37",
+  charcoal: "#1F2937",
+  gray: "#6B7280",
+  lightGray: "#F3F4F6",
+  background: "#FFFFFF",
 } as const;
 
 export const absoluteUrl = (path = "/") =>

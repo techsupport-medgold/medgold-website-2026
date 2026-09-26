@@ -9,7 +9,8 @@ export const COMING_SOON_SEO = {
 
 export const comingSoonHero = {
   eyebrow: `Launching ${SITE.launchYear}`,
-  heading: "Gold-standard healthcare is coming soon",
+  headingLead: "Gold-standard healthcare is",
+  headingAccent: "coming soon",
   intro:
     "Med Gold is building a patient-first healthcare experience: experienced doctors, modern diagnostics, and care that fits around your life. Our website is on its way.",
 };

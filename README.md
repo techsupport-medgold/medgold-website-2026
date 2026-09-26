@@ -80,8 +80,16 @@ self-hosted fonts, static rendering, security headers, and `www` to apex redirec
 Before launch:
 
 1. Replace the placeholder domain, email, phone, and address in `src/config/site.ts`.
-2. Replace the logo mark in `src/components/common/Logo.tsx` and `public/images/med-gold-logo.svg`.
-3. Add Search Console / Bing verification tokens and submit `/sitemap.xml`.
-4. Validate structured data with the [Rich Results Test](https://search.google.com/test/rich-results).
+2. Add Search Console / Bing verification tokens and submit `/sitemap.xml`.
+3. Validate structured data with the [Rich Results Test](https://search.google.com/test/rich-results).
+
+## Brand
+
+- Logo: `public/images/logo-medgold.svg`, rendered via `src/components/common/Logo.tsx`.
+  To update it, replace the SVG (keep the file name) and adjust the aspect ratio in `Logo.tsx`
+  and `opengraph-image.tsx` if it changes.
+- Colours: teal `#0B6376`, gold `#D4AF37`, charcoal `#1F2937`, gray `#6B7280`,
+  light gray `#F3F4F6`, white. Tokens live in `src/styles/_tailwind.scss`; usage and contrast
+  rules are in `.cursor/rules/ui-components.mdc`.
 
 Project conventions for new pages live in `.cursor/rules/`.

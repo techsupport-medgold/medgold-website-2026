@@ -1,12 +1,17 @@
 import { ImageResponse } from "next/og";
 import { BRAND_COLORS, SITE } from "@@/config/site";
-import { BrandMark } from "@@/lib/brandImage";
+import { logoDataUrl } from "@@/lib/brandImage";
 
 export const alt = SITE.title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpengraphImage() {
+const LOGO_HEIGHT = 150;
+const LOGO_WIDTH = Math.round((1550 / 605) * LOGO_HEIGHT);
+
+export default async function OpengraphImage() {
+  const logo = await logoDataUrl();
+
   return new ImageResponse(
     (
       <div
@@ -17,23 +22,20 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 72,
-          color: "#ffffff",
-          background: `linear-gradient(160deg, ${BRAND_COLORS.primary} 0%, #062e2b 100%)`,
+          background: `linear-gradient(135deg, #FFFFFF 55%, ${BRAND_COLORS.lightGray} 100%)`,
+          color: BRAND_COLORS.charcoal,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <BrandMark size={88} />
-          <div style={{ display: "flex", fontSize: 48, fontWeight: 700 }}>
-            Med&nbsp;<span style={{ color: BRAND_COLORS.gold }}>Gold</span>
-          </div>
-        </div>
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        <img src={logo} width={LOGO_WIDTH} height={LOGO_HEIGHT} />
 
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <div
             style={{
               display: "flex",
               fontSize: 28,
-              color: BRAND_COLORS.gold,
+              fontWeight: 700,
+              color: BRAND_COLORS.primary,
               letterSpacing: 4,
               textTransform: "uppercase",
             }}
@@ -43,18 +45,29 @@ export default function OpengraphImage() {
           <div
             style={{
               display: "flex",
-              fontSize: 64,
+              fontSize: 60,
               fontWeight: 700,
               lineHeight: 1.1,
-              maxWidth: 960,
+              maxWidth: 980,
             }}
           >
             {SITE.tagline}
           </div>
         </div>
 
-        <div style={{ display: "flex", fontSize: 26, opacity: 0.85 }}>
-          {SITE.url.replace(/^https?:\/\//, "")}
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <div
+            style={{
+              display: "flex",
+              width: 80,
+              height: 6,
+              borderRadius: 6,
+              background: BRAND_COLORS.gold,
+            }}
+          />
+          <div style={{ display: "flex", fontSize: 26, color: BRAND_COLORS.gray }}>
+            {SITE.url.replace(/^https?:\/\//, "")}
+          </div>
         </div>
       </div>
     ),

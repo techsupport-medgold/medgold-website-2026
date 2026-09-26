@@ -28,11 +28,11 @@ export default function InDevelopmentLayout({
   return (
     <div className="flex min-h-screen flex-col">
       <header className="border-b border-border-muted bg-surface">
-        <div className="container flex items-center justify-between py-5">
-          <Link href="/" aria-label={`${SITE.name} home`} className="rounded-lg">
-            <Logo />
+        <div className="container flex items-center justify-between py-4">
+          <Link href="/" aria-label={`${SITE.name} home`} className="rounded-md">
+            <Logo priority />
           </Link>
-          <span className="rounded-full bg-surface-raised px-3 py-1 text-xs font-medium text-ink-muted">
+          <span className="rounded-full bg-surface-muted px-3 py-1 text-xs font-medium text-ink-muted">
             Preview
           </span>
         </div>

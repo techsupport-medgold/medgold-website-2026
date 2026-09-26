@@ -16,12 +16,34 @@ Build all new UI from shadcn/ui. The project is configured in `components.json`:
   `npx shadcn@latest add <name>` instead of hand-rolling the markup.
 - Do not add `antd`, `@ant-design/icons`, or other component libraries.
 - Icons come from `lucide-react`. Decorative icons get `aria-hidden="true"`.
-- Style with brand tokens only, never raw hex values in components:
-  `bg-primary`, `bg-primary-deep`, `bg-gold`, `text-gold-ink`, `bg-surface`,
-  `surface-muted`, `surface-raised`, `text-ink`, `ink-muted`, `ink-subtle`,
-  `border-border`, `border-border-muted`, `shadow-card`, `text-link`.
-- `gold` (#c89b3c) is only 2.6:1 on white: use it for fills, rules, and accents.
-  Use `text-gold-ink` for gold text on light backgrounds (AA 5.3:1).
+- Style with brand tokens only, never raw hex values in components.
+
+## Brand palette
+
+| Token | Colour | Use |
+|-------|--------|-----|
+| `primary` | Teal `#0B6376` | Buttons, links, heading accents, focus ring, icons |
+| `primary-deep` | `#084E5D` (derived) | Primary button hover |
+| `gold` | Gold `#D4AF37` | Rules, dots, highlights, accent bars (fills only) |
+| `gold-ink` | `#876A14` (derived) | Gold-coloured text, if ever needed (5.1:1) |
+| `ink` | Charcoal `#1F2937` | Body and heading text |
+| `ink-muted` | `#4B5563` (derived) | Secondary text on light-gray bands and tinted areas |
+| `ink-subtle` | Gray `#6B7280` | Secondary text on pure white only |
+| `surface-muted` | Light Gray `#F3F4F6` | Section bands, footer, cards on white |
+| `surface` | White | Page and card backgrounds |
+| `border-border-muted` | `#E5E7EB` | Dividers and card borders |
+
+Contrast rules (WCAG 2.2 AA):
+- Never use `gold` for text on white (2.1:1). Charcoal on gold is fine (6.9:1).
+- Brand gray is 4.4:1 on `#F3F4F6`: use `text-ink-muted` on light-gray backgrounds.
+- Teal and white are 6.9:1 either way round.
+
+## Logo
+
+- The official logo is `public/images/logo-medgold.svg` (1550x605, teal banner). Render it only
+  through `@@/components/common/Logo` (`height` prop, `priority` above the fold).
+- It is designed for light backgrounds; do not place it on teal or dark fills.
+- Favicons use the square `BrandMark` tile in `src/lib/brandImage.tsx`.
 - Tailwind only scans `src/pages`, `src/components`, and `src/app` (see `tailwind.config.ts`).
   Keep class-string tables under `src/components`, not `src/lib`.
 - Page-scoped SCSS lives in `src/styles/pages/<page>.scss` under a page class

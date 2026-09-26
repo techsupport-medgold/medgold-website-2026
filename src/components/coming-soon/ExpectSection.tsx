@@ -13,7 +13,10 @@ const ICONS: Record<ExpectIcon, LucideIcon> = {
 
 export default function ExpectSection() {
   return (
-    <section aria-labelledby="expect-heading" className="py-20 sm:py-24">
+    <section
+      aria-labelledby="expect-heading"
+      className="border-t border-border-muted bg-surface-muted py-20 sm:py-24"
+    >
       <div className="container">
         <div className="max-w-2xl">
           <span className="gold-rule" aria-hidden="true" />
@@ -34,11 +37,11 @@ export default function ExpectSection() {
                 key={item.title}
                 className="rounded-lg border border-border-muted bg-surface p-7 shadow-card"
               >
-                <span className="inline-flex size-12 items-center justify-center rounded-lg bg-surface-raised text-primary">
+                <span className="inline-flex size-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Icon className="size-6" aria-hidden="true" />
                 </span>
                 <h3 className="mt-5 text-xl font-semibold">{item.title}</h3>
-                <p className="mt-2 text-ink-muted">{item.description}</p>
+                <p className="mt-2 text-ink-subtle">{item.description}</p>
               </li>
             );
           })}
