@@ -11,6 +11,11 @@ export const metadata: Metadata = {
 const PAGES = [
   { href: DevRoutes.HOME, title: "Home", description: "Future homepage." },
   { href: DevRoutes.ABOUT, title: "About", description: "About Med Gold." },
+  { href: DevRoutes.SERVICES, title: "Services", description: "Services we offer." },
+  { href: DevRoutes.CAREERS, title: "Careers", description: "Jobs at Med Gold." },
+  { href: DevRoutes.CONTACT, title: "Contact Us", description: "Enquiry form and contact details." },
+  { href: DevRoutes.PRIVACY, title: "Privacy Policy", description: "Placeholder privacy policy." },
+  { href: DevRoutes.TERMS, title: "Terms and Conditions", description: "Placeholder terms of use." },
 ];
 
 export default function DevIndexPage() {
