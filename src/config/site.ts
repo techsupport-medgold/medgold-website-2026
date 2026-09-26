@@ -27,8 +27,8 @@ export const SITE = {
   language: "en",
   logo: "/images/logo-medgold.svg",
   launchYear: 2026,
-  /** ISO date with offset, e.g. 2026-12-01T10:00:00+05:30. Null until announced. */
-  launchDate: process.env.NEXT_PUBLIC_LAUNCH_DATE || null,
+  /** ISO date with IST offset; NEXT_PUBLIC_LAUNCH_DATE overrides the announced date. */
+  launchDate: process.env.NEXT_PUBLIC_LAUNCH_DATE || "2026-11-08T00:00:00+05:30",
   country: "IN",
   contact: {
     person: "Mr. Sundramurthi",

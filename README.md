@@ -29,7 +29,7 @@ npm run dev                  # http://localhost:3000
 | Variable | Purpose |
 |----------|---------|
 | `NEXT_PUBLIC_SITE_URL` | Public origin; drives canonical URLs, sitemap, robots, OG, JSON-LD |
-| `NEXT_PUBLIC_LAUNCH_DATE` | Countdown target, ISO with offset (e.g. `2026-12-01T10:00:00+05:30`) |
+| `NEXT_PUBLIC_LAUNCH_DATE` | Optional countdown override, ISO with offset (default 8 Nov 2026 IST) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console meta tag |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster meta tag |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (only loaded when set) |
@@ -52,10 +52,9 @@ src/
 ## Coming-soon page and launch countdown
 
 `/` is a single-screen coming-soon page with a countdown and the contact details from
-`src/config/site.ts`. Set the launch date with `NEXT_PUBLIC_LAUNCH_DATE` (ISO with IST offset,
-e.g. `2026-12-01T10:00:00+05:30`) locally in `.env.local` and in Vercel. Until it is set, the
-countdown shows `--` and "Launch date will be announced soon." After the date passes it shows
-"We are launching now." Changing the date on Vercel requires a redeploy.
+`src/config/site.ts`. The launch date is **8 November 2026, 00:00 IST** (`SITE.launchDate`).
+To change it, edit `site.ts` or set `NEXT_PUBLIC_LAUNCH_DATE` (ISO with IST offset) in
+`.env.local` / Vercel, then redeploy. After the date passes the page shows "We are launching now."
 
 ## Pages in development (`/dev/...`)
 
@@ -90,7 +89,7 @@ self-hosted fonts, static rendering, security headers, and `www` to apex redirec
 
 Before launch:
 
-1. Confirm the domain (`NEXT_PUBLIC_SITE_URL`) and set `NEXT_PUBLIC_LAUNCH_DATE`.
+1. Confirm the domain (`NEXT_PUBLIC_SITE_URL`) and the launch date in `src/config/site.ts`.
 2. Add Search Console / Bing verification tokens and submit `/sitemap.xml`.
 3. Validate structured data with the [Rich Results Test](https://search.google.com/test/rich-results).
 

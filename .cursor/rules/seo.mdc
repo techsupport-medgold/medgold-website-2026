@@ -33,7 +33,8 @@ alwaysApply: true
 - Never `Disallow` `/dev` in `robots.txt`: blocked pages cannot be crawled, so Google never
   sees the noindex and may still list the bare URL.
 - Do not link to `/dev` pages from the public coming-soon page.
-- The launch date comes from `NEXT_PUBLIC_LAUNCH_DATE` (`SITE.launchDate`); never hardcode it.
+- The launch date lives only in `SITE.launchDate` (`src/config/site.ts`, overridable via
+  `NEXT_PUBLIC_LAUNCH_DATE`); never hardcode it elsewhere.
 
 ### Launching a page
 
