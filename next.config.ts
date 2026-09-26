@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { DEV_ROUTES } from "./src/config/routes";
+import { DEV_PREFIX } from "./src/config/routes";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://medgold.com";
 const apexHost = new URL(siteUrl).host.replace(/^www\./, "");
@@ -57,12 +57,10 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      ...DEV_ROUTES.flatMap((route) =>
-        [route, `${route}/:path*`].map((source) => ({
-          source,
-          headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
-        }))
-      ),
+      ...[DEV_PREFIX, `${DEV_PREFIX}/:path*`].map((source) => ({
+        source,
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      })),
     ];
   },
 };

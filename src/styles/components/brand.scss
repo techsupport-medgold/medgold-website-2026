@@ -5,3 +5,52 @@
   border-radius: 9999px;
   background: rgb(var(--color-gold-rgb));
 }
+
+/* Soft teal/gold wash with a faint grid, for hero areas on white. */
+.brand-wash {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(48rem 28rem at 90% 0%, rgb(var(--color-primary-rgb) / 0.1), transparent 65%),
+    radial-gradient(36rem 22rem at 10% 100%, rgb(var(--color-gold-rgb) / 0.14), transparent 60%),
+    #ffffff;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgb(var(--color-primary-rgb) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--color-primary-rgb) / 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 70%);
+  }
+}
+
+.status-dot {
+  position: relative;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgb(var(--color-gold-rgb));
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    animation: status-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes status-ping {
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}

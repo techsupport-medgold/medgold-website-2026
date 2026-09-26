@@ -1,10 +1,15 @@
 export const Routes = {
   HOME: "/",
-  ABOUT: "/about",
 } as const;
 
 /**
- * Routes under src/app/(in-development). Each one (and its sub-paths) is served with
- * `X-Robots-Tag: noindex, nofollow` and must stay out of the sitemap until launch.
+ * Pre-launch pages live under /dev (src/app/dev). Everything under this prefix is served
+ * noindex, nofollow (layout metadata + X-Robots-Tag header) and stays out of the sitemap.
  */
-export const DEV_ROUTES: string[] = [Routes.ABOUT];
+export const DEV_PREFIX = "/dev";
+
+export const DevRoutes = {
+  INDEX: DEV_PREFIX,
+  HOME: `${DEV_PREFIX}/home`,
+  ABOUT: `${DEV_PREFIX}/about`,
+} as const;

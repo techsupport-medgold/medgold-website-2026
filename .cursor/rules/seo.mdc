@@ -23,20 +23,23 @@ alwaysApply: true
 
 ## Pre-launch: only the coming-soon page is indexed
 
-- `/` (coming soon) is the only indexable page and the only sitemap entry.
-- **Every new page goes in `src/app/(in-development)/`.** The group layout sets
-  `noindex, nofollow`; the route group does not change the URL (`(in-development)/about` serves `/about`).
-- Add the page path to `DEV_ROUTES` in `src/config/routes.ts` so it also gets the
-  `X-Robots-Tag: noindex, nofollow` header (and add it to `Routes`).
+- `/` (countdown coming-soon page) is the only indexable page and the only sitemap entry.
+- **Every page built before launch goes in `src/app/dev/<page>/` and is served at
+  `/dev/<page>`** (the future homepage is `/dev/home`). The `dev/layout.tsx` sets
+  `noindex, nofollow`, and `next.config.ts` adds `X-Robots-Tag: noindex, nofollow` for `/dev/**`,
+  so new dev pages are covered automatically.
+- Add the page to `DevRoutes` in `src/config/routes.ts` and to the list in `src/app/dev/page.tsx`.
 - Do not override `robots` in dev page metadata, and do not add dev pages to `sitemap.ts`.
-- Never `Disallow` dev pages in `robots.txt`: blocked pages cannot be crawled, so Google never
+- Never `Disallow` `/dev` in `robots.txt`: blocked pages cannot be crawled, so Google never
   sees the noindex and may still list the bare URL.
-- Do not link to dev pages from the coming-soon page.
+- Do not link to `/dev` pages from the public coming-soon page.
+- The launch date comes from `NEXT_PUBLIC_LAUNCH_DATE` (`SITE.launchDate`); never hardcode it.
 
 ### Launching a page
 
-1. Move it from `src/app/(in-development)/<route>` to `src/app/<route>`.
-2. Remove it from `DEV_ROUTES`.
+1. Move it from `src/app/dev/<page>` to its final path (e.g. `dev/home` becomes `src/app/page.tsx`,
+   `dev/about` becomes `src/app/about`), and update internal links.
+2. Remove it from `DevRoutes` and the `/dev` index list.
 3. Add it to `ROUTES` in `src/app/sitemap.ts`.
 4. Complete the checklist below (metadata, canonical, OG, JSON-LD).
 

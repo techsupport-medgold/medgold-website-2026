@@ -27,20 +27,22 @@ export const SITE = {
   language: "en",
   logo: "/images/logo-medgold.svg",
   launchYear: 2026,
+  /** ISO date with offset, e.g. 2026-12-01T10:00:00+05:30. Null until announced. */
+  launchDate: process.env.NEXT_PUBLIC_LAUNCH_DATE || null,
+  country: "IN",
   contact: {
-    email: "hello@medgold.com",
-    phone: "+91 00000 00000",
-    phoneHref: "+910000000000",
-    address: {
-      streetAddress: "Address to be announced",
-      addressLocality: "Chennai",
-      addressRegion: "Tamil Nadu",
-      postalCode: "600001",
-      addressCountry: "IN",
-    },
+    person: "Mr. Sundramurthi",
+    phone: "+91 91509 37804",
+    phoneHref: "+919150937804",
+    whatsapp: "919150937804",
   },
   social: [] as string[],
 } as const;
+
+export const whatsappUrl = (message?: string) =>
+  `https://wa.me/${SITE.contact.whatsapp}${
+    message ? `?text=${encodeURIComponent(message)}` : ""
+  }`;
 
 export const BRAND_COLORS = {
   primary: "#0B6376",

@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import ComingSoonHero from "@@/components/coming-soon/ComingSoonHero";
-import ContactSection from "@@/components/coming-soon/ContactSection";
-import ExpectSection from "@@/components/coming-soon/ExpectSection";
-import Footer from "@@/components/common/Footer";
+import ComingSoon from "@@/components/coming-soon/ComingSoon";
 import JsonLd from "@@/components/common/JsonLd";
 import { COMING_SOON_PAGE_URL, COMING_SOON_SEO } from "@@/data/comingSoon";
 import { webPageSchema } from "@@/lib/schema";
@@ -17,13 +14,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="coming-soon-page flex min-h-screen flex-col">
-      <main className="flex-1">
-        <ComingSoonHero />
-        <ExpectSection />
-        <ContactSection />
-      </main>
-      <Footer />
+    <>
+      <ComingSoon />
       <JsonLd
         id="webpage-schema"
         data={webPageSchema({
@@ -32,6 +24,6 @@ export default function Home() {
           description: COMING_SOON_SEO.description,
         })}
       />
-    </div>
+    </>
   );
 }

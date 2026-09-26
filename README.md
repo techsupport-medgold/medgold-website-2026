@@ -29,6 +29,7 @@ npm run dev                  # http://localhost:3000
 | Variable | Purpose |
 |----------|---------|
 | `NEXT_PUBLIC_SITE_URL` | Public origin; drives canonical URLs, sitemap, robots, OG, JSON-LD |
+| `NEXT_PUBLIC_LAUNCH_DATE` | Countdown target, ISO with offset (e.g. `2026-12-01T10:00:00+05:30`) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console meta tag |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster meta tag |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (only loaded when set) |
@@ -39,24 +40,34 @@ npm run dev                  # http://localhost:3000
 ```text
 src/
   app/          routes, metadata, robots.ts, sitemap.ts, manifest.ts, OG image + icons
-  components/   ui/ (shadcn), common/ (Logo, Footer, JsonLd, Analytics), coming-soon/
-  config/       site.ts - brand, domain, contact details; routes.ts - Routes + DEV_ROUTES
+  app/dev/      pre-launch pages (/dev, /dev/home, /dev/about), all noindex
+  components/   ui/ (shadcn), common/ (Logo, Footer, JsonLd, Analytics),
+                coming-soon/ (countdown page), home/ (future homepage sections)
+  config/       site.ts - brand, domain, contact, launch date; routes.ts - Routes + DevRoutes
   data/         page copy and SEO constants
   lib/          utils, JSON-LD schema builders, brand image helper
-  styles/       globals.scss, _tailwind.scss (tokens), base/, pages/
+  styles/       globals.scss, _tailwind.scss (tokens), base/, components/
 ```
 
-## Pages in development
+## Coming-soon page and launch countdown
 
-Only the coming-soon page (`/`) is indexed. Every other page is built inside
-`src/app/(in-development)/`: it is reachable by its URL (for example `/about`) but is
-served with `noindex, nofollow` (meta tag + `X-Robots-Tag` header) and kept out of the sitemap.
+`/` is a single-screen coming-soon page with a countdown and the contact details from
+`src/config/site.ts`. Set the launch date with `NEXT_PUBLIC_LAUNCH_DATE` (ISO with IST offset,
+e.g. `2026-12-01T10:00:00+05:30`) locally in `.env.local` and in Vercel. Until it is set, the
+countdown shows `--` and "Launch date will be announced soon." After the date passes it shows
+"We are launching now." Changing the date on Vercel requires a redeploy.
 
-- New page: create `src/app/(in-development)/<route>/page.tsx` and add the path to
-  `DEV_ROUTES` in `src/config/routes.ts`.
-- Launch a page: move it to `src/app/<route>/`, remove it from `DEV_ROUTES`, and add it to
-  `ROUTES` in `src/app/sitemap.ts`.
-- Do not block dev pages in `robots.txt`; crawlers need to see the noindex.
+## Pages in development (`/dev/...`)
+
+Only `/` is indexed. Every page built before launch lives in `src/app/dev/<page>/` and is served
+at `/dev/<page>`, for example `/dev/home` (future homepage) and `/dev/about`. `/dev` lists them.
+All `/dev` URLs are `noindex, nofollow` (meta tag + `X-Robots-Tag` header) and out of the sitemap.
+
+- New page: create `src/app/dev/<page>/page.tsx`, add it to `DevRoutes` in
+  `src/config/routes.ts` and to the list in `src/app/dev/page.tsx`.
+- Launch a page: move it to its final path (`dev/home` becomes `/`), remove it from `DevRoutes`,
+  and add it to `ROUTES` in `src/app/sitemap.ts`.
+- Do not block `/dev` in `robots.txt`; crawlers need to see the noindex.
 
 ## Deploying to Vercel
 
@@ -79,7 +90,7 @@ self-hosted fonts, static rendering, security headers, and `www` to apex redirec
 
 Before launch:
 
-1. Replace the placeholder domain, email, phone, and address in `src/config/site.ts`.
+1. Confirm the domain (`NEXT_PUBLIC_SITE_URL`) and set `NEXT_PUBLIC_LAUNCH_DATE`.
 2. Add Search Console / Bing verification tokens and submit `/sitemap.xml`.
 3. Validate structured data with the [Rich Results Test](https://search.google.com/test/rich-results).
 

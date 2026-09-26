@@ -1,9 +1,5 @@
 import { HeartPulse, Microscope, Stethoscope, type LucideIcon } from "lucide-react";
-import {
-  comingSoonExpectIntro,
-  comingSoonExpectItems,
-  type ExpectIcon,
-} from "@@/data/comingSoon";
+import { homeExpectIntro, homeExpectItems, type ExpectIcon } from "@@/data/home";
 
 const ICONS: Record<ExpectIcon, LucideIcon> = {
   stethoscope: Stethoscope,
@@ -26,11 +22,11 @@ export default function ExpectSection() {
           >
             What to expect
           </h2>
-          <p className="mt-4 text-lg text-ink-muted">{comingSoonExpectIntro}</p>
+          <p className="mt-4 text-lg text-ink-muted">{homeExpectIntro}</p>
         </div>
 
         <ul className="mt-12 grid gap-6 md:grid-cols-3">
-          {comingSoonExpectItems.map((item) => {
+          {homeExpectItems.map((item) => {
             const Icon = ICONS[item.icon];
             return (
               <li
