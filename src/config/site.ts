@@ -39,6 +39,9 @@ export const SITE = {
   social: [] as string[],
 } as const;
 
+/** Public Microsoft Clarity project ID; NEXT_PUBLIC_CLARITY_ID overrides it. */
+export const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "yoaflrji2q";
+
 export const whatsappUrl = (message?: string) =>
   `https://wa.me/${SITE.contact.whatsapp}${
     message ? `?text=${encodeURIComponent(message)}` : ""
