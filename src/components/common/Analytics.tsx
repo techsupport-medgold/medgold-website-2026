@@ -1,9 +1,9 @@
 import Script from "next/script";
+import ClarityInit from "@@/components/common/ClarityInit";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
-const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID;
 
-/** Injects GTM / Clarity only when their IDs are configured. */
+/** Injects GTM when its ID is configured, and Microsoft Clarity on the production site. */
 export default function Analytics() {
   return (
     <>
@@ -16,15 +16,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','${GTM_ID}');`}
         </Script>
       ) : null}
-      {CLARITY_ID ? (
-        <Script id="ms-clarity" strategy="lazyOnload">
-          {`(function(c,l,a,r,i,t,y){
-c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-})(window, document, "clarity", "script", "${CLARITY_ID}");`}
-        </Script>
-      ) : null}
+      <ClarityInit />
     </>
   );
 }

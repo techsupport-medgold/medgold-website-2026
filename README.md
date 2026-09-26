@@ -33,7 +33,7 @@ npm run dev                  # http://localhost:3000
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console meta tag |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster meta tag |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (only loaded when set) |
-| `NEXT_PUBLIC_CLARITY_ID` | Microsoft Clarity (only loaded when set) |
+| `NEXT_PUBLIC_CLARITY_ID` | Optional override for the Microsoft Clarity project ID (default in `src/config/site.ts`; loads on the production site only) |
 
 ## Project structure
 
