@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
-import { BrandMark } from "@@/lib/brandImage";
+import { brandMark } from "@@/lib/brandImage";
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-export default function Icon() {
-  return new ImageResponse(<BrandMark size={512} />, size);
+export default async function Icon() {
+  return new ImageResponse(await brandMark({ size: 512 }), size);
 }

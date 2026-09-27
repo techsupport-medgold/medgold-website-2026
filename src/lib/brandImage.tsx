@@ -1,53 +1,37 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { BRAND_COLORS, SITE } from "@@/config/site";
+import { SITE } from "@@/config/site";
+
+/** Background of `public/images/fav.svg`, used to fill its rounded corners where transparency is not allowed. */
+const FAVICON_BACKGROUND = "#035D72";
+
+async function publicFileDataUrl(publicPath: string) {
+  const svg = await readFile(path.join(process.cwd(), "public", publicPath));
+  return `data:image/svg+xml;base64,${svg.toString("base64")}`;
+}
 
 /**
- * Square brand tile for favicon / app icons (`next/og` routes, inline styles only).
- * The full logo is a wide banner that is unreadable at favicon sizes.
+ * Square brand icon (`public/images/fav.svg`) for favicon / app icon routes (`next/og`, inline styles only).
+ * `solid` fills the transparent rounded corners, since iOS renders transparency as black and applies its own mask.
  */
-export function BrandMark({ size }: { size: number }) {
+export async function brandMark({ size, solid = false }: { size: number; solid?: boolean }) {
+  const src = await publicFileDataUrl(SITE.favicon);
   return (
     <div
       style={{
         width: size,
         height: size,
-        borderRadius: size * 0.22,
-        background: BRAND_COLORS.primary,
         display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        background: solid ? FAVICON_BACKGROUND : "transparent",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          color: "#FFFFFF",
-          fontSize: size * 0.62,
-          fontWeight: 700,
-          lineHeight: 1,
-          marginTop: -size * 0.04,
-        }}
-      >
-        M
-      </div>
-      <div
-        style={{
-          display: "flex",
-          width: size * 0.46,
-          height: Math.max(2, size * 0.07),
-          borderRadius: size,
-          background: BRAND_COLORS.gold,
-          marginTop: size * 0.04,
-        }}
-      />
+      {/* eslint-disable-next-line jsx-a11y/alt-text */}
+      <img src={src} width={size} height={size} />
     </div>
   );
 }
 
 /** The official logo as a data URL, for embedding in generated share images. */
-export async function logoDataUrl() {
-  const svg = await readFile(path.join(process.cwd(), "public", SITE.logo));
-  return `data:image/svg+xml;base64,${svg.toString("base64")}`;
+export function logoDataUrl() {
+  return publicFileDataUrl(SITE.logo);
 }
