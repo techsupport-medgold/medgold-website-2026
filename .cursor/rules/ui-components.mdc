@@ -43,7 +43,8 @@ Contrast rules (WCAG 2.2 AA):
 - The official logo is `public/images/logo-medgold.svg` (1550x605, teal banner). Render it only
   through `@@/components/common/Logo` (`height` prop, `priority` above the fold).
 - It is designed for light backgrounds; do not place it on teal or dark fills.
-- Favicons use the square `BrandMark` tile in `src/lib/brandImage.tsx`.
+- Favicons and app icons are generated from `public/images/fav.svg` (`SITE.favicon`) via
+  `brandMark()` in `src/lib/brandImage.tsx`. Replace that file to change the icon.
 - Tailwind only scans `src/pages`, `src/components`, and `src/app` (see `tailwind.config.ts`).
   Keep class-string tables under `src/components`, not `src/lib`.
 - Page-scoped SCSS lives in `src/styles/pages/<page>.scss` under a page class
