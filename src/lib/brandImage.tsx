@@ -1,9 +1,9 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { SITE } from "@@/config/site";
+import { BRAND_COLORS, SITE } from "@@/config/site";
 
 /** Background of `public/images/fav.svg`, used to fill its rounded corners where transparency is not allowed. */
-const FAVICON_BACKGROUND = "#035D72";
+const FAVICON_BACKGROUND = BRAND_COLORS.primary;
 
 async function publicFileDataUrl(publicPath: string) {
   const svg = await readFile(path.join(process.cwd(), "public", publicPath));
@@ -25,7 +25,7 @@ export async function brandMark({ size, solid = false }: { size: number; solid?:
         background: solid ? FAVICON_BACKGROUND : "transparent",
       }}
     >
-      {/* eslint-disable-next-line jsx-a11y/alt-text */}
+      {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
       <img src={src} width={size} height={size} />
     </div>
   );
