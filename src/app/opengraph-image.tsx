@@ -7,7 +7,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const LOGO_HEIGHT = 150;
-const LOGO_WIDTH = Math.round((1550 / 605) * LOGO_HEIGHT);
+const LOGO_WIDTH = Math.round((1588 / 642) * LOGO_HEIGHT);
 
 export default async function OpengraphImage() {
   const logo = await logoDataUrl();

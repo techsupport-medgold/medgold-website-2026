@@ -2,8 +2,8 @@ import Image from "next/image";
 import { SITE } from "@@/config/site";
 import { cn } from "@@/lib/utils";
 
-const LOGO_WIDTH = 1550;
-const LOGO_HEIGHT = 605;
+const LOGO_WIDTH = 1588;
+const LOGO_HEIGHT = 642;
 
 type LogoProps = {
   className?: string;

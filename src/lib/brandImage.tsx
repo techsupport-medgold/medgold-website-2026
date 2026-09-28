@@ -25,7 +25,7 @@ export async function brandMark({ size, solid = false }: { size: number; solid?:
         background: solid ? FAVICON_BACKGROUND : "transparent",
       }}
     >
-      {/* eslint-disable-next-line jsx-a11y/alt-text */}
+      {/* eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element */}
       <img src={src} width={size} height={size} />
     </div>
   );
