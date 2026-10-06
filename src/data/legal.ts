@@ -18,6 +18,7 @@ const contactLines = [
   `Contact person: ${SITE.contact.person}`,
   `Phone: ${SITE.contact.phone}`,
   `WhatsApp: ${SITE.contact.phone}`,
+  `Address: ${SITE.address.full}`,
 ];
 
 export const PRIVACY_SEO = {

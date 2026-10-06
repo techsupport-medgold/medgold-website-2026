@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageCircle, Phone, UserRound } from "lucide-react";
+import { MapPin, MessageCircle, Phone, UserRound } from "lucide-react";
 import Logo from "@@/components/common/Logo";
 import { DEV_NAV, LEGAL_NAV } from "@@/config/routes";
 import { SITE, whatsappUrl } from "@@/config/site";
@@ -55,6 +55,20 @@ export default function Footer() {
                   <MessageCircle className="size-4 text-primary" aria-hidden="true" />
                   Chat on WhatsApp
                   <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={SITE.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex max-w-xs items-start gap-2 py-2.5 text-sm text-ink-muted transition-colors hover:text-primary"
+                >
+                  <MapPin className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                  <span>
+                    {SITE.address.full}
+                    <span className="sr-only"> (opens Google Maps in a new tab)</span>
+                  </span>
                 </a>
               </li>
             </ul>

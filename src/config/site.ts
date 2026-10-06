@@ -37,6 +37,16 @@ export const SITE = {
     phoneHref: "+919150937804",
     whatsapp: "919150937804",
   },
+  address: {
+    street: "No.5, Santhosh Nagar Annex",
+    locality: "Kolathur",
+    city: "Chennai",
+    region: "Tamil Nadu",
+    postalCode: "600099",
+    full: "No.5, Santhosh Nagar Annex, Kolathur, Chennai, Tamil Nadu 600099",
+  },
+  geo: { lat: 13.1309443, lng: 80.199499 },
+  mapUrl: "https://maps.app.goo.gl/pkUEuPoQ5N37jBJZ9",
   social: [] as string[],
 } as const;
 
@@ -47,6 +57,13 @@ export const whatsappUrl = (message?: string) =>
   `https://wa.me/${SITE.contact.whatsapp}${
     message ? `?text=${encodeURIComponent(message)}` : ""
   }`;
+
+/** Keyless Google Maps embed pinned to SITE.geo. */
+export const mapEmbedUrl = () =>
+  `https://www.google.com/maps?q=${SITE.geo.lat},${SITE.geo.lng}&z=17&output=embed`;
+
+export const directionsUrl = () =>
+  `https://www.google.com/maps/dir/?api=1&destination=${SITE.geo.lat},${SITE.geo.lng}`;
 
 export const BRAND_COLORS = {
   primary: "#0B6376",

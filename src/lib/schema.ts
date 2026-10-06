@@ -17,6 +17,20 @@ export const organizationSchema = {
   image: absoluteUrl("/opengraph-image"),
   description: SITE.description,
   telephone: SITE.contact.phoneHref,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: `${SITE.address.street}, ${SITE.address.locality}`,
+    addressLocality: SITE.address.city,
+    addressRegion: SITE.address.region,
+    postalCode: SITE.address.postalCode,
+    addressCountry: SITE.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: SITE.geo.lat,
+    longitude: SITE.geo.lng,
+  },
+  hasMap: SITE.mapUrl,
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer service",

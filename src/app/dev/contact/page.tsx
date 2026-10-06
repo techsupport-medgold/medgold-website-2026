@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { MessageCircle, Phone, UserRound } from "lucide-react";
+import { ExternalLink, MapPin, MessageCircle, Navigation, Phone, UserRound } from "lucide-react";
 import EnquiryForm from "@@/components/contact/EnquiryForm";
-import { SITE, whatsappUrl } from "@@/config/site";
-import { CONTACT_SEO, contactHero } from "@@/data/contact";
+import { Button } from "@@/components/ui/button";
+import { SITE, directionsUrl, mapEmbedUrl, whatsappUrl } from "@@/config/site";
+import { CONTACT_SEO, contactHero, findUs } from "@@/data/contact";
 
 export const metadata: Metadata = {
   title: CONTACT_SEO.title,
@@ -63,8 +64,71 @@ export default function ContactPage() {
                   </span>
                 </span>
               </a>
+              <a href={SITE.mapUrl} target="_blank" rel="noopener noreferrer" className={cardClass}>
+                <MapPin className="size-6 shrink-0 text-primary" aria-hidden="true" />
+                <span>
+                  <span className="block text-sm font-medium text-ink-muted">Address</span>
+                  <span className="block font-semibold text-ink">
+                    {SITE.address.street}, {SITE.address.locality}
+                  </span>
+                  <span className="block text-sm text-ink-muted">
+                    {SITE.address.city}, {SITE.address.region} {SITE.address.postalCode}
+                  </span>
+                  <span className="mt-1 block text-sm font-medium text-link group-hover:underline">
+                    View on Google Maps
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </span>
+                </span>
+              </a>
             </address>
           </aside>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="find-us-heading"
+        className="border-t border-border-muted bg-surface-muted py-12 sm:py-16"
+      >
+        <div className="container">
+          <span className="gold-rule" aria-hidden="true" />
+          <h2 id="find-us-heading" className="mt-4 text-3xl font-bold">
+            {findUs.heading}
+          </h2>
+          <p className="mt-3 max-w-2xl text-ink-muted">{findUs.intro}</p>
+          <p className="mt-2 font-medium text-ink">{SITE.address.full}</p>
+
+          <div className="mt-8 overflow-hidden rounded-lg border border-border-muted bg-surface shadow-card">
+            <iframe
+              src={mapEmbedUrl()}
+              title={findUs.mapTitle}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              className="block h-[360px] w-full border-0 sm:h-[420px]"
+            />
+          </div>
+
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg" className="hover:bg-primary-deep">
+              <a href={directionsUrl()} target="_blank" rel="noopener noreferrer">
+                <Navigation aria-hidden="true" />
+                Get directions
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-primary/40 bg-surface text-primary hover:bg-primary/5 hover:text-primary"
+            >
+              <a href={SITE.mapUrl} target="_blank" rel="noopener noreferrer">
+                <ExternalLink aria-hidden="true" />
+                Open in Google Maps
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
     </>
