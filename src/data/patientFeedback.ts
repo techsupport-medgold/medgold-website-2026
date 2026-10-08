@@ -29,7 +29,7 @@ export const hero = {
   ],
   image: {
     src: "/images/patient-feedback/feedback-hero.jpg",
-    alt: "Doctor and nurse showing an elderly inpatient a feedback survey on a tablet at his bedside",
+    alt: "Doctor and nurse smiling as an elderly inpatient gives feedback on a tablet at his bedside",
   },
   dashboard: {
     title: "Patient Feedback System (SOP-PFS)",
@@ -66,7 +66,7 @@ export const touchpoints = {
       footer: "Resolution: Immediate On-Floor",
       image: {
         src: "/images/patient-feedback/touchpoint-bedside.jpg",
-        alt: "Doctor and nurse collecting feedback from an inpatient on a tablet in a hospital room",
+        alt: "Patient care coordinator recording an inpatient's feedback on a tablet while a nurse adjusts her drip",
       },
     },
     {
@@ -77,7 +77,7 @@ export const touchpoints = {
       footer: "Bilingual: Tamil & English",
       image: {
         src: "/images/patient-feedback/touchpoint-kiosk.jpg",
-        alt: "Smiling patient rating her visit on a touchscreen feedback kiosk at a hospital counter",
+        alt: "Smiling visitor giving a five-star rating on a touchscreen feedback kiosk in a hospital lobby",
       },
     },
     {
@@ -88,7 +88,7 @@ export const touchpoints = {
       footer: "Alert SLA: <10 Minutes",
       image: {
         src: "/images/patient-feedback/touchpoint-command.jpg",
-        alt: "Hospital managers reviewing live patient sentiment dashboards on a large command center screen",
+        alt: "Three hospital managers reviewing live patient sentiment heatmaps and trend charts on a large command centre screen",
       },
     },
   ] satisfies {

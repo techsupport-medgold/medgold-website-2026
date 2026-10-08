@@ -23,6 +23,7 @@ export const DevRoutes = {
   CONTACT: `${DEV_PREFIX}/contact-us`,
   PRIVACY: `${DEV_PREFIX}/privacy-policy`,
   TERMS: `${DEV_PREFIX}/terms-of-service`,
+  STYLE_GUIDE: `${DEV_PREFIX}/style-guide`,
 } as const;
 
 export type NavItem = { href: string; label: string; children?: readonly NavItem[] };

@@ -85,11 +85,38 @@ export default function ServicesMenu({ item, variant, triggerClassName, onNaviga
     else setOpenOn(pathname);
   };
 
+  const focusItem = (index: number | "first" | "last") => {
+    const links = Array.from(containerRef.current?.querySelectorAll<HTMLAnchorElement>(`[id="${panelId}"] a`) ?? []);
+    if (!links.length) return;
+    const target = index === "first" ? 0 : index === "last" ? links.length - 1 : (index + links.length) % links.length;
+    links[target]?.focus();
+  };
+
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Escape" && open) {
       event.stopPropagation();
       close();
       triggerRef.current?.focus();
+      return;
+    }
+    if (variant !== "desktop") return;
+
+    const onTrigger = event.target === triggerRef.current;
+    const links = Array.from(containerRef.current?.querySelectorAll<HTMLAnchorElement>(`[id="${panelId}"] a`) ?? []);
+    const current = links.indexOf(event.target as HTMLAnchorElement);
+
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      const toFirst = event.key === "ArrowDown";
+      if (onTrigger) {
+        if (!open) setOpenOn(pathname);
+        requestAnimationFrame(() => focusItem(toFirst ? "first" : "last"));
+      } else if (current >= 0) {
+        focusItem(current + (toFirst ? 1 : -1));
+      }
+    } else if ((event.key === "Home" || event.key === "End") && current >= 0) {
+      event.preventDefault();
+      focusItem(event.key === "Home" ? "first" : "last");
     }
   };
 
@@ -145,7 +172,8 @@ export default function ServicesMenu({ item, variant, triggerClassName, onNaviga
         <ul
           className={cn(
             "grid gap-0.5",
-            variant === "desktop" && "rounded-xl border border-border-muted bg-surface p-2 shadow-card",
+            variant === "desktop" &&
+              "rounded-xl border border-border-muted bg-surface p-2 shadow-card-hover animate-in fade-in-0 slide-in-from-top-2 duration-200",
           )}
         >
           {children.map((link) => {

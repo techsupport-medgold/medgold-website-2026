@@ -6,7 +6,8 @@ import { cn } from "@@/lib/utils"
 
 const buttonVariants = cva(
   [
-    "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+    "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-200 ease-out-expo active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50 motion-reduce:active:scale-100 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+    "[&_svg:last-child:not(:first-child)]:transition-transform hover:[&_svg:last-child:not(:first-child)]:translate-x-0.5",
     "focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
     "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
   ],
@@ -14,7 +15,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "bg-primary text-primary-foreground shadow hover:bg-primary-deep hover:shadow-card-hover",
+        accent:
+          "bg-gold text-ink shadow hover:bg-gold/90 hover:shadow-glow-gold",
+        inverse:
+          "bg-white text-primary-deep shadow hover:bg-surface-raised",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 focus-visible:ring-destructive/20",
         outline:

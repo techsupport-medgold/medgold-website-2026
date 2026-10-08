@@ -30,6 +30,7 @@ const PAGES = [
   { href: DevRoutes.CONTACT, title: "Contact Us", description: "Enquiry form and contact details." },
   { href: DevRoutes.PRIVACY, title: "Privacy Policy", description: "Placeholder privacy policy." },
   { href: DevRoutes.TERMS, title: "Terms of Service", description: "Placeholder terms of use." },
+  { href: DevRoutes.STYLE_GUIDE, title: "Style Guide", description: "Design tokens, components, motion and image rules." },
 ];
 
 export default function DevIndexPage() {

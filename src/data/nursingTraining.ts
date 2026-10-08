@@ -36,7 +36,7 @@ export const hero = {
   ] satisfies { icon: TrainingTrustIcon; title: string; detail: string }[],
   image: {
     src: "/images/nursing-training/training-hero.jpg",
-    alt: "Senior nurse teaching a group of nursing trainees beside a patient's bed in a hospital ward",
+    alt: "Senior nurse educator teaching a group of nursing trainees beside a training manikin in a hospital skills lab",
   },
   card: {
     title: "Nursing Training & Skills Development Center",

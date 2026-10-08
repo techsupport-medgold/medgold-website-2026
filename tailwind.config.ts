@@ -16,6 +16,33 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+      },
+      spacing: {
+        section: "var(--section-y)",
+      },
+      transitionTimingFunction: {
+        "out-expo": "var(--ease-out-expo)",
+        spring: "var(--ease-spring)",
+      },
+      keyframes: {
+        "reveal-up": {
+          from: { opacity: "0", transform: "translateY(24px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        shimmer: {
+          from: { backgroundPosition: "200% 0" },
+          to: { backgroundPosition: "-200% 0" },
+        },
+      },
+      animation: {
+        "reveal-up": "reveal-up var(--duration-slow) var(--ease-out-expo) both",
+        float: "float 6s ease-in-out infinite",
+        shimmer: "shimmer 3s linear infinite",
       },
       colors: {
         primary: {
@@ -33,18 +60,18 @@ export default {
         },
         link: "rgb(var(--link-rgb) / <alpha-value>)",
         surface: {
-          DEFAULT: "var(--surface)",
-          muted: "var(--surface-muted)",
-          raised: "var(--surface-raised)",
+          DEFAULT: "rgb(var(--surface-rgb) / <alpha-value>)",
+          muted: "rgb(var(--surface-muted-rgb) / <alpha-value>)",
+          raised: "rgb(var(--surface-raised-rgb) / <alpha-value>)",
         },
         border: {
           DEFAULT: "hsl(var(--border))",
-          muted: "var(--border-muted)",
+          muted: "rgb(var(--border-muted-rgb) / <alpha-value>)",
         },
         ink: {
-          DEFAULT: "var(--ink)",
-          muted: "var(--ink-muted)",
-          subtle: "var(--ink-subtle)",
+          DEFAULT: "rgb(var(--ink-rgb) / <alpha-value>)",
+          muted: "rgb(var(--ink-muted-rgb) / <alpha-value>)",
+          subtle: "rgb(var(--ink-subtle-rgb) / <alpha-value>)",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -78,9 +105,13 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        card: "var(--radius-card)",
+        pill: "9999px",
       },
       boxShadow: {
         card: "var(--card-shadow)",
+        "card-hover": "var(--card-shadow-hover)",
+        "glow-gold": "var(--glow-gold)",
       },
     },
     container: {

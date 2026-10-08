@@ -31,7 +31,7 @@ export const hero = {
   ] satisfies { icon: TrustIcon; label: string }[],
   image: {
     src: "/images/staffing/staffing-hero.jpg",
-    alt: "Doctor, nurses and clinical staff standing together outside a hospital entrance at night",
+    alt: "Doctor, nurses, a technician and a front-office executive standing together in a hospital lobby at dusk",
   },
   overlay: {
     label: "Active Workforce Deployed",
@@ -139,7 +139,7 @@ export const portfolio = {
       icon: "emr",
       image: {
         src: "/images/staffing/front-office.jpg",
-        alt: "Hospital front-office staff assisting patients at the reception desk",
+        alt: "Front-office executive with a headset assisting an elderly couple at the hospital reception desk",
       },
     },
     {
@@ -151,7 +151,7 @@ export const portfolio = {
       icon: "nurse",
       image: {
         src: "/images/staffing/nursing.jpg",
-        alt: "Nurses caring for a patient at the bedside in a hospital ward",
+        alt: "Two ICU nurses adjusting an IV line for a patient beside a bedside monitor",
       },
     },
     {
@@ -163,7 +163,7 @@ export const portfolio = {
       icon: "lab",
       image: {
         src: "/images/staffing/diagnostics-lab.jpg",
-        alt: "Laboratory technicians working with diagnostic analysers in a clinical lab",
+        alt: "Two laboratory technicians handling blood sample tubes beside automated analysers in a pathology lab",
       },
     },
     {
@@ -175,7 +175,7 @@ export const portfolio = {
       icon: "governance",
       image: {
         src: "/images/staffing/executive.jpg",
-        alt: "Hospital leadership team meeting around a boardroom table",
+        alt: "Hospital leadership team led by a medical director meeting around a boardroom table overlooking the city",
       },
     },
   ] satisfies {

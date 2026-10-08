@@ -55,12 +55,12 @@ export const hero = {
   photos: [
     {
       src: "/images/branding/doctor-consult.jpg",
-      alt: "Senior doctor reviewing a patient file with a colleague on a hospital ward",
+      alt: "Senior consultant reviewing a patient file with a younger doctor on a hospital ward",
       label: "Doctor Authority & Trust",
     },
     {
       src: "/images/branding/hospital-interior.jpg",
-      alt: "Modern hospital recovery room with clinical equipment beside the bed",
+      alt: "Modern private hospital room with a made bed, patient monitor, teal accent wall and visitor chair",
       label: "Hospital Brand Loyalty",
     },
   ],

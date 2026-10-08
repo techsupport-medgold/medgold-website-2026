@@ -72,7 +72,7 @@ export default function FeedbackHero() {
               src={hero.image.src}
               alt={hero.image.alt}
               fill
-              priority
+              preload
               sizes="(min-width: 1024px) 40vw, 100vw"
               className="object-cover"
             />

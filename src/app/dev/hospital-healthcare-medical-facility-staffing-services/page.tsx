@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { Zap } from "lucide-react";
+import ServiceBreadcrumb from "@@/components/services/ServiceBreadcrumb";
 import ServiceCta from "@@/components/services/ServiceCta";
 import StatsBar from "@@/components/services/StatsBar";
 import ComparisonSection from "@@/components/staffing/ComparisonSection";
 import DirectorySection from "@@/components/staffing/DirectorySection";
 import DualValueSection from "@@/components/staffing/DualValueSection";
 import PortfolioSection from "@@/components/staffing/PortfolioSection";
-import StaffingBreadcrumb from "@@/components/staffing/StaffingBreadcrumb";
 import StaffingHero from "@@/components/staffing/StaffingHero";
-import { impactStats, requisition, STAFFING_SEO } from "@@/data/staffing";
+import { breadcrumb, impactStats, requisition, STAFFING_SEO } from "@@/data/staffing";
 
 export const metadata: Metadata = {
   title: STAFFING_SEO.title,
@@ -17,7 +18,13 @@ export const metadata: Metadata = {
 export default function StaffingServicePage() {
   return (
     <>
-      <StaffingBreadcrumb />
+      <ServiceBreadcrumb
+        current={breadcrumb.current}
+        badges={[
+          { label: breadcrumb.rosterBadge },
+          { label: breadcrumb.slaBadge, icon: Zap, tone: "gold" },
+        ]}
+      />
       <StaffingHero />
       <StatsBar label="Staffing impact" stats={impactStats} />
       <DualValueSection />

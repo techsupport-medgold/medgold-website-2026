@@ -87,7 +87,7 @@ export default function TrainingHero() {
               src={hero.image.src}
               alt={hero.image.alt}
               fill
-              priority
+              preload
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
             />

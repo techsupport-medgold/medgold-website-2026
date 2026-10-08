@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Rocket } from "lucide-react";
-import BrandingBreadcrumb from "@@/components/branding/BrandingBreadcrumb";
+import { BadgeCheck, Rocket } from "lucide-react";
 import BrandingHero from "@@/components/branding/BrandingHero";
 import EcosystemBanner from "@@/components/branding/EcosystemBanner";
 import GrowthProcess from "@@/components/branding/GrowthProcess";
 import GrowthServices from "@@/components/branding/GrowthServices";
 import WhyChooseSection from "@@/components/branding/WhyChooseSection";
+import ServiceBreadcrumb from "@@/components/services/ServiceBreadcrumb";
 import ServiceCta from "@@/components/services/ServiceCta";
-import { BRANDING_PAGE_URL, BRANDING_SEO, cta } from "@@/data/branding";
+import { BRANDING_PAGE_URL, BRANDING_SEO, breadcrumb, cta } from "@@/data/branding";
 
 export const metadata: Metadata = {
   title: BRANDING_SEO.title,
@@ -18,7 +18,15 @@ export const metadata: Metadata = {
 export default function BrandingServicePage() {
   return (
     <>
-      <BrandingBreadcrumb />
+      <ServiceBreadcrumb
+        current={breadcrumb.current}
+        badges={[
+          { label: breadcrumb.badge, tone: "gold" },
+          { label: breadcrumb.specialist },
+          { label: breadcrumb.compliance, icon: BadgeCheck, tone: "neutral" },
+        ]}
+        contacts={["phone", "phoneAlt"]}
+      />
       <BrandingHero />
       <EcosystemBanner />
       <GrowthServices />

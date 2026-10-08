@@ -18,17 +18,39 @@
     /* Teal links are 6.9:1 on white. */
     --link-rgb: 11 99 118;
 
-    /* Surface / text scale */
-    --surface: #ffffff;
-    --surface-muted: #f3f4f6;
-    --surface-raised: #e8f1f3;
-    --border-muted: #e5e7eb;
-    --ink: #1f2937;
+    /* Surface / text scale (channels so Tailwind can apply /opacity) */
+    --surface-rgb: 255 255 255;
+    --surface-muted-rgb: 243 244 246;
+    --surface-raised-rgb: 232 241 243;
+    --border-muted-rgb: 229 231 235;
+    --ink-rgb: 31 41 55;
     /* 7.6:1 on white, 6.9:1 on #f3f4f6 - secondary text on light-gray bands. */
-    --ink-muted: #4b5563;
+    --ink-muted-rgb: 75 85 99;
     /* Brand gray: 4.8:1 on white but only 4.4:1 on #f3f4f6, so white backgrounds only. */
-    --ink-subtle: #6b7280;
+    --ink-subtle-rgb: 107 114 128;
+    --surface: rgb(var(--surface-rgb));
+    --surface-muted: rgb(var(--surface-muted-rgb));
+    --surface-raised: rgb(var(--surface-raised-rgb));
+    --border-muted: rgb(var(--border-muted-rgb));
+    --ink: rgb(var(--ink-rgb));
+    --ink-muted: rgb(var(--ink-muted-rgb));
+    --ink-subtle: rgb(var(--ink-subtle-rgb));
+
+    /* Elevation */
     --card-shadow: 0 1px 2px 0 rgb(31 41 55 / 0.04), 0 8px 24px -8px rgb(31 41 55 / 0.1);
+    --card-shadow-hover: 0 2px 4px 0 rgb(31 41 55 / 0.05), 0 24px 48px -16px rgb(8 78 93 / 0.28);
+    --glow-gold: 0 0 0 1px rgb(212 175 55 / 0.35), 0 12px 32px -12px rgb(212 175 55 / 0.55);
+
+    /* Motion */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --duration-fast: 160ms;
+    --duration-base: 280ms;
+    --duration-slow: 700ms;
+
+    /* Layout */
+    --section-y: 4.5rem;
+    --radius-card: 1.25rem;
 
     /* shadcn/ui tokens (HSL channels) derived from the brand palette. */
     --background: 0 0% 100%;
@@ -51,5 +73,11 @@
     --input: 220 13% 91%;
     --ring: 191 83% 25%;
     --radius: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    :root {
+      --section-y: 6rem;
+    }
   }
 }

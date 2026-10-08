@@ -155,7 +155,7 @@ export default function BrandingHero() {
                   src={photo.src}
                   alt={photo.alt}
                   fill
-                  priority={index === 0}
+                  preload={index === 0}
                   sizes="(min-width: 1024px) 20vw, 50vw"
                   className="object-cover"
                 />

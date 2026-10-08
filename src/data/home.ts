@@ -18,7 +18,7 @@ export const homeHero = {
   compliance: ["NABH 5th Edition Aligned", "ISO 9001:2015 Clinical Quality", "BMWM 2016 Certification"],
   image: {
     src: "/images/home/command-centre.jpg",
-    alt: "MedGold hospital central command and telemetry room in Chennai, with staff monitoring operations dashboards",
+    alt: "Two hospital operations staff in a Chennai command centre reviewing live floor maps and status dashboards on a video wall",
   },
   imageTag: "Live operations telemetry • Chennai metro hub",
   imageStatus: "Online",
@@ -65,7 +65,7 @@ export const servicePillars: readonly ServicePillar[] = [
     href: DevRoutes.PHARMACY_AUDIT,
     image: {
       src: "/images/home/pharmacy-audit.jpg",
-      alt: "Pharmacist checking medicine stock and cold-chain records in a hospital pharmacy",
+      alt: "Hospital pharmacist scanning medicine stock on store-room shelves, with a stock dashboard and cold-chain refrigerator nearby",
     },
   },
   {
@@ -77,7 +77,7 @@ export const servicePillars: readonly ServicePillar[] = [
     icon: "audit",
     image: {
       src: "/images/home/clinic-audit.jpg",
-      alt: "Clinical quality director and doctor reviewing audit checklists on a hospital ward",
+      alt: "Clinical quality director in a saree and white coat reviewing an audit checklist with a doctor on a hospital ward",
     },
   },
   {
@@ -89,7 +89,7 @@ export const servicePillars: readonly ServicePillar[] = [
     icon: "sanitization",
     image: {
       src: "/images/home/janitorial-sanitization.jpg",
-      alt: "Hospital housekeeping staff scrubbing and sanitizing a corridor floor",
+      alt: "Hospital housekeeping staff in masks and gloves machine-scrubbing a corridor floor and disinfecting handrails beside a colour-coded trolley",
     },
   },
   {
