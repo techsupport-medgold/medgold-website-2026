@@ -22,7 +22,7 @@ const PAGES = [
     title: "Pharmacy Stock Audit & Growth",
     description: "Pharmacy stock audit and profit consulting service.",
   },
-  { href: DevRoutes.BRANDING, title: "Hospital & Clinic Branding & Marketing", description: "Placeholder service page." },
+  { href: DevRoutes.BRANDING, title: "Hospital & Clinic Branding & Marketing", description: "12 growth services, why MedGold, 5-step growth process and consultation CTA." },
   { href: DevRoutes.PATIENT_FEEDBACK, title: "Patient Feedback Systems", description: "Capture touchpoints, 5-stage workflow, deployment estimator and audit demo CTA." },
   { href: DevRoutes.NURSING_TRAINING, title: "Nursing Training", description: "Training pillars, curriculum, cohort planner and hospital assessment CTA." },
   { href: DevRoutes.CAREERS, title: "Careers", description: "Jobs at Med Gold." },
