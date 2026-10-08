@@ -12,7 +12,11 @@ const PAGES = [
   { href: DevRoutes.HOME, title: "Home", description: "Future homepage." },
   { href: DevRoutes.ABOUT, title: "About", description: "About Med Gold." },
   { href: DevRoutes.SERVICES, title: "Services", description: "Services we offer." },
-  { href: DevRoutes.STAFFING, title: "Healthcare Facility Staffing", description: "Placeholder service page." },
+  {
+    href: DevRoutes.STAFFING,
+    title: "Healthcare Facility Staffing",
+    description: "Hospital manpower supply, staffing and practical training service.",
+  },
   {
     href: DevRoutes.PHARMACY_AUDIT,
     title: "Pharmacy Stock Audit & Growth",

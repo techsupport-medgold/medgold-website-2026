@@ -13,10 +13,6 @@ export type ServicePlaceholder = { title: string; description: string };
 
 /** Service pages that are planned but not yet written. Each renders through ServicePlaceholderPage. */
 export const servicePlaceholders = {
-  staffing: {
-    title: "Healthcare Facility Staffing",
-    description: "Hospital and healthcare facility staffing services from Med Gold. This page is in development.",
-  },
   branding: {
     title: "Hospital & Clinic Branding & Marketing",
     description: "Branding and marketing services for hospitals and clinics from Med Gold. This page is in development.",

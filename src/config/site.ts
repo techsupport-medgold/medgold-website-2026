@@ -35,6 +35,8 @@ export const SITE = {
     person: "Mr. Sundramurthi",
     phone: "+91 91509 37804",
     phoneHref: "+919150937804",
+    phoneAlt: "+91 82480 60804",
+    phoneAltHref: "+918248060804",
     whatsapp: "919150937804",
     email: "consulting@medgoldhealthcare.com",
   },
