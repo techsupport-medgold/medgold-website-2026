@@ -116,8 +116,6 @@ export default function ServicesMenu({ item, variant, triggerClassName, onNaviga
         }
       : {};
 
-  const links = [{ href: item.href, label: `All ${item.label.toLowerCase()}` }, ...children];
-
   return (
     <li ref={containerRef} className={variant === "desktop" ? "relative" : undefined} onKeyDown={onKeyDown} onBlur={onBlur} {...hoverProps}>
       <button
@@ -150,10 +148,10 @@ export default function ServicesMenu({ item, variant, triggerClassName, onNaviga
             variant === "desktop" && "rounded-xl border border-border-muted bg-surface p-2 shadow-card",
           )}
         >
-          {links.map((link, index) => {
+          {children.map((link) => {
             const current = pathname === link.href;
             return (
-              <li key={link.href} className={cn(index === 0 && "border-b border-border-muted pb-1 mb-1")}>
+              <li key={link.href}>
                 <Link
                   href={link.href}
                   aria-current={current ? "page" : undefined}
@@ -161,7 +159,6 @@ export default function ServicesMenu({ item, variant, triggerClassName, onNaviga
                   className={cn(
                     "flex min-h-11 w-full items-center rounded-md px-3 text-sm font-medium text-ink-muted transition-colors hover:bg-surface-muted hover:text-primary",
                     "aria-[current=page]:font-semibold aria-[current=page]:text-primary",
-                    index === 0 && "text-primary-deep",
                     variant === "mobile" && "text-base",
                   )}
                 >
