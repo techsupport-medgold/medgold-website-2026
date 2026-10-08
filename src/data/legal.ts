@@ -1,6 +1,6 @@
 import { SITE } from "@@/config/site";
 
-/** Placeholder legal copy, previewed at /dev/privacy-policy and /dev/terms. Must be reviewed by a legal advisor before launch. */
+/** Placeholder legal copy, previewed at /dev/privacy-policy and /dev/terms-of-service. Must be reviewed by a legal advisor before launch. */
 
 export type LegalSection = {
   id: string;
@@ -28,7 +28,7 @@ export const PRIVACY_SEO = {
 };
 
 export const TERMS_SEO = {
-  title: "Terms and Conditions",
+  title: "Terms of Service",
   description:
     "The terms and conditions that apply when you use the Med Gold website, including our medical disclaimer and enquiry terms.",
 };
@@ -131,7 +131,7 @@ export const termsSections: LegalSection[] = [
     id: "acceptance",
     heading: "Acceptance of terms",
     paragraphs: [
-      `By accessing or using the ${SITE.name} website, you agree to these Terms and Conditions. If you do not agree, please do not use the website.`,
+      `By accessing or using the ${SITE.name} website, you agree to these Terms of Service. If you do not agree, please do not use the website.`,
     ],
   },
   {
@@ -185,20 +185,20 @@ export const termsSections: LegalSection[] = [
     id: "governing-law",
     heading: "Governing law",
     paragraphs: [
-      "These Terms and Conditions are governed by the laws of India. Any disputes are subject to the exclusive jurisdiction of the courts of Tamil Nadu.",
+      "These Terms of Service are governed by the laws of India. Any disputes are subject to the exclusive jurisdiction of the courts of Tamil Nadu.",
     ],
   },
   {
     id: "changes",
     heading: "Changes to these terms",
     paragraphs: [
-      'We may update these Terms and Conditions from time to time. Any changes will be posted on this page with a revised "Last updated" date.',
+      'We may update these Terms of Service from time to time. Any changes will be posted on this page with a revised "Last updated" date.',
     ],
   },
   {
     id: "contact",
     heading: "Contact us",
-    paragraphs: ["If you have any questions about these Terms and Conditions, please contact us:"],
+    paragraphs: ["If you have any questions about these Terms of Service, please contact us:"],
     list: contactLines,
   },
 ];

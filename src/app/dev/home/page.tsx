@@ -10,7 +10,7 @@ import ServiceCta from "@@/components/services/ServiceCta";
 import { auditCta, HOME_SEO, type AuditBenefitIcon } from "@@/data/home";
 
 export const metadata: Metadata = {
-  title: HOME_SEO.title,
+  title: { absolute: HOME_SEO.title },
   description: HOME_SEO.description,
 };
 

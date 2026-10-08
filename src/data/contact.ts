@@ -1,4 +1,4 @@
-/** Copy for the contact page, previewed at /dev/contact. */
+/** Copy for the contact page, previewed at /dev/contact-us. */
 export const CONTACT_SEO = {
   title: "Contact Us",
   description:

@@ -19,6 +19,15 @@ const nextConfig: NextConfig = {
         destination: `https://${apexHost}/:path*`,
         permanent: true,
       },
+      ...[
+        ["about", "about-us"],
+        ["contact", "contact-us"],
+        ["terms", "terms-of-service"],
+      ].map(([from, to]) => ({
+        source: `${DEV_PREFIX}/${from}`,
+        destination: `${DEV_PREFIX}/${to}`,
+        permanent: false,
+      })),
     ];
   },
 

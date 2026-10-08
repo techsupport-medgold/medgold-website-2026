@@ -9,7 +9,7 @@ export const SITE = {
   legalName: "Med Gold",
   shortName: "Med Gold",
   url: SITE_URL,
-  title: "Med Gold | Trusted Healthcare - Coming Soon",
+  title: "Hospital Healthcare Operations Management and Maintenance Company Chennai India",
   tagline: "Gold-standard healthcare, built around you.",
   description:
     "Med Gold is launching soon: patient-first healthcare with experienced doctors, modern diagnostics, and compassionate care. Get in touch to learn more.",

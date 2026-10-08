@@ -4,7 +4,7 @@ import { Routes } from "@@/config/routes";
 
 /**
  * Launched routes only. A page is added here when it moves out of
- * src/app/(in-development) and is removed from DEV_ROUTES.
+ * src/app/dev and is removed from DevRoutes.
  */
 const ROUTES: {
   path: string;

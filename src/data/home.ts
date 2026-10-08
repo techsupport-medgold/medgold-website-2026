@@ -2,7 +2,7 @@ import { DevRoutes, LEGAL_NAV } from "@@/config/routes";
 
 /** Copy for the future homepage, previewed at /dev/home. */
 export const HOME_SEO = {
-  title: "Hospital Operations Management & Clinical Maintenance",
+  title: "Hospital Healthcare Operations Management and Maintenance Company Chennai India",
   description:
     "From NABH-compliant clinical audits to sterile housekeeping, nursing aide upskilling and digital records, Med Gold powers hospital operations across Chennai.",
 };
@@ -256,7 +256,7 @@ export const directory = {
       title: "Enterprise Hub",
       links: [
         { label: "About MedGold Operations", href: DevRoutes.ABOUT },
-        { label: "South India Case Studies", href: "#case-study" },
+        { label: "South India Case Studies", href: DevRoutes.CASE_STUDIES },
         { label: "Operations & Growth Careers", href: DevRoutes.CAREERS },
         { label: "Connect with Ops Desk", href: DevRoutes.CONTACT },
       ],
