@@ -1,5 +1,12 @@
 import { Award, BadgeCheck, CircleCheck, HeartPulse, Siren, Syringe, type LucideIcon } from "lucide-react";
+import Card from "@@/components/ui/card";
+import IconBadge from "@@/components/ui/icon-badge";
+import Pill from "@@/components/ui/pill";
+import Reveal from "@@/components/ui/reveal";
+import Section from "@@/components/ui/section";
+import SectionHeader from "@@/components/ui/section-header";
 import { pillars, type PillarIcon } from "@@/data/nursingTraining";
+import { stagger } from "@@/lib/motion";
 import { cn } from "@@/lib/utils";
 
 const PILLAR_ICONS: Record<PillarIcon, LucideIcon> = {
@@ -11,51 +18,52 @@ const PILLAR_ICONS: Record<PillarIcon, LucideIcon> = {
 
 export default function TrainingPillars() {
   return (
-    <section aria-labelledby="pillars-heading" className="bg-surface py-16 sm:py-20">
-      <div className="container">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-wider text-gold-ink">{pillars.eyebrow}</p>
-            <h2 id="pillars-heading" className="mt-3 text-3xl font-bold tracking-tight text-primary-deep sm:text-4xl">
-              {pillars.heading}
-            </h2>
-            <p className="mt-4 text-ink-muted">{pillars.intro}</p>
-          </div>
-          <p className="inline-flex w-fit shrink-0 items-center gap-1.5 rounded bg-surface-raised px-4 py-2 text-xs font-semibold text-primary-deep">
-            <BadgeCheck className="size-4" aria-hidden="true" />
-            {pillars.badge}
-          </p>
-        </div>
+    <Section aria-labelledby="pillars-heading">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <SectionHeader id="pillars-heading" eyebrow={pillars.eyebrow} title={pillars.heading} intro={pillars.intro} />
+        <Pill tone="gold" size="md" className="w-fit shrink-0 py-2 shadow-sm">
+          <BadgeCheck className="size-4" aria-hidden="true" />
+          {pillars.badge}
+        </Pill>
+      </div>
 
-        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {pillars.cards.map((card) => {
-            const Icon = PILLAR_ICONS[card.icon];
-            return (
-              <li
-                key={card.title}
-                className={cn(
-                  "min-w-0 rounded-lg border-t-4 bg-surface p-6 shadow-card",
-                  card.accent === "gold" ? "border-t-gold" : "border-t-primary-deep",
-                )}
-              >
-                <span className="flex size-12 items-center justify-center rounded bg-surface-raised">
-                  <Icon className="size-6 text-primary-deep" aria-hidden="true" />
-                </span>
-                <p className="mt-4 text-sm font-semibold uppercase tracking-wider text-gold-ink">{card.label}</p>
-                <h3 className="text-lg font-bold text-primary-deep">{card.title}</h3>
-                <ul className="mt-3 grid gap-1.5 text-sm text-ink-muted">
+      <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {pillars.cards.map((card, index) => {
+          const gold = card.accent === "gold";
+          return (
+            <Reveal as="li" key={card.title} delay={stagger(index)}>
+              <Card interactive className="group h-full overflow-hidden">
+                <span
+                  className={cn(
+                    "absolute inset-x-0 top-0 h-1 origin-left transition-transform duration-500 ease-out-expo group-hover:scale-x-100 sm:scale-x-50",
+                    gold ? "bg-gradient-to-r from-gold to-gold/40" : "bg-gradient-to-r from-primary-deep to-primary",
+                  )}
+                  aria-hidden="true"
+                />
+                <div className="flex items-start justify-between gap-3">
+                  <IconBadge icon={PILLAR_ICONS[card.icon]} tone={gold ? "gold" : "teal"} />
+                  <span
+                    className="font-display text-4xl font-extrabold leading-none text-primary/10 transition-colors duration-300 group-hover:text-primary/20"
+                    aria-hidden="true"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <p className="mt-5 text-xs font-bold uppercase tracking-[0.14em] text-gold-ink">{card.label}</p>
+                <h3 className="mt-1 text-xl font-bold text-primary-deep">{card.title}</h3>
+                <ul className="mt-4 grid gap-2.5 border-t border-border-muted pt-4 text-sm text-ink-muted">
                   {card.items.map((item) => (
-                    <li key={item} className="flex items-start gap-1.5">
-                      <CircleCheck className="mt-0.5 size-4 shrink-0 text-gold-ink" aria-hidden="true" />
+                    <li key={item} className="flex items-start gap-2">
+                      <CircleCheck className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
                       {item}
                     </li>
                   ))}
                 </ul>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
+              </Card>
+            </Reveal>
+          );
+        })}
+      </ul>
+    </Section>
   );
 }

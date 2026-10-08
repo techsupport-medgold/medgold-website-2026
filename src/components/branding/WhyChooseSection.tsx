@@ -16,7 +16,13 @@ import {
   TrendingUp,
   type LucideIcon,
 } from "lucide-react";
+import Card from "@@/components/ui/card";
+import IconBadge from "@@/components/ui/icon-badge";
+import Reveal from "@@/components/ui/reveal";
+import Section from "@@/components/ui/section";
+import SectionHeader from "@@/components/ui/section-header";
 import { segments, whyChoose, type SegmentIcon, type WhyIcon } from "@@/data/branding";
+import { stagger } from "@@/lib/motion";
 import { cn } from "@@/lib/utils";
 
 const WHY_ICONS: Record<WhyIcon, LucideIcon> = {
@@ -39,68 +45,64 @@ const SEGMENT_ICONS: Record<SegmentIcon, LucideIcon> = {
   startup: Rocket,
 };
 
-const eyebrowClass = "text-[11px] font-bold uppercase tracking-wider text-gold-ink";
-const headingClass = "mt-2 text-2xl font-bold tracking-tight text-primary-deep sm:text-[28px] sm:leading-9";
-
 export default function WhyChooseSection() {
   return (
-    <section aria-label="Why MedGold and who we serve" className="brand-wash py-16 sm:py-20">
-      <div className="container grid items-start gap-8 lg:grid-cols-2">
-        <div className="rounded-lg border border-border-muted bg-surface p-6 shadow-sm sm:p-8">
-          <p className={eyebrowClass}>{whyChoose.eyebrow}</p>
-          <h2 id="why-medgold-heading" className={headingClass}>
-            {whyChoose.heading}
-          </h2>
-          <p className="mt-2 text-sm text-ink-muted">{whyChoose.intro}</p>
-          <ul className="mt-6 grid gap-4">
-            {whyChoose.items.map((item) => {
-              const Icon = WHY_ICONS[item.icon];
-              return (
-                <li key={item.title} className="flex gap-3">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded bg-surface-raised">
-                    <Icon className="size-5 text-primary-deep" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-bold text-primary-deep">{item.title}</h3>
-                    <p className="text-xs text-ink-muted">{item.text}</p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+    <Section tone="raised" aria-label="Why MedGold and who we serve" containerClassName="grid items-start gap-12 lg:grid-cols-12">
+      <div className="lg:col-span-6">
+        <SectionHeader id="why-medgold-heading" eyebrow={whyChoose.eyebrow} title={whyChoose.heading} intro={whyChoose.intro} />
+        <ul className="mt-8 grid gap-4">
+          {whyChoose.items.map((item, index) => (
+            <Reveal as="li" key={item.title} delay={stagger(index)}>
+              <Card padding="sm" interactive className="group flex-row gap-4">
+                <IconBadge icon={WHY_ICONS[item.icon]} tone={index % 2 === 0 ? "teal" : "gold"} />
+                <div className="min-w-0">
+                  <h3 className="text-lg font-bold text-primary-deep">{item.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-ink-muted">{item.text}</p>
+                </div>
+              </Card>
+            </Reveal>
+          ))}
+        </ul>
+      </div>
 
-        <div className="rounded-lg border border-border-muted bg-surface-raised p-6 shadow-sm sm:p-8">
-          <p className={eyebrowClass}>{segments.eyebrow}</p>
-          <h2 id="segments-heading" className={headingClass}>
-            {segments.heading}
-          </h2>
-          <p className="mt-2 text-sm text-ink-muted">{segments.intro}</p>
-          <ul className="mt-6 grid gap-2 sm:grid-cols-2">
+      <Reveal className="lg:sticky lg:top-28 lg:col-span-6">
+        <Card variant="elevated" padding="lg" className="overflow-hidden">
+          <span
+            className="pointer-events-none absolute -right-20 -top-20 size-56 rounded-full bg-gold/10 blur-3xl"
+            aria-hidden="true"
+          />
+          <SectionHeader
+            id="segments-heading"
+            eyebrow={segments.eyebrow}
+            title={segments.heading}
+            intro={segments.intro}
+            className="relative"
+          />
+          <ul className="relative mt-8 grid gap-3 sm:grid-cols-2">
             {segments.items.map((item, index) => {
               const Icon = SEGMENT_ICONS[item.icon];
               return (
                 <li
                   key={item.label}
                   className={cn(
-                    "flex min-h-[38px] items-center gap-2 rounded border border-border-muted bg-surface px-2.5 py-2 text-xs font-semibold tracking-wide text-ink",
+                    "group flex min-h-11 items-center gap-3 rounded-xl border border-border-muted bg-surface px-3 py-2.5 text-sm font-semibold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-primary/5 hover:shadow-card motion-reduce:hover:translate-y-0",
                     index === segments.items.length - 1 && "sm:col-span-2",
                   )}
                 >
-                  <Icon className="size-4 shrink-0 text-primary-deep" aria-hidden="true" />
+                  <IconBadge icon={Icon} tone="soft" size="sm" />
                   {item.label}
                 </li>
               );
             })}
           </ul>
-          <p className="mt-6 flex items-center gap-3 rounded border border-border-muted bg-surface p-3 text-xs text-ink-muted">
-            <ThumbsUp className="size-5 shrink-0 text-primary-deep" aria-hidden="true" />
+          <p className="relative mt-8 flex items-start gap-3 rounded-xl border-l-4 border-gold bg-surface-raised p-4 text-sm text-ink-muted">
+            <ThumbsUp className="mt-0.5 size-5 shrink-0 text-gold-ink" aria-hidden="true" />
             <span>
-              <strong className="font-bold">{segments.geo.title}</strong> {segments.geo.text}
+              <strong className="font-bold text-primary-deep">{segments.geo.title}</strong> {segments.geo.text}
             </span>
           </p>
-        </div>
-      </div>
-    </section>
+        </Card>
+      </Reveal>
+    </Section>
   );
 }

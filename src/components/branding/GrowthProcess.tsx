@@ -11,7 +11,14 @@ import {
   UserCheck,
   type LucideIcon,
 } from "lucide-react";
+import Card from "@@/components/ui/card";
+import IconBadge from "@@/components/ui/icon-badge";
+import Pill from "@@/components/ui/pill";
+import Reveal from "@@/components/ui/reveal";
+import Section from "@@/components/ui/section";
+import SectionHeader from "@@/components/ui/section-header";
 import { process, type OutcomeIcon, type ProcessIcon } from "@@/data/branding";
+import { stagger } from "@@/lib/motion";
 import { cn } from "@@/lib/utils";
 
 const STEP_ICONS: Record<ProcessIcon, LucideIcon> = {
@@ -32,67 +39,62 @@ const OUTCOME_ICONS: Record<OutcomeIcon, LucideIcon> = {
 
 export default function GrowthProcess() {
   return (
-    <section aria-labelledby="growth-process-heading" className="bg-surface-raised py-16 sm:py-20">
-      <div className="container">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-wider text-gold-ink">{process.eyebrow}</p>
-          <h2
-            id="growth-process-heading"
-            className="mt-2 text-3xl font-bold tracking-tight text-primary-deep sm:text-4xl"
-          >
-            {process.heading}
-          </h2>
-          <p className="mt-3 text-ink-muted">{process.intro}</p>
-        </div>
+    <Section tone="dark" aria-labelledby="growth-process-heading">
+      <SectionHeader
+        id="growth-process-heading"
+        tone="dark"
+        eyebrow={process.eyebrow}
+        title={process.heading}
+        intro={process.intro}
+      />
 
-        <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {process.steps.map((step, index) => {
-            const Icon = STEP_ICONS[step.icon];
-            const OutcomeIconComponent = OUTCOME_ICONS[step.outcomeIcon];
-            const gold = step.tone === "gold";
-            const number = String(index + 1).padStart(2, "0");
-            return (
-              <li key={step.title} className="flex flex-col rounded-lg border border-border-muted bg-surface p-6 shadow-sm">
-                <div className="flex items-center justify-between">
+      <Reveal className="mt-12 hidden lg:block" aria-hidden="true">
+        <div className="h-1 overflow-hidden rounded-full bg-white/10">
+          <div className="reveal-bar h-full w-full rounded-full bg-gradient-to-r from-primary via-teal-300 to-gold" />
+        </div>
+      </Reveal>
+
+      <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:mt-8 lg:grid-cols-5">
+        {process.steps.map((step, index) => {
+          const OutcomeIconComponent = OUTCOME_ICONS[step.outcomeIcon];
+          const gold = step.tone === "gold";
+          return (
+            <Reveal as="li" key={step.title} delay={stagger(index, 100)}>
+              <Card variant="dark" interactive className="group h-full hover:border-gold/40 hover:bg-white/[0.09]">
+                <div className="flex items-start justify-between gap-2">
+                  <IconBadge
+                    icon={STEP_ICONS[step.icon]}
+                    tone="dark"
+                    className={cn(gold && "bg-gold text-ink")}
+                  />
                   <span
-                    className={cn(
-                      "text-4xl font-bold tracking-tight",
-                      gold ? "text-gold-ink/40" : "text-primary-deep/30",
-                    )}
+                    className="font-display text-4xl font-extrabold leading-none tracking-tight text-white/15 transition-colors duration-300 group-hover:text-gold/40"
                     aria-hidden="true"
                   >
-                    {number}
-                  </span>
-                  <span
-                    className={cn(
-                      "rounded-sm bg-surface-raised px-2 py-0.5 text-[11px] font-bold tracking-wide",
-                      gold ? "text-gold-ink" : "text-primary-deep",
-                    )}
-                  >
-                    STEP {index + 1}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <span className="mt-1 flex size-10 items-center justify-center rounded-xl bg-surface-raised">
-                  <Icon className={cn("size-4", gold ? "text-gold-ink" : "text-primary-deep")} aria-hidden="true" />
-                </span>
-                <h3 className="mt-2 text-lg font-bold leading-snug text-primary-deep">{step.title}</h3>
-                <p className="mt-1 text-xs text-ink-muted">{step.text}</p>
+                <Pill tone="dark" className="mt-5 w-fit text-[11px] font-bold tracking-wider">
+                  STEP {index + 1}
+                </Pill>
+                <h3 className="mt-3 text-lg font-bold leading-snug text-white">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/75">{step.text}</p>
                 <div className="mt-auto pt-6">
                   <p
                     className={cn(
-                      "flex items-center gap-1 border-t border-border-muted pt-2.5 text-[11px] font-semibold tracking-wide",
-                      gold ? "text-gold-ink" : "text-primary-deep",
+                      "flex items-center gap-1.5 border-t border-white/15 pt-3 text-xs font-semibold tracking-wide",
+                      gold ? "text-gold" : "text-teal-200",
                     )}
                   >
-                    <OutcomeIconComponent className="size-3.5" aria-hidden="true" />
+                    <OutcomeIconComponent className="size-3.5 shrink-0" aria-hidden="true" />
                     {step.outcome}
                   </p>
                 </div>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-    </section>
+              </Card>
+            </Reveal>
+          );
+        })}
+      </ol>
+    </Section>
   );
 }

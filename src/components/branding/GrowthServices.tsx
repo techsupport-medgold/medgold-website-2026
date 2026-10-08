@@ -1,4 +1,5 @@
 import {
+  ArrowRight,
   BriefcaseBusiness,
   Building2,
   FileText,
@@ -13,7 +14,13 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
+import Card from "@@/components/ui/card";
+import IconBadge from "@@/components/ui/icon-badge";
+import Reveal from "@@/components/ui/reveal";
+import Section from "@@/components/ui/section";
+import SectionHeader from "@@/components/ui/section-header";
 import { services, type GrowthServiceIcon } from "@@/data/branding";
+import { stagger } from "@@/lib/motion";
 import { cn } from "@@/lib/utils";
 
 const SERVICE_ICONS: Record<GrowthServiceIcon, LucideIcon> = {
@@ -33,38 +40,55 @@ const SERVICE_ICONS: Record<GrowthServiceIcon, LucideIcon> = {
 
 export default function GrowthServices() {
   return (
-    <section aria-labelledby="growth-services-heading" className="bg-surface-raised py-16 sm:py-20">
-      <div className="container">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-wider text-gold-ink">{services.eyebrow}</p>
-          <h2
-            id="growth-services-heading"
-            className="mt-2 text-3xl font-bold tracking-tight text-primary-deep sm:text-4xl"
-          >
-            {services.heading}
-          </h2>
-          <p className="mt-3 text-ink-muted">{services.intro}</p>
-        </div>
+    <Section aria-labelledby="growth-services-heading">
+      <SectionHeader
+        id="growth-services-heading"
+        eyebrow={services.eyebrow}
+        title={services.heading}
+        intro={services.intro}
+      />
 
-        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.items.map((item) => {
-            const Icon = SERVICE_ICONS[item.icon];
-            const gold = item.tone === "gold";
-            return (
-              <li key={item.title} className="flex flex-col rounded-lg bg-surface p-6 shadow-card">
-                <span className="flex size-10 items-center justify-center rounded bg-surface-raised">
-                  <Icon className={cn("size-5", gold ? "text-gold-ink" : "text-primary-deep")} aria-hidden="true" />
-                </span>
-                <h3 className="mt-4 text-lg font-bold leading-snug text-primary-deep">{item.title}</h3>
-                <p className="mt-2 text-sm text-ink-muted">{item.text}</p>
-                <p className={cn("mt-auto pt-4 text-xs font-semibold", gold ? "text-gold-ink" : "text-primary-deep")}>
-                  {item.outcome} <span aria-hidden="true">→</span>
-                </p>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
+      <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {services.items.map((item, index) => {
+          const Icon = SERVICE_ICONS[item.icon];
+          const gold = item.tone === "gold";
+          return (
+            <Reveal as="li" key={item.title} delay={stagger(index % 3)}>
+              <Card interactive className="group h-full overflow-hidden">
+                <span
+                  className={cn(
+                    "absolute inset-x-0 top-0 h-1 origin-left scale-x-0 transition-transform duration-500 ease-out-expo group-hover:scale-x-100 motion-reduce:transition-none",
+                    gold ? "bg-gold" : "bg-gradient-to-r from-primary to-primary-deep",
+                  )}
+                  aria-hidden="true"
+                />
+                <div className="flex items-center justify-between">
+                  <IconBadge icon={Icon} tone={gold ? "gold" : "soft"} />
+                  <span className="font-mono text-xs font-bold text-ink-subtle" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <h3 className="mt-5 text-lg font-bold leading-snug text-primary-deep">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-muted">{item.text}</p>
+                <div className="mt-auto pt-5">
+                  <p
+                    className={cn(
+                      "flex items-center gap-1.5 border-t border-border-muted pt-4 text-sm font-semibold",
+                      gold ? "text-gold-ink" : "text-primary",
+                    )}
+                  >
+                    {item.outcome}
+                    <ArrowRight
+                      className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none"
+                      aria-hidden="true"
+                    />
+                  </p>
+                </div>
+              </Card>
+            </Reveal>
+          );
+        })}
+      </ul>
+    </Section>
   );
 }

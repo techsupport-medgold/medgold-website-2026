@@ -1,7 +1,13 @@
-import Image from "next/image";
-import { ShieldCheck, Tablet, TabletSmartphone, TrendingUp, type LucideIcon } from "lucide-react";
+import { CircleCheck, ShieldCheck, Tablet, TabletSmartphone, TrendingUp, type LucideIcon } from "lucide-react";
+import Card from "@@/components/ui/card";
+import IconBadge from "@@/components/ui/icon-badge";
+import Pill from "@@/components/ui/pill";
+import ResponsiveImage from "@@/components/ui/responsive-image";
+import Reveal from "@@/components/ui/reveal";
+import Section from "@@/components/ui/section";
+import SectionHeader from "@@/components/ui/section-header";
 import { touchpoints, type TouchpointIcon } from "@@/data/patientFeedback";
-import { cn } from "@@/lib/utils";
+import { stagger } from "@@/lib/motion";
 
 const TOUCHPOINT_ICONS: Record<TouchpointIcon, LucideIcon> = {
   tablet: Tablet,
@@ -9,64 +15,60 @@ const TOUCHPOINT_ICONS: Record<TouchpointIcon, LucideIcon> = {
   telemetry: TrendingUp,
 };
 
-const BADGE_TONES = ["bg-primary-deep", "bg-gold-ink", "bg-primary"] as const;
-
 export default function CaptureTouchpoints() {
   return (
-    <section aria-labelledby="touchpoints-heading" className="bg-surface py-16 sm:py-20">
-      <div className="container">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-wider text-gold-ink">{touchpoints.eyebrow}</p>
-            <h2
-              id="touchpoints-heading"
-              className="mt-2 text-3xl font-bold tracking-tight text-primary-deep sm:text-4xl"
-            >
-              {touchpoints.heading}
-            </h2>
-            <p className="mt-3 text-ink-muted">{touchpoints.intro}</p>
-          </div>
-          <p className="flex items-center gap-1.5 text-xs font-semibold text-primary-deep">
-            <ShieldCheck className="size-4 shrink-0" aria-hidden="true" />
-            {touchpoints.standard}
-          </p>
-        </div>
-
-        <ul className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {touchpoints.items.map((item, index) => {
-            const Icon = TOUCHPOINT_ICONS[item.icon];
-            return (
-              <li key={item.title} className="flex flex-col overflow-hidden rounded-lg bg-surface shadow-card">
-                <div className="relative aspect-[16/10] bg-surface-raised">
-                  <Image
-                    src={item.image.src}
-                    alt={item.image.alt}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                  <span
-                    className={cn(
-                      "absolute right-2 top-2 rounded px-2 py-0.5 text-[11px] font-semibold text-white",
-                      BADGE_TONES[index % BADGE_TONES.length],
-                    )}
-                  >
-                    {item.badge}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="flex items-start gap-2 text-lg font-bold leading-snug text-ink">
-                    <Icon className="mt-1 size-4 shrink-0 text-primary-deep" aria-hidden="true" />
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-ink-muted">{item.text}</p>
-                  <p className="mt-auto pt-6 text-xs font-semibold text-primary-deep">{item.footer}</p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+    <Section aria-labelledby="touchpoints-heading">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <SectionHeader
+          id="touchpoints-heading"
+          eyebrow={touchpoints.eyebrow}
+          title={touchpoints.heading}
+          intro={touchpoints.intro}
+          className="max-w-2xl"
+        />
+        <Pill tone="teal" size="md" className="w-fit shrink-0 rounded-2xl py-1.5 sm:rounded-pill">
+          <ShieldCheck className="size-4 shrink-0" aria-hidden="true" />
+          {touchpoints.standard}
+        </Pill>
       </div>
-    </section>
+
+      <ul className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {touchpoints.items.map((item, index) => (
+          <Reveal as="li" key={item.title} delay={stagger(index)}>
+            <Card padding="none" interactive className="group h-full overflow-hidden">
+              <div className="relative">
+                <ResponsiveImage
+                  src={item.image.src}
+                  alt={item.image.alt}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  overlay="bottom"
+                  zoom
+                  className="aspect-[16/10]"
+                />
+                <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-pill bg-slate-950/70 px-3 py-1 text-xs font-semibold text-gold backdrop-blur">
+                  <span className="status-dot" aria-hidden="true" />
+                  {item.badge}
+                </span>
+                <IconBadge
+                  icon={TOUCHPOINT_ICONS[item.icon]}
+                  tone="teal"
+                  className="absolute -bottom-6 left-6 shadow-card-hover ring-4 ring-surface"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-6 pt-10">
+                <h3 className="text-xl font-bold leading-snug text-primary-deep">{item.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-muted">{item.text}</p>
+                <div className="mt-auto pt-6">
+                  <p className="flex items-center gap-2 border-t border-border-muted pt-4 text-xs font-bold text-primary-deep">
+                    <CircleCheck className="size-4 shrink-0 text-gold-ink" aria-hidden="true" />
+                    {item.footer}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </Reveal>
+        ))}
+      </ul>
+    </Section>
   );
 }

@@ -1,28 +1,28 @@
 import { Award } from "lucide-react";
+import IconBadge from "@@/components/ui/icon-badge";
+import Reveal from "@@/components/ui/reveal";
 import { banner } from "@@/data/branding";
+import { stagger } from "@@/lib/motion";
 
 export default function EcosystemBanner() {
   return (
-    <section
-      aria-label="Our growth vision"
-      className="border-y border-gold-ink/30 bg-gradient-to-r from-primary-deep via-primary-deep to-gold-ink shadow-md"
-    >
-      <div className="container flex flex-col gap-4 py-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-center gap-3">
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10">
-            <Award className="size-5 text-gold" aria-hidden="true" />
-          </span>
+    <section aria-label="Our growth vision" className="brand-dark border-y border-gold/20 text-white">
+      <div className="container flex flex-col gap-6 py-10 lg:flex-row lg:items-center lg:justify-between">
+        <Reveal className="group flex items-center gap-4">
+          <IconBadge icon={Award} tone="dark" className="ring-1 ring-gold/30" />
           <div>
-            <p className="text-base font-extrabold tracking-wide text-gold sm:text-lg">{banner.heading}</p>
-            <p className="text-xs text-white/90">{banner.text}</p>
+            <p className="font-display text-lg font-extrabold tracking-wide text-gold sm:text-xl">{banner.heading}</p>
+            <p className="mt-1 text-sm text-white/80">{banner.text}</p>
           </div>
-        </div>
-        <ul className="flex flex-wrap gap-x-4 gap-y-1.5">
-          {banner.tags.map((tag) => (
-            <li key={tag} className="flex items-center gap-1 text-[11px] font-semibold tracking-wide text-white/95">
-              <span className="size-1.5 rounded-full bg-gold" aria-hidden="true" />
-              {tag}
-            </li>
+        </Reveal>
+        <ul className="flex flex-wrap gap-2">
+          {banner.tags.map((tag, index) => (
+            <Reveal as="li" key={tag} delay={stagger(index)}>
+              <span className="inline-flex items-center gap-2 rounded-pill bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white ring-1 ring-inset ring-white/20 transition-colors duration-300 hover:bg-white/15 hover:ring-gold/50">
+                <span className="size-1.5 rounded-full bg-gold" aria-hidden="true" />
+                {tag}
+              </span>
+            </Reveal>
           ))}
         </ul>
       </div>
