@@ -13,6 +13,7 @@ export const DevRoutes = {
   HOME: `${DEV_PREFIX}/home`,
   ABOUT: `${DEV_PREFIX}/about`,
   SERVICES: `${DEV_PREFIX}/services`,
+  PHARMACY_AUDIT: `${DEV_PREFIX}/services/pharmacy-audit`,
   CAREERS: `${DEV_PREFIX}/careers`,
   CONTACT: `${DEV_PREFIX}/contact`,
   PRIVACY: `${DEV_PREFIX}/privacy-policy`,

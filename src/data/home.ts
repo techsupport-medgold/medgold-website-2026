@@ -51,6 +51,7 @@ export type ServicePillar = {
   code: string;
   icon: PillarIcon;
   image?: { src: string; alt: string };
+  href?: string;
 };
 
 export const servicePillars: readonly ServicePillar[] = [
@@ -61,6 +62,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["Schedule H/X Audits", "Cold-Chain 2°C-8°C"],
     code: "SOP-PHA",
     icon: "pharmacy",
+    href: DevRoutes.PHARMACY_AUDIT,
     image: {
       src: "/images/home/pharmacy-audit.jpg",
       alt: "Pharmacist checking medicine stock and cold-chain records in a hospital pharmacy",
@@ -235,7 +237,7 @@ export const directory = {
     {
       title: "Clinical Audits",
       links: [
-        { label: "Pharmacy Audit Services", href: DevRoutes.SERVICES },
+        { label: "Pharmacy Audit Services", href: DevRoutes.PHARMACY_AUDIT },
         { label: "Hospital & Clinic Audits", href: DevRoutes.SERVICES },
         { label: "Medical Record Maintenance", href: DevRoutes.SERVICES },
         { label: "Patient Feedback Systems", href: DevRoutes.SERVICES },

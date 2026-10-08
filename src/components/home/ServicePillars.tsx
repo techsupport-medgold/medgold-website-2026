@@ -81,7 +81,7 @@ export default function ServicePillars() {
                   </ul>
                   <div className="mt-auto flex items-center justify-between border-t border-primary/10 pt-2">
                     <Link
-                      href={DevRoutes.SERVICES}
+                      href={pillar.href ?? DevRoutes.SERVICES}
                       className="group inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                     >
                       {servicesIntro.linkLabel}

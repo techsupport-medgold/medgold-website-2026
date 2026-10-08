@@ -36,6 +36,7 @@ export const SITE = {
     phone: "+91 91509 37804",
     phoneHref: "+919150937804",
     whatsapp: "919150937804",
+    email: "consulting@medgoldhealthcare.com",
   },
   address: {
     street: "No.5, Santhosh Nagar Annex",
