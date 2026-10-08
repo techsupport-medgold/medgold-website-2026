@@ -9,7 +9,7 @@ export type EnquiryValues = {
 export type EnquiryField = keyof EnquiryValues;
 export type EnquiryErrors = Partial<Record<EnquiryField, string>>;
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /** Returns the 10-digit Indian mobile number, or null. Accepts spaces, dashes, +91, 91, or a leading 0. */
 export function normalizeIndianMobile(input: string): string | null {

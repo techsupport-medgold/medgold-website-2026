@@ -22,8 +22,4 @@ export const servicePlaceholders = {
     description:
       "Patient feedback collection and system integration services from Med Gold. This page is in development.",
   },
-  nursingTraining: {
-    title: "Nursing Training",
-    description: "Nursing assistant training and on-the-job programmes from Med Gold. This page is in development.",
-  },
 } satisfies Record<string, ServicePlaceholder>;

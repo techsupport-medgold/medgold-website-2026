@@ -1,5 +1,5 @@
+import ComparisonTable from "@@/components/services/ComparisonTable";
 import { comparison } from "@@/data/staffing";
-import { cn } from "@@/lib/utils";
 
 export default function ComparisonSection() {
   return (
@@ -16,41 +16,14 @@ export default function ComparisonSection() {
           <p className="mt-4 text-ink-muted">{comparison.intro}</p>
         </div>
 
-        <div
-          className="mt-10 overflow-x-auto rounded-lg bg-surface shadow-card"
-          role="region"
-          aria-labelledby="staffing-comparison-heading"
-          tabIndex={0}
-        >
-          <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-            <caption className="sr-only">{comparison.heading}</caption>
-            <thead className="bg-primary-deep text-white">
-              <tr>
-                <th scope="col" className="w-1/6 p-4 text-xs font-bold tracking-wide">
-                  {comparison.columns[0]}
-                </th>
-                <th scope="col" className="w-1/3 p-4 text-xs font-bold tracking-wide text-white/80">
-                  {comparison.columns[1]}
-                </th>
-                <th scope="col" className="bg-primary p-4 text-xs font-bold tracking-wide">
-                  {comparison.columns[2]}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {comparison.rows.map((row, index) => (
-                <tr key={row.dimension} className={index % 2 === 1 ? "bg-surface-muted" : "bg-surface"}>
-                  <th scope="row" className="p-4 font-semibold text-primary-deep">
-                    {row.dimension}
-                  </th>
-                  <td className="p-4 text-ink-muted">{row.conventional}</td>
-                  <td className={cn("p-4 text-primary-deep", index % 2 === 1 ? "bg-primary/10" : "bg-primary/5")}>
-                    {row.medgold}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-10">
+          <ComparisonTable
+            caption={comparison.heading}
+            labelledBy="staffing-comparison-heading"
+            columns={comparison.columns}
+            rows={comparison.rows.map((row) => [row.dimension, row.conventional, row.medgold] as const)}
+            highlightColumn={2}
+          />
         </div>
       </div>
     </section>

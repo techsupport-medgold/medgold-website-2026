@@ -24,7 +24,7 @@ const PAGES = [
   },
   { href: DevRoutes.BRANDING, title: "Hospital & Clinic Branding & Marketing", description: "Placeholder service page." },
   { href: DevRoutes.PATIENT_FEEDBACK, title: "Patient Feedback Systems", description: "Placeholder service page." },
-  { href: DevRoutes.NURSING_TRAINING, title: "Nursing Training", description: "Placeholder service page." },
+  { href: DevRoutes.NURSING_TRAINING, title: "Nursing Training", description: "Training pillars, curriculum, cohort planner and hospital requisition form." },
   { href: DevRoutes.CAREERS, title: "Careers", description: "Jobs at Med Gold." },
   { href: DevRoutes.CONTACT, title: "Contact Us", description: "Enquiry form and contact details." },
   { href: DevRoutes.PRIVACY, title: "Privacy Policy", description: "Placeholder privacy policy." },
