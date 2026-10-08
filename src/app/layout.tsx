@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "@@/styles/globals.scss";
 import Analytics, { AnalyticsNoScript } from "@@/components/common/Analytics";
 import JsonLd from "@@/components/common/JsonLd";
@@ -10,6 +10,13 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["600", "700", "800"],
+  variable: "--font-display",
 });
 
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
@@ -78,8 +85,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={SITE.language} className={inter.variable}>
-      <body>
+    <html lang={SITE.language} className={`${inter.variable} ${jakarta.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <AnalyticsNoScript />
         {children}
         <JsonLd id="organization-schema" data={organizationSchema} />

@@ -1,10 +1,13 @@
 /** Copy for the services page, previewed at /dev/services. */
 export const SERVICES_SEO = {
   title: "Services",
-  description: "Healthcare services from Med Gold. This page is in development.",
+  description:
+    "Hospital audits, pharmacy stock audits, sanitization, staffing, patient feedback systems and nursing training from Med Gold in Chennai.",
 };
 
 export const servicesHero = {
+  eyebrow: "Med Gold services",
   heading: "Our services",
-  intro: "This page is in development. Details of our services will be added before launch.",
+  intro:
+    "Audits, operations and growth services for hospitals and clinics across Chennai and Tamil Nadu. Choose a service to see how we work.",
 };

@@ -9,7 +9,7 @@ export const SITE = {
   legalName: "Med Gold",
   shortName: "Med Gold",
   url: SITE_URL,
-  title: "Med Gold | Trusted Healthcare - Coming Soon",
+  title: "Hospital Healthcare Operations Management and Maintenance Company Chennai India",
   tagline: "Gold-standard healthcare, built around you.",
   description:
     "Med Gold is launching soon: patient-first healthcare with experienced doctors, modern diagnostics, and compassionate care. Get in touch to learn more.",
@@ -35,8 +35,21 @@ export const SITE = {
     person: "Mr. Sundramurthi",
     phone: "+91 91509 37804",
     phoneHref: "+919150937804",
+    phoneAlt: "+91 82480 60804",
+    phoneAltHref: "+918248060804",
     whatsapp: "919150937804",
+    email: "consulting@medgoldhealthcare.com",
   },
+  address: {
+    street: "No.5, Santhosh Nagar Annex",
+    locality: "Kolathur",
+    city: "Chennai",
+    region: "Tamil Nadu",
+    postalCode: "600099",
+    full: "No.5, Santhosh Nagar Annex, Kolathur, Chennai, Tamil Nadu 600099",
+  },
+  geo: { lat: 13.1309443, lng: 80.199499 },
+  mapUrl: "https://maps.app.goo.gl/pkUEuPoQ5N37jBJZ9",
   social: [] as string[],
 } as const;
 
@@ -47,6 +60,13 @@ export const whatsappUrl = (message?: string) =>
   `https://wa.me/${SITE.contact.whatsapp}${
     message ? `?text=${encodeURIComponent(message)}` : ""
   }`;
+
+/** Keyless Google Maps embed pinned to SITE.geo. */
+export const mapEmbedUrl = () =>
+  `https://www.google.com/maps?q=${SITE.geo.lat},${SITE.geo.lng}&z=17&output=embed`;
+
+export const directionsUrl = () =>
+  `https://www.google.com/maps/dir/?api=1&destination=${SITE.geo.lat},${SITE.geo.lng}`;
 
 export const BRAND_COLORS = {
   primary: "#0B6376",

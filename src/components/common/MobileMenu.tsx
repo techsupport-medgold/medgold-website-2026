@@ -37,6 +37,7 @@ export default function MobileMenu() {
         className="absolute inset-x-0 top-full border-b border-border-muted bg-surface shadow-card"
       >
         <NavLinks
+          variant="mobile"
           className="container grid gap-1 py-4"
           linkClassName="w-full text-base"
           onNavigate={() => setOpen(false)}

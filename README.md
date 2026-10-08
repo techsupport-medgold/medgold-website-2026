@@ -40,7 +40,7 @@ npm run dev                  # http://localhost:3000
 ```text
 src/
   app/          routes, metadata, robots.ts, sitemap.ts, manifest.ts, OG image + icons
-  app/dev/      pre-launch pages (/dev, /dev/home, /dev/about), all noindex
+  app/dev/      pre-launch pages (/dev, /dev/home, /dev/about-us), all noindex
   components/   ui/ (shadcn), common/ (Logo, Footer, JsonLd, Analytics),
                 coming-soon/ (countdown page), home/ (future homepage sections)
   config/       site.ts - brand, domain, contact, launch date; routes.ts - Routes + DevRoutes
@@ -59,7 +59,7 @@ To change it, edit `site.ts` or set `NEXT_PUBLIC_LAUNCH_DATE` (ISO with IST offs
 ## Pages in development (`/dev/...`)
 
 Only `/` is indexed. Every page built before launch lives in `src/app/dev/<page>/` and is served
-at `/dev/<page>`, for example `/dev/home` (future homepage) and `/dev/about`. `/dev` lists them.
+at `/dev/<page>`, for example `/dev/home` (future homepage) and `/dev/about-us`. `/dev` lists them.
 All `/dev` URLs are `noindex, nofollow` (meta tag + `X-Robots-Tag` header) and out of the sitemap.
 
 - New page: create `src/app/dev/<page>/page.tsx`, add it to `DevRoutes` in

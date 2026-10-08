@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { CheckCircle2, MessageCircle, Phone, Send } from "lucide-react";
+import { CheckCircle2, ChevronDown, MessageCircle, Phone, Send } from "lucide-react";
 import { Button } from "@@/components/ui/button";
 import { SITE, whatsappUrl } from "@@/config/site";
 import { enquiryTypes } from "@@/data/contact";
@@ -195,16 +195,30 @@ export default function EnquiryForm() {
 
         <div className="sm:col-span-2">
           {label("type", true)}
-          <select aria-required="true" {...fieldProps("type")}>
-            <option value="" disabled>
-              Choose an option
-            </option>
-            {enquiryTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
+          <div className="relative">
+            <select
+              aria-required="true"
+              {...fieldProps("type")}
+              className={cn(
+                controlClass,
+                "cursor-pointer appearance-none pr-10",
+                !values.type && "text-ink-subtle",
+              )}
+            >
+              <option value="" disabled>
+                Choose an option
               </option>
-            ))}
-          </select>
+              {enquiryTypes.map((type) => (
+                <option key={type} value={type} className="text-ink">
+                  {type}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none absolute right-3 top-1/2 size-5 -translate-y-1/2 text-ink-muted"
+            />
+          </div>
           {fieldError("type")}
         </div>
 

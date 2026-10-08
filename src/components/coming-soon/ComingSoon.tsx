@@ -9,7 +9,7 @@ export default function ComingSoon() {
   return (
     <div className="brand-wash flex min-h-screen flex-col">
       <main className="container flex flex-1 flex-col items-center justify-center py-12 text-center sm:py-16">
-        <Logo height={88} priority />
+        <Logo height={88} preload />
 
         <p className="mt-10 inline-flex items-center gap-3 rounded-full border border-primary/20 bg-surface px-4 py-1.5 text-sm font-medium text-primary shadow-card">
           <span className="status-dot" aria-hidden="true" />

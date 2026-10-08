@@ -12,10 +12,25 @@ const PAGES = [
   { href: DevRoutes.HOME, title: "Home", description: "Future homepage." },
   { href: DevRoutes.ABOUT, title: "About", description: "About Med Gold." },
   { href: DevRoutes.SERVICES, title: "Services", description: "Services we offer." },
+  {
+    href: DevRoutes.STAFFING,
+    title: "Healthcare Facility Staffing",
+    description: "Hospital manpower supply, staffing and practical training service.",
+  },
+  {
+    href: DevRoutes.PHARMACY_AUDIT,
+    title: "Pharmacy Stock Audit & Growth",
+    description: "Pharmacy stock audit and profit consulting service.",
+  },
+  { href: DevRoutes.BRANDING, title: "Hospital & Clinic Branding & Marketing", description: "12 growth services, why MedGold, 5-step growth process and consultation CTA." },
+  { href: DevRoutes.PATIENT_FEEDBACK, title: "Patient Feedback Systems", description: "Capture touchpoints, 5-stage workflow, deployment estimator and audit demo CTA." },
+  { href: DevRoutes.NURSING_TRAINING, title: "Nursing Training", description: "Training pillars, curriculum, cohort planner and hospital assessment CTA." },
+  { href: DevRoutes.CASE_STUDIES, title: "Case Studies", description: "Placeholder case studies page." },
   { href: DevRoutes.CAREERS, title: "Careers", description: "Jobs at Med Gold." },
   { href: DevRoutes.CONTACT, title: "Contact Us", description: "Enquiry form and contact details." },
   { href: DevRoutes.PRIVACY, title: "Privacy Policy", description: "Placeholder privacy policy." },
-  { href: DevRoutes.TERMS, title: "Terms and Conditions", description: "Placeholder terms of use." },
+  { href: DevRoutes.TERMS, title: "Terms of Service", description: "Placeholder terms of use." },
+  { href: DevRoutes.STYLE_GUIDE, title: "Style Guide", description: "Design tokens, components, motion and image rules." },
 ];
 
 export default function DevIndexPage() {

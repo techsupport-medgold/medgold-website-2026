@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main className="container flex min-h-screen flex-col items-center justify-center py-20 text-center">
-      <Logo priority />
+      <Logo preload />
       <p className="mt-10 text-sm font-semibold uppercase tracking-widest text-primary">
         404
       </p>

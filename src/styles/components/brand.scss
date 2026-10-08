@@ -47,6 +47,109 @@
   }
 }
 
+/* Lifts a card on hover/focus-within; pair with shadow-card. */
+.hover-lift {
+  transition:
+    transform var(--duration-base) var(--ease-out-expo),
+    box-shadow var(--duration-base) var(--ease-out-expo),
+    border-color var(--duration-base) ease;
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+
+/* Underline that fades in and settles closer to the text on hover/focus. */
+.link-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: transparent;
+  text-underline-offset: 6px;
+  transition:
+    text-decoration-color var(--duration-base) ease,
+    text-underline-offset var(--duration-base) var(--ease-out-expo),
+    color var(--duration-base) ease;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-color: currentColor;
+    text-underline-offset: 3px;
+  }
+}
+
+/* Dark teal band with soft gold glow and a faint grid. */
+.brand-dark {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #ffffff;
+  background:
+    radial-gradient(40rem 24rem at 100% 0%, rgb(var(--color-gold-rgb) / 0.16), transparent 60%),
+    radial-gradient(36rem 24rem at 0% 100%, rgb(var(--color-primary-rgb) / 0.6), transparent 60%),
+    rgb(var(--color-primary-deep-rgb));
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at 70% 20%, #000 10%, transparent 70%);
+  }
+}
+
+/* Scroll reveal: hidden only once JS marks the element as pending. */
+.reveal {
+  &[data-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  &[data-reveal="shown"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--duration-slow) var(--ease-out-expo),
+      transform var(--duration-slow) var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+}
+
+/* Progress fills inside a Reveal grow from the left when revealed. */
+.reveal-bar {
+  transform-origin: left;
+}
+
+.reveal[data-reveal="pending"] .reveal-bar {
+  transform: scaleX(0);
+}
+
+.reveal[data-reveal="shown"] .reveal-bar {
+  transform: scaleX(1);
+  transition: transform 1.2s var(--ease-out-expo) calc(var(--reveal-delay, 0ms) + 200ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal[data-reveal] .reveal-bar {
+    transform: none;
+  }
+
+  .reveal[data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hover-lift:hover,
+  .hover-lift:focus-within {
+    transform: none;
+  }
+}
+
 @keyframes status-ping {
   75%,
   100% {
