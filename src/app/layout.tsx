@@ -78,8 +78,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={SITE.language} className={inter.variable}>
-      <body>
+    <html lang={SITE.language} className={inter.variable} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <AnalyticsNoScript />
         {children}
         <JsonLd id="organization-schema" data={organizationSchema} />
