@@ -99,6 +99,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["ICU Specialist Nurses", "Duty Doctors"],
     code: "SOP-STF",
     icon: "staffing",
+    href: DevRoutes.STAFFING,
   },
   {
     title: "Patient Feedback Systems",
@@ -107,6 +108,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["Digital Bedside NPS", "Instant Escalation"],
     code: "SOP-PFS",
     icon: "feedback",
+    href: DevRoutes.PATIENT_FEEDBACK,
   },
   {
     title: "Nursing Assistant OJT",
@@ -115,6 +117,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["Bedside Simulation", "BLS Certified"],
     code: "SOP-OJT",
     icon: "training",
+    href: DevRoutes.NURSING_TRAINING,
   },
 ];
 
@@ -240,15 +243,15 @@ export const directory = {
         { label: "Pharmacy Audit Services", href: DevRoutes.PHARMACY_AUDIT },
         { label: "Hospital & Clinic Audits", href: DevRoutes.SERVICES },
         { label: "Medical Record Maintenance", href: DevRoutes.SERVICES },
-        { label: "Patient Feedback Systems", href: DevRoutes.SERVICES },
+        { label: "Patient Feedback Systems", href: DevRoutes.PATIENT_FEEDBACK },
       ],
     },
     {
       title: "Operations & Maintenance (O&M)",
       links: [
         { label: "Janitorial & OT Cleanroom", href: DevRoutes.SERVICES },
-        { label: "Healthcare Facility Staffing", href: DevRoutes.SERVICES },
-        { label: "Nursing Assistant OJT", href: DevRoutes.SERVICES },
+        { label: "Healthcare Facility Staffing", href: DevRoutes.STAFFING },
+        { label: "Nursing Assistant OJT", href: DevRoutes.NURSING_TRAINING },
       ],
     },
     {

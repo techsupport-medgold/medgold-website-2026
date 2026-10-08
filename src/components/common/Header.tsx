@@ -26,7 +26,7 @@ export default function Header() {
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
-          <NavLinks className="flex items-center gap-1" />
+          <NavLinks variant="desktop" className="flex items-center gap-1" />
         </nav>
 
         <div className="flex items-center gap-2">
