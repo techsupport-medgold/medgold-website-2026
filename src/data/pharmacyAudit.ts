@@ -277,5 +277,4 @@ export const booking = {
   ] satisfies { icon: BookingBenefitIcon; title: string; text: string }[],
   confidentiality: "Complete business confidentiality assured. Strict NDA guaranteed.",
   cta: "Book Diagnostic Consultation",
-  ctaNote: "Opens our Contact Us page.",
 };

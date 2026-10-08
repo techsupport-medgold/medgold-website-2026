@@ -17,9 +17,4 @@ export const servicePlaceholders = {
     title: "Hospital & Clinic Branding & Marketing",
     description: "Branding and marketing services for hospitals and clinics from Med Gold. This page is in development.",
   },
-  patientFeedback: {
-    title: "Patient Feedback Systems",
-    description:
-      "Patient feedback collection and system integration services from Med Gold. This page is in development.",
-  },
 } satisfies Record<string, ServicePlaceholder>;

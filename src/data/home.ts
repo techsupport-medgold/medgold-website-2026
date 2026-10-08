@@ -226,8 +226,6 @@ export const auditCta = {
     "Primary Healthcare Facility Location",
   ],
   cta: "Submit Assessment Request & Deploy Audit Team",
-  ctaNote: "Opens our Contact Us page.",
-  deskLabel: "Chennai zonal operations desk",
 };
 
 export type DirectoryLink = { label: string; href?: string };

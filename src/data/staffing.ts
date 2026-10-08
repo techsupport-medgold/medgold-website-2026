@@ -317,5 +317,4 @@ export const requisition = {
   ],
   nda: "Hospital data protected under strict Healthcare NDA",
   cta: "Dispatch Staffing Roster Request",
-  ctaNote: "Opens our Contact Us page.",
 } as const;
