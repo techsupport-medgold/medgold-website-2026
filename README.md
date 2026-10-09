@@ -66,7 +66,7 @@ All `/dev` URLs are `noindex, nofollow` (meta tag + `X-Robots-Tag` header) and o
   `src/config/routes.ts` and to the list in `src/app/dev/page.tsx`.
 - Launch a page: move it to its final path (`dev/home` becomes `/`), remove it from `DevRoutes`,
   and add it to `ROUTES` in `src/app/sitemap.ts`.
-- Do not block `/dev` in `robots.txt`; crawlers need to see the noindex.
+- `/dev` is also disallowed in `robots.txt` (`src/app/robots.ts`).
 
 ## Deploying to Vercel
 
