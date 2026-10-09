@@ -45,7 +45,6 @@ export const snapshot = {
     { value: "+24%", label: "Gross Margin Uplift", accent: false },
     { value: "<48h", label: "Rapid Diagnostic Audit", accent: false },
   ],
-  emailLabel: "Email:",
 };
 
 export const evidenceStats = [
@@ -244,9 +243,7 @@ export const whyMedGold = {
 export const philosophy = {
   eyebrow: "Core philosophy",
   quote: "“Most Pharmacies Focus on Sales. We Focus on Profits.”",
-  body: "Small systematic improvements across purchasing, stock rotations, and staff productivity compound into massive bottom-line results.",
-  hotlineLabel: "Consulting Hotline:",
-} as const;
+  body: "Small systematic improvements across purchasing, stock rotations, and staff productivity compound into massive bottom-line results.",} as const;
 
 export const approach = {
   eyebrow: "Methodology & phasing",

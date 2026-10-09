@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Phone } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Reveal from "@@/components/ui/reveal";
 import { stagger } from "@@/lib/motion";
 import { Eyebrow } from "@@/components/ui/section-header";
-import { SITE } from "@@/config/site";
+import { DevRoutes } from "@@/config/routes";
 import { directory } from "@@/data/home";
 
 export default function HomeDirectory() {
@@ -17,14 +17,13 @@ export default function HomeDirectory() {
               {directory.heading}
             </h2>
           </div>
-          <a
-            href={`tel:${SITE.contact.phoneHref}`}
+          <Link
+            href={DevRoutes.CONTACT}
             className="hover-lift inline-flex min-h-11 w-fit items-center gap-2 rounded-pill bg-surface px-5 text-sm font-semibold text-primary-deep shadow-card hover:text-primary"
           >
-            <Phone className="size-4 text-gold-ink" aria-hidden="true" />
-            {directory.hotlineLabel}
-            <span className="sr-only">: {SITE.contact.phone}</span>
-          </a>
+            {directory.contactLabel}
+            <ArrowRight className="size-4 text-gold-ink" aria-hidden="true" />
+          </Link>
         </div>
 
         <div className="mt-8 grid grid-cols-2 gap-8 lg:grid-cols-4">

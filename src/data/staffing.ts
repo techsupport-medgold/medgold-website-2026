@@ -17,9 +17,7 @@ export const hero = {
   badge: "MEDGOLD HEALTHCARE — AN ISO 9001:2015 CERTIFIED COMPANY",
   heading: "Medical & Healthcare Manpower Services & Clinical Staffing Solutions",
   intro:
-    "End-to-end credentialed healthcare staffing and career development for hospitals, clinics, diagnostic labs, and pharmacies across Chennai and South India. Empowering institutions with qualified clinical manpower while advancing healthcare professionals through real hospital training.",
-  hotlinesLabel: "Hotlines:",
-  addressLabel: "Address:",
+    "End-to-end credentialed healthcare staffing and career development for hospitals, clinics, diagnostic labs, and pharmacies across Chennai and South India. Empowering institutions with qualified clinical manpower while advancing healthcare professionals through real hospital training.",  addressLabel: "Address:",
   webLabel: "Web:",
   primaryCta: "Request Staffing Roster",
   secondaryCta: "Upgrade Skills & Training",
@@ -57,7 +55,7 @@ export type DualValueCard = {
   title: string;
   intro: string;
   points: readonly { lead: string; text: string }[];
-  link: { label: string; kind: "contact" | "phone" };
+  link: { label: string };
 };
 
 export const dualValue = {
@@ -91,7 +89,7 @@ export const dualValue = {
           text: "Rotational shifts, day-care, and round-the-clock intensive care staffing.",
         },
       ],
-      link: { label: "Request Hospital Staffing Profiles", kind: "contact" },
+      link: { label: "Request Hospital Staffing Profiles" },
     },
     {
       icon: "training",
@@ -118,7 +116,7 @@ export const dualValue = {
           text: "Practical field experience organizing and executing preventive healthcare camps.",
         },
       ],
-      link: { label: "Call Enrollment Desk", kind: "phone" },
+      link: { label: "Contact the Enrollment Desk" },
     },
   ] satisfies DualValueCard[],
 };

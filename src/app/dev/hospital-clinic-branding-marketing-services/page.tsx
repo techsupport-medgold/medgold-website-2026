@@ -24,9 +24,7 @@ export default function BrandingServicePage() {
           { label: breadcrumb.badge, tone: "gold" },
           { label: breadcrumb.specialist },
           { label: breadcrumb.compliance, icon: BadgeCheck, tone: "neutral" },
-        ]}
-        contacts={["phone", "phoneAlt"]}
-      />
+        ]}      />
       <BrandingHero />
       <EcosystemBanner />
       <GrowthServices />

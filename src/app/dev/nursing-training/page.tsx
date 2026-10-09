@@ -32,9 +32,7 @@ export default function NursingTrainingPage() {
     <>
       <ServiceBreadcrumb
         current={breadcrumb.current}
-        badges={breadcrumb.badges.map((badge) => ({ label: badge.label, icon: BADGE_ICONS[badge.icon] }))}
-        contacts={["phone"]}
-      />
+        badges={breadcrumb.badges.map((badge) => ({ label: badge.label, icon: BADGE_ICONS[badge.icon] }))}      />
       <TrainingHero />
       <TraineeProfiles />
       <TrainingPillars />

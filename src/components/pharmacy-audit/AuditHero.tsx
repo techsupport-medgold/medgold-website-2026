@@ -6,8 +6,6 @@ import {
   ChartNoAxesCombined,
   IndianRupee,
   ListChecks,
-  Mail,
-  Phone,
   TrendingUp,
   type LucideIcon,
 } from "lucide-react";
@@ -16,7 +14,6 @@ import CountUp from "@@/components/ui/count-up";
 import IconBadge from "@@/components/ui/icon-badge";
 import Pill from "@@/components/ui/pill";
 import { DevRoutes } from "@@/config/routes";
-import { SITE } from "@@/config/site";
 import { hero, snapshot, type HeroFeatureIcon } from "@@/data/pharmacyAudit";
 import { cn } from "@@/lib/utils";
 
@@ -80,17 +77,6 @@ export default function AuditHero() {
                 <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-auto min-h-12 shrink whitespace-normal border-primary/30 bg-surface/80 px-6 py-3 font-semibold text-primary-deep hover:border-primary hover:bg-surface hover:text-primary"
-            >
-              <a href={`tel:${SITE.contact.phoneHref}`}>
-                <Phone aria-hidden="true" />
-                Call {SITE.contact.phone}
-              </a>
-            </Button>
           </div>
         </div>
 
@@ -152,17 +138,6 @@ export default function AuditHero() {
                 </div>
               ))}
             </dl>
-
-            <p className="mt-4 flex flex-wrap items-center justify-center gap-x-1.5 rounded-xl bg-surface-raised px-3 py-1 text-center text-xs font-bold text-gold-ink">
-              <Mail className="size-3.5" aria-hidden="true" />
-              {snapshot.emailLabel}
-              <a
-                href={`mailto:${SITE.contact.email}`}
-                className="link-underline inline-flex min-h-11 items-center font-medium text-primary-deep hover:text-primary"
-              >
-                {SITE.contact.email}
-              </a>
-            </p>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Building2, CircleCheck, GraduationCap, Phone, type LucideIcon } from "lucide-react";
+import { ArrowRight, Building2, CircleCheck, GraduationCap, type LucideIcon } from "lucide-react";
 import Card from "@@/components/ui/card";
 import IconBadge from "@@/components/ui/icon-badge";
 import Pill from "@@/components/ui/pill";
@@ -7,7 +7,6 @@ import Reveal from "@@/components/ui/reveal";
 import Section from "@@/components/ui/section";
 import SectionHeader from "@@/components/ui/section-header";
 import { DevRoutes } from "@@/config/routes";
-import { SITE } from "@@/config/site";
 import { dualValue, type DualValueCard, type DualValueIcon } from "@@/data/staffing";
 import { stagger } from "@@/lib/motion";
 import { cn } from "@@/lib/utils";
@@ -22,21 +21,13 @@ function CardLink({ card }: { card: DualValueCard }) {
     "group/link inline-flex min-h-11 items-center gap-1.5 font-semibold transition-colors",
     card.accent === "gold" ? "text-gold-ink hover:text-ink" : "text-primary-deep hover:text-primary",
   );
-  const iconClass = "size-4 shrink-0 transition-transform duration-300 group-hover/link:translate-x-1";
-  if (card.link.kind === "phone") {
-    return (
-      <a href={`tel:${SITE.contact.phoneHref}`} className={className}>
-        <span className="link-underline">
-          {card.link.label} ({SITE.contact.phone})
-        </span>
-        <Phone className={iconClass} aria-hidden="true" />
-      </a>
-    );
-  }
   return (
     <Link href={DevRoutes.CONTACT} className={className}>
       <span className="link-underline">{card.link.label}</span>
-      <ArrowRight className={iconClass} aria-hidden="true" />
+      <ArrowRight
+        className="size-4 shrink-0 transition-transform duration-300 group-hover/link:translate-x-1"
+        aria-hidden="true"
+      />
     </Link>
   );
 }

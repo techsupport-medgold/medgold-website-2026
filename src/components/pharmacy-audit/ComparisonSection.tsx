@@ -1,9 +1,8 @@
-import { CircleCheck, CircleX, Phone, Quote, TrendingUp } from "lucide-react";
+import { CircleCheck, CircleX, Quote, TrendingUp } from "lucide-react";
 import Card from "@@/components/ui/card";
 import Reveal from "@@/components/ui/reveal";
 import Section from "@@/components/ui/section";
 import SectionHeader, { Eyebrow } from "@@/components/ui/section-header";
-import { SITE } from "@@/config/site";
 import { comparison, philosophy, whyMedGold } from "@@/data/pharmacyAudit";
 import { stagger } from "@@/lib/motion";
 import { cn } from "@@/lib/utils";
@@ -106,7 +105,7 @@ export default function ComparisonSection() {
         </Reveal>
 
         <Reveal delay={120} className="lg:col-span-5">
-          <div className="brand-dark flex h-full flex-col justify-between gap-8 rounded-card p-8 shadow-card-hover sm:p-10">
+          <div className="brand-dark flex h-full flex-col justify-center gap-8 rounded-card p-8 shadow-card-hover sm:p-10">
             <Quote
               className="pointer-events-none absolute -right-4 -top-4 size-36 rotate-12 text-gold/10"
               aria-hidden="true"
@@ -118,18 +117,6 @@ export default function ComparisonSection() {
               </blockquote>
               <p className="mt-4 text-sm leading-relaxed text-white/80">{philosophy.body}</p>
             </div>
-            <p className="relative flex flex-wrap items-center gap-x-2 border-t border-white/10 pt-5 text-sm text-white/80">
-              {philosophy.hotlineLabel}
-              <a
-                href={`tel:${SITE.contact.phoneHref}`}
-                className="group inline-flex min-h-11 items-center gap-2 font-bold text-gold transition-colors hover:text-white"
-              >
-                <span className="flex size-8 items-center justify-center rounded-full bg-gold/15 transition-transform duration-300 ease-spring group-hover:scale-110">
-                  <Phone className="size-4" aria-hidden="true" />
-                </span>
-                {SITE.contact.phone}
-              </a>
-            </p>
           </div>
         </Reveal>
       </div>

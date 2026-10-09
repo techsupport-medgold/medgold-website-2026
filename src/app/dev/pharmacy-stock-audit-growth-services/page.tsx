@@ -27,9 +27,7 @@ export default function PharmacyAuditPage() {
     <>
       <ServiceBreadcrumb
         current={breadcrumb.current}
-        badges={[{ label: breadcrumb.tagline }]}
-        contacts={["phone", "email"]}
-      />
+        badges={[{ label: breadcrumb.tagline }]}      />
       <AuditHero />
       <EvidenceBar />
       <ProblemsSection />

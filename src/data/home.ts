@@ -233,7 +233,7 @@ export type DirectoryLink = { label: string; href?: string };
 export const directory = {
   eyebrow: "Fast navigation directory",
   heading: "Direct Operational Portals & Institutional Documentation",
-  hotlineLabel: "Chennai Emergency Hotline",
+  contactLabel: "Contact our team",
   columns: [
     {
       title: "Clinical Audits",

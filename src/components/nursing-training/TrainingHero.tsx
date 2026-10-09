@@ -6,7 +6,6 @@ import {
   GraduationCap,
   Hospital,
   MapPin,
-  Phone,
   UserPlus,
   Users,
   type LucideIcon,
@@ -24,9 +23,6 @@ const TRUST_ICONS: Record<TrainingTrustIcon, LucideIcon> = {
   faculty: Users,
   certified: Award,
 };
-
-const phoneLinkClass =
-  "link-underline inline-flex min-h-11 items-center font-semibold text-primary-deep hover:text-primary sm:min-h-6";
 
 export default function TrainingHero() {
   return (
@@ -66,18 +62,6 @@ export default function TrainingHero() {
                 <ArrowRight aria-hidden="true" />
               </a>
             </Button>
-            <p className="inline-flex min-h-12 flex-wrap items-center justify-center gap-x-2 rounded-md border border-primary/30 bg-surface/80 px-5 py-2 text-sm text-primary-deep shadow-sm">
-              <Phone className="size-4 shrink-0 text-gold-ink" aria-hidden="true" />
-              <a href={`tel:${SITE.contact.phoneHref}`} className={phoneLinkClass}>
-                {SITE.contact.phone}
-              </a>
-              <span className="text-ink-muted" aria-hidden="true">
-                /
-              </span>
-              <a href={`tel:${SITE.contact.phoneAltHref}`} className={phoneLinkClass}>
-                {SITE.contact.phoneAlt}
-              </a>
-            </p>
           </div>
 
           <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -126,19 +110,7 @@ export default function TrainingHero() {
               <span className="font-semibold text-ink">{hero.card.locationLabel}</span> {SITE.address.full}.{" "}
               {hero.card.description}
             </p>
-            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-border-muted pt-3 text-sm">
-              <p className="flex flex-wrap items-center gap-x-1.5 text-ink">
-                <span className="font-bold">{hero.card.hotlinesLabel}</span>
-                <a href={`tel:${SITE.contact.phoneHref}`} className={phoneLinkClass}>
-                  {SITE.contact.phone}
-                </a>
-                <span className="text-ink-muted" aria-hidden="true">
-                  |
-                </span>
-                <a href={`tel:${SITE.contact.phoneAltHref}`} className={phoneLinkClass}>
-                  {SITE.contact.phoneAlt}
-                </a>
-              </p>
+            <div className="border-t border-border-muted pt-3">
               <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-ink">
                 <Globe className="size-3.5" aria-hidden="true" />
                 {new URL(SITE_URL).host}
