@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { ExternalLink, MapPin, MessageCircle, Navigation, Phone, UserRound } from "lucide-react";
+import Breadcrumb from "@@/components/common/Breadcrumb";
 import EnquiryForm from "@@/components/contact/EnquiryForm";
 import { Button } from "@@/components/ui/button";
+import { DevRoutes } from "@@/config/routes";
 import { SITE, directionsUrl, mapEmbedUrl, whatsappUrl } from "@@/config/site";
 import { CONTACT_SEO, contactHero, findUs } from "@@/data/contact";
 
@@ -16,6 +18,7 @@ const cardClass =
 export default function ContactPage() {
   return (
     <>
+      <Breadcrumb current="Contact Us" path={DevRoutes.CONTACT} />
       <section aria-labelledby="contact-page-heading" className="brand-wash">
         <div className="container pb-12 pt-16 sm:pb-16 sm:pt-20">
           <div className="max-w-2xl">

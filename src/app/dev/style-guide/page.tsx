@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ArrowRight, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
+import Breadcrumb from "@@/components/common/Breadcrumb";
 import StatsBar from "@@/components/services/StatsBar";
+import { DevRoutes } from "@@/config/routes";
 import Accordion from "@@/components/ui/accordion";
 import { Button } from "@@/components/ui/button";
 import Card from "@@/components/ui/card";
@@ -23,6 +25,7 @@ const CARD_VARIANTS = ["default", "elevated", "outline", "soft"] as const;
 export default function StyleGuidePage() {
   return (
     <>
+      <Breadcrumb current="Style Guide" path={DevRoutes.STYLE_GUIDE} />
       <Section tone="wash" aria-labelledby="style-guide-heading">
         <SectionHeader
           as="h1"

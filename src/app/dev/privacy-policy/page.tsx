@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import LegalPage from "@@/components/legal/LegalPage";
+import { DevRoutes } from "@@/config/routes";
 import { PRIVACY_SEO, privacySections } from "@@/data/legal";
 
 export const metadata: Metadata = {
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicyPage() {
-  return <LegalPage title="Privacy Policy" sections={privacySections} />;
+  return <LegalPage title="Privacy Policy" path={DevRoutes.PRIVACY} sections={privacySections} />;
 }

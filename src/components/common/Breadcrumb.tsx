@@ -1,20 +1,29 @@
 import Link from "next/link";
 import { ChevronRight, type LucideIcon } from "lucide-react";
+import JsonLd from "@@/components/common/JsonLd";
 import Pill from "@@/components/ui/pill";
 import { DevRoutes } from "@@/config/routes";
+import { breadcrumbSchema } from "@@/lib/schema";
 
 const crumbLinkClass = "link-underline inline-flex min-h-11 items-center hover:text-primary sm:min-h-0";
 
 export type BreadcrumbBadge = { label: string; icon?: LucideIcon; tone?: "teal" | "gold" | "neutral" };
 
-type ServiceBreadcrumbProps = {
+type BreadcrumbProps = {
   current: string;
+  path: string;
   badges?: readonly BreadcrumbBadge[];
 };
 
-export default function ServiceBreadcrumb({ current, badges }: ServiceBreadcrumbProps) {
+export default function Breadcrumb({ current, path, badges }: BreadcrumbProps) {
+  const trail = [
+    { name: "Home", path: DevRoutes.HOME },
+    { name: current, path },
+  ];
+
   return (
     <div className="border-b border-primary/10 bg-surface-raised">
+      <JsonLd id="breadcrumb-schema" data={breadcrumbSchema(trail)} />
       <div className="container flex flex-col gap-2 py-2.5 lg:flex-row lg:items-center lg:justify-between">
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-1 text-xs font-semibold text-ink-muted">

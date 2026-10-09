@@ -5,7 +5,8 @@ import EcosystemBanner from "@@/components/branding/EcosystemBanner";
 import GrowthProcess from "@@/components/branding/GrowthProcess";
 import GrowthServices from "@@/components/branding/GrowthServices";
 import WhyChooseSection from "@@/components/branding/WhyChooseSection";
-import ServiceBreadcrumb from "@@/components/services/ServiceBreadcrumb";
+import Breadcrumb from "@@/components/common/Breadcrumb";
+import { DevRoutes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { BRANDING_PAGE_URL, BRANDING_SEO, breadcrumb, cta } from "@@/data/branding";
 
@@ -18,7 +19,8 @@ export const metadata: Metadata = {
 export default function BrandingServicePage() {
   return (
     <>
-      <ServiceBreadcrumb
+      <Breadcrumb
+        path={DevRoutes.BRANDING}
         current={breadcrumb.current}
         badges={[
           { label: breadcrumb.badge, tone: "gold" },

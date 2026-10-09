@@ -60,6 +60,8 @@ alwaysApply: true
    and `priority` only for the above-the-fold hero image.
 7. Stay statically rendered unless data truly requires otherwise. Verify with `npm run build`
    and check the page source for the content and JSON-LD.
+8. Render `<Breadcrumb current path />` from `@@/components/common/Breadcrumb` directly under
+   the header (every page except the homepage). It also outputs the `BreadcrumbList` JSON-LD.
 
 ## Do not
 
