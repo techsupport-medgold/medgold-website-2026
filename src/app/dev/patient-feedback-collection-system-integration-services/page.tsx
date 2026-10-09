@@ -5,7 +5,8 @@ import CaptureTouchpoints from "@@/components/patient-feedback/CaptureTouchpoint
 import FeedbackEstimator from "@@/components/patient-feedback/FeedbackEstimator";
 import FeedbackHero from "@@/components/patient-feedback/FeedbackHero";
 import WorkflowSection from "@@/components/patient-feedback/WorkflowSection";
-import ServiceBreadcrumb from "@@/components/services/ServiceBreadcrumb";
+import Breadcrumb from "@@/components/common/Breadcrumb";
+import { DevRoutes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import StatsBar from "@@/components/services/StatsBar";
 import { breadcrumb, cta, PATIENT_FEEDBACK_SEO, stats } from "@@/data/patientFeedback";
@@ -18,7 +19,8 @@ export const metadata: Metadata = {
 export default function PatientFeedbackServicePage() {
   return (
     <>
-      <ServiceBreadcrumb
+      <Breadcrumb
+        path={DevRoutes.PATIENT_FEEDBACK}
         current={breadcrumb.current}
         badges={[
           { label: breadcrumb.badge },

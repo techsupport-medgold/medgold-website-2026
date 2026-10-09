@@ -1,13 +1,9 @@
-import { ArrowRight, CalendarCheck, Phone, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarCheck, Sparkles } from "lucide-react";
 import { Button } from "@@/components/ui/button";
 import CountUp from "@@/components/ui/count-up";
 import ResponsiveImage from "@@/components/ui/responsive-image";
-import { SITE } from "@@/config/site";
 import { hero } from "@@/data/patientFeedback";
 import { cn } from "@@/lib/utils";
-
-const contactLinkClass =
-  "link-underline inline-flex min-h-11 items-center font-semibold text-primary-deep hover:text-primary sm:min-h-6";
 
 export default function FeedbackHero() {
   return (
@@ -42,17 +38,6 @@ export default function FeedbackHero() {
                 <CalendarCheck aria-hidden="true" />
                 {hero.primaryCta}
                 <ArrowRight aria-hidden="true" />
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-auto min-h-12 shrink whitespace-normal border-primary/30 bg-surface/80 px-6 py-3 font-semibold text-primary-deep hover:border-primary hover:bg-surface hover:text-primary"
-            >
-              <a href={`tel:${SITE.contact.phoneHref}`}>
-                <Phone aria-hidden="true" />
-                {hero.callLabel} {SITE.contact.phone}
               </a>
             </Button>
           </div>
@@ -127,16 +112,6 @@ export default function FeedbackHero() {
                 style={{ width: `${hero.dashboard.percent}%` }}
               />
             </div>
-            <p className="text-right text-xs text-ink-muted">
-              {hero.dashboard.contactLabel}{" "}
-              <a href={`tel:${SITE.contact.phoneHref}`} className={contactLinkClass}>
-                {SITE.contact.phone}
-              </a>{" "}
-              <span aria-hidden="true">|</span>{" "}
-              <a href={`mailto:${SITE.contact.email}`} className={cn(contactLinkClass, "break-all")}>
-                {SITE.contact.email}
-              </a>
-            </p>
           </figcaption>
         </figure>
       </div>

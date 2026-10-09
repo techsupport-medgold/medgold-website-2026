@@ -19,9 +19,7 @@ export const hero = {
     title: "SOFTWARE SOLUTIONS: OUR INTEGRATED FEEDBACK SOFTWARE",
     text: "Our integrated feedback software platform provides real-time data access, detailed trend analysis, and comprehensive performance dashboards for all hospital levels.",
   },
-  primaryCta: "Schedule Free System Audit Demo",
-  callLabel: "Call:",
-  tiles: [
+  primaryCta: "Schedule Free System Audit Demo",  tiles: [
     { value: "Real-Time", label: "Data Access" },
     { value: "<24 Hrs", label: "Service Recovery" },
     { value: "Red Alert", label: "Negative Reviews" },
@@ -37,9 +35,7 @@ export const hero = {
     value: "98.4%",
     percent: 94.6,
     label: "Patient Voice Captured",
-    scope: "All Hospital Levels",
-    contactLabel: "Direct contact:",
-  },
+    scope: "All Hospital Levels",  },
 } as const;
 
 export const stats = [

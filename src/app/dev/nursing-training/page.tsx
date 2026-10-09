@@ -6,7 +6,8 @@ import TraineeProfiles from "@@/components/nursing-training/TraineeProfiles";
 import TrainingComparison from "@@/components/nursing-training/TrainingComparison";
 import TrainingHero from "@@/components/nursing-training/TrainingHero";
 import TrainingPillars from "@@/components/nursing-training/TrainingPillars";
-import ServiceBreadcrumb from "@@/components/services/ServiceBreadcrumb";
+import Breadcrumb from "@@/components/common/Breadcrumb";
+import { DevRoutes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { breadcrumb, NURSING_TRAINING_SEO, requisition, type AssuranceIcon } from "@@/data/nursingTraining";
 
@@ -30,11 +31,10 @@ const BADGE_ICONS: Record<(typeof breadcrumb.badges)[number]["icon"], LucideIcon
 export default function NursingTrainingPage() {
   return (
     <>
-      <ServiceBreadcrumb
+      <Breadcrumb
+        path={DevRoutes.NURSING_TRAINING}
         current={breadcrumb.current}
-        badges={breadcrumb.badges.map((badge) => ({ label: badge.label, icon: BADGE_ICONS[badge.icon] }))}
-        contacts={["phone"]}
-      />
+        badges={breadcrumb.badges.map((badge) => ({ label: badge.label, icon: BADGE_ICONS[badge.icon] }))}      />
       <TrainingHero />
       <TraineeProfiles />
       <TrainingPillars />

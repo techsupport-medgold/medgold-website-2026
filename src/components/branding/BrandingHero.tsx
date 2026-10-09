@@ -4,7 +4,6 @@ import {
   CalendarCheck,
   Eye,
   Megaphone,
-  Phone,
   Quote,
   ShieldCheck,
   TrendingUp,
@@ -16,7 +15,6 @@ import CountUp from "@@/components/ui/count-up";
 import IconBadge from "@@/components/ui/icon-badge";
 import Pill from "@@/components/ui/pill";
 import ResponsiveImage from "@@/components/ui/responsive-image";
-import { SITE } from "@@/config/site";
 import { hero, type PromiseIcon } from "@@/data/branding";
 import { cn } from "@@/lib/utils";
 
@@ -33,8 +31,6 @@ const CHANNEL_COLORS: Record<(typeof hero.dashboard.channels)[number]["id"], str
   google: "bg-white text-slate-800",
   youtube: "bg-red-600 text-white",
 };
-
-const phoneLinkClass = "link-underline inline-flex min-h-11 items-center hover:text-primary";
 
 export default function BrandingHero() {
   return (
@@ -81,17 +77,6 @@ export default function BrandingHero() {
                 <ArrowRight aria-hidden="true" />
               </a>
             </Button>
-            <p className="flex flex-wrap items-center gap-x-2 rounded-2xl bg-surface/90 px-4 text-sm font-semibold text-primary-deep shadow-sm ring-1 ring-inset ring-border-muted sm:rounded-full">
-              <Phone className="size-4 text-gold-ink" aria-hidden="true" />
-              {hero.callLabel}
-              <a href={`tel:${SITE.contact.phoneHref}`} className={phoneLinkClass}>
-                {SITE.contact.phone}
-              </a>
-              <span className="hidden text-border-muted sm:inline" aria-hidden="true">|</span>
-              <a href={`tel:${SITE.contact.phoneAltHref}`} className={phoneLinkClass}>
-                {SITE.contact.phoneAlt}
-              </a>
-            </p>
           </div>
 
           <blockquote className="mt-8 flex gap-3 rounded-card border-l-4 border-gold bg-surface/90 p-5 shadow-card ring-1 ring-black/5">

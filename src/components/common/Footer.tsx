@@ -22,20 +22,12 @@ export default function Footer() {
               Tell us what is slowing your facility down and a Med Gold specialist will get back to you.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg" variant="accent" className="h-12 px-6 font-semibold">
-              <Link href={DevRoutes.CONTACT}>
-                Talk to our team
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="h-12 border-white/30 bg-transparent px-6 font-semibold text-white hover:bg-white/10 hover:text-white">
-              <a href={`tel:${SITE.contact.phoneHref}`}>
-                <Phone aria-hidden="true" />
-                {SITE.contact.phone}
-              </a>
-            </Button>
-          </div>
+          <Button asChild size="lg" variant="accent" className="h-12 w-fit px-6 font-semibold">
+            <Link href={DevRoutes.CONTACT}>
+              Talk to our team
+              <ArrowRight aria-hidden="true" />
+            </Link>
+          </Button>
         </div>
       </div>
 

@@ -8,7 +8,6 @@ import {
   GraduationCap,
   Hospital,
   MapPin,
-  Phone,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -30,9 +29,6 @@ const TRUST_ICONS: Record<TrustIcon, LucideIcon> = {
 const chipClass =
   "inline-flex max-w-full items-start gap-1.5 rounded-2xl bg-surface px-3 py-1.5 text-xs text-ink-muted shadow-sm ring-1 ring-inset ring-border-muted sm:items-center sm:rounded-pill";
 const chipIconClass = "mt-0.5 size-3.5 shrink-0 text-gold-ink sm:mt-0";
-const phoneLinkClass =
-  "link-underline inline-flex min-h-11 items-center font-semibold text-primary-deep hover:text-primary sm:min-h-6";
-
 export default function StaffingHero() {
   return (
     <section aria-labelledby="staffing-heading" className="brand-wash">
@@ -50,20 +46,7 @@ export default function StaffingHero() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted">{hero.intro}</p>
 
-          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Contact details">
-            <li className={chipClass}>
-              <Phone className={chipIconClass} aria-hidden="true" />
-              <span className="flex flex-wrap items-center gap-x-1">
-                <span className="font-bold text-ink">{hero.hotlinesLabel}</span>
-                <a href={`tel:${SITE.contact.phoneHref}`} className={phoneLinkClass}>
-                  {SITE.contact.phone}
-                </a>
-                <span aria-hidden="true">/</span>
-                <a href={`tel:${SITE.contact.phoneAltHref}`} className={phoneLinkClass}>
-                  {SITE.contact.phoneAlt}
-                </a>
-              </span>
-            </li>
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Location and website">
             <li className={chipClass}>
               <MapPin className={chipIconClass} aria-hidden="true" />
               <span>

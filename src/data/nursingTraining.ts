@@ -12,7 +12,6 @@ export const breadcrumb = {
     { icon: "hospital", label: "Real Hospital Environment" },
     { icon: "placement", label: "Job Placement Assistance" },
   ],
-  hotlineLabel: "Hotline:",
 } as const;
 
 export type TrainingTrustIcon = "hospital" | "placement" | "faculty" | "certified";
@@ -42,9 +41,7 @@ export const hero = {
     title: "Nursing Training & Skills Development Center",
     location: "Kolathur, Chennai",
     description: "Hands-on ICU & Ward simulations with state-of-the-art medical equipment handling.",
-    locationLabel: "Location:",
-    hotlinesLabel: "Hotlines:",
-  },
+    locationLabel: "Location:",  },
 };
 
 export type ProfileIcon = "diploma" | "anm" | "gnm" | "bsc" | "aide" | "ward";

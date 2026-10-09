@@ -30,8 +30,8 @@ alwaysApply: true
   so new dev pages are covered automatically.
 - Add the page to `DevRoutes` in `src/config/routes.ts` and to the list in `src/app/dev/page.tsx`.
 - Do not override `robots` in dev page metadata, and do not add dev pages to `sitemap.ts`.
-- Never `Disallow` `/dev` in `robots.txt`: blocked pages cannot be crawled, so Google never
-  sees the noindex and may still list the bare URL.
+- `/dev` is disallowed in `robots.txt` (`src/app/robots.ts`) and also served with noindex;
+  keep both.
 - Do not link to `/dev` pages from the public coming-soon page.
 - The launch date lives only in `SITE.launchDate` (`src/config/site.ts`, overridable via
   `NEXT_PUBLIC_LAUNCH_DATE`); never hardcode it elsewhere.
@@ -60,6 +60,8 @@ alwaysApply: true
    and `priority` only for the above-the-fold hero image.
 7. Stay statically rendered unless data truly requires otherwise. Verify with `npm run build`
    and check the page source for the content and JSON-LD.
+8. Render `<Breadcrumb current path />` from `@@/components/common/Breadcrumb` directly under
+   the header (every page except the homepage). It also outputs the `BreadcrumbList` JSON-LD.
 
 ## Do not
 

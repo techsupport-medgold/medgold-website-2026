@@ -30,9 +30,7 @@ export const hero = {
     { icon: "revenue", title: "More Revenue", text: "Predictable OPD & IPD" },
     { icon: "brand", title: "Stronger Brand", text: "Doctor Trust & ORM" },
   ] satisfies { icon: PromiseIcon; title: string; text: string }[],
-  primaryCta: "Book a Free Hospital Growth Consultation",
-  callLabel: "Call:",
-  quote: {
+  primaryCta: "Book a Free Hospital Growth Consultation",  quote: {
     title: 'OUR PROMISE: "MORE VISIBILITY • MORE PATIENTS • MORE REVENUE"',
     text: '"We don\'t just market hospitals. We build healthcare brands and growth ecosystems."',
   },

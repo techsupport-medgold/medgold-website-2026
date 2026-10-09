@@ -1,12 +1,11 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  ClipboardCheck,
   GraduationCap,
   IdCard,
+  Megaphone,
   MessageSquareHeart,
   Pill as PillIcon,
-  SprayCan,
   type LucideIcon,
 } from "lucide-react";
 import Card from "@@/components/ui/card";
@@ -22,8 +21,7 @@ import { servicePillars, servicesIntro, type PillarIcon } from "@@/data/home";
 
 const ICONS: Record<PillarIcon, LucideIcon> = {
   pharmacy: PillIcon,
-  audit: ClipboardCheck,
-  sanitization: SprayCan,
+  branding: Megaphone,
   staffing: IdCard,
   feedback: MessageSquareHeart,
   training: GraduationCap,
@@ -68,6 +66,9 @@ export default function ServicePillars() {
                   <h3 className={pillar.image ? "text-xl font-bold text-primary-deep" : "mt-5 text-xl font-bold text-primary-deep"}>
                     {pillar.title}
                   </h3>
+                  {pillar.subtitle ? (
+                    <p className="mt-2 text-sm font-semibold leading-snug text-gold-ink">{pillar.subtitle}</p>
+                  ) : null}
                   <p className="mt-3 text-sm leading-relaxed text-ink-muted">{pillar.description}</p>
                   <ul className="mb-6 mt-4 flex flex-wrap gap-2" aria-label={`${pillar.title} highlights`}>
                     {pillar.tags.map((tag) => (
@@ -78,7 +79,7 @@ export default function ServicePillars() {
                   </ul>
                   <div className="mt-auto flex items-center justify-between border-t border-border-muted pt-2">
                     <Link
-                      href={pillar.href ?? DevRoutes.SERVICES}
+                      href={pillar.href ?? DevRoutes.CONTACT}
                       className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary after:absolute after:inset-0 after:rounded-card hover:text-primary-deep"
                     >
                       {servicesIntro.linkLabel}

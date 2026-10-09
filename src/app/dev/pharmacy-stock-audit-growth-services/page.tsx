@@ -6,7 +6,8 @@ import ComparisonSection from "@@/components/pharmacy-audit/ComparisonSection";
 import EvidenceBar from "@@/components/pharmacy-audit/EvidenceBar";
 import FrameworkSection from "@@/components/pharmacy-audit/FrameworkSection";
 import ProblemsSection from "@@/components/pharmacy-audit/ProblemsSection";
-import ServiceBreadcrumb from "@@/components/services/ServiceBreadcrumb";
+import Breadcrumb from "@@/components/common/Breadcrumb";
+import { DevRoutes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { booking, breadcrumb, PHARMACY_AUDIT_SEO, type BookingBenefitIcon } from "@@/data/pharmacyAudit";
 
@@ -25,11 +26,10 @@ const BENEFIT_ICONS: Record<BookingBenefitIcon, LucideIcon> = {
 export default function PharmacyAuditPage() {
   return (
     <>
-      <ServiceBreadcrumb
+      <Breadcrumb
+        path={DevRoutes.PHARMACY_AUDIT}
         current={breadcrumb.current}
-        badges={[{ label: breadcrumb.tagline }]}
-        contacts={["phone", "email"]}
-      />
+        badges={[{ label: breadcrumb.tagline }]}      />
       <AuditHero />
       <EvidenceBar />
       <ProblemsSection />
