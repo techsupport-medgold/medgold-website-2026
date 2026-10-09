@@ -10,21 +10,21 @@ export const HOME_SEO = {
 export const homeHero = {
   badge:
     "Chennai's foremost hospital audit, O&M and healthcare growth partner • 120+ healthcare facilities managed",
-  heading: "Hospital Operations Management & Clinical Maintenance Company",
+  heading: "MedGold Healthcare",
   intro:
-    "From NABH-compliant clinical audits to sterile hospital housekeeping, nursing aide upskilling, and digital medical records, we power healthcare continuity across Chennai and Kanchipuram with zero operational disruptions.",
+    "From NABH-compliant clinical audits to clinical facility staffing, nursing aide upskilling, and digital medical records, we power healthcare continuity across Chennai and Kanchipuram with zero operational disruptions.",
   primaryCta: "Schedule Operations Audit",
   secondaryCta: "Explore Core Healthcare Services",
   compliance: ["NABH 5th Edition Aligned", "ISO 9001:2015 Clinical Quality", "BMWM 2016 Certification"],
   image: {
-    src: "/images/home/command-centre.jpg",
-    alt: "Two hospital operations staff in a Chennai command centre reviewing live floor maps and status dashboards on a video wall",
+    src: "/images/staffing/staffing-hero.jpg",
+    alt: "Med Gold clinical team of a doctor, nurses in teal scrubs, a technician and a coordinator standing together in a Chennai hospital lobby",
   },
-  imageTag: "Live operations telemetry • Chennai metro hub",
+  imageTag: "Clinical Staffing & Roster Command • Chennai Metro Hub",
   imageStatus: "Online",
   metricCards: [
-    { value: "99.8%", label: "Clinical SOP Compliance Rate", tone: "primary" },
-    { value: "100%", label: "NABH/JCI Audit Readiness", tone: "gold" },
+    { value: "99.8%", label: "Shift Fill & Roster Adherence", tone: "primary" },
+    { value: "100%", label: "NABH & Statutory Vetted Staff", tone: "gold" },
   ],
 } as const;
 
@@ -36,16 +36,17 @@ export const trustMetrics = [
 ] as const;
 
 export const servicesIntro = {
-  heading: "Healthcare Operations Architecture",
+  heading: "Healthcare Operations Management",
   intro:
     "Standardizing hospital clinical governance, infection deterrence, biomedical uptime, and statutory inspection compliance through certified standard operating procedures.",
   linkLabel: "Explore Services",
 };
 
-export type PillarIcon = "pharmacy" | "audit" | "sanitization" | "staffing" | "feedback" | "training";
+export type PillarIcon = "pharmacy" | "branding" | "staffing" | "feedback" | "training";
 
 export type ServicePillar = {
   title: string;
+  subtitle?: string;
   description: string;
   tags: readonly string[];
   code: string;
@@ -56,10 +57,11 @@ export type ServicePillar = {
 
 export const servicePillars: readonly ServicePillar[] = [
   {
-    title: "Pharmacy Audits",
+    title: "Pharmacy Stock Audit & Optimization",
+    subtitle: "Stop Dead Stock, Expiry & Leakage • High-Profit Center",
     description:
-      "Prescription compliance, expiry containment, Schedule H/X regulatory records, automated reconciliation, and strict cold-chain sensor audits.",
-    tags: ["Schedule H/X Audits", "Cold-Chain 2°C-8°C"],
+      "Physical stock verification & valuation, purchase/sales SOP development, KPI & KRA frameworks, staff training, and leakage eradication.",
+    tags: ["Stock Audit & Valuation", "Zero Expiry Losses", "SOP & KPI Systems"],
     code: "SOP-PHA",
     icon: "pharmacy",
     href: DevRoutes.PHARMACY_AUDIT,
@@ -69,27 +71,17 @@ export const servicePillars: readonly ServicePillar[] = [
     },
   },
   {
-    title: "Hospital & Clinic Audits",
+    title: "Hospital Branding, Marketing & Growth Services",
+    subtitle: "OPD Footfall Expansion • Institutional Revenue Growth",
     description:
-      "NABH 5th edition, JCI assessments, OT positive pressure airflows, life safety verifications, and inpatient bottleneck eradication.",
-    tags: ["NABH Readiness", "Infection Control"],
-    code: "SOP-HCA",
-    icon: "audit",
+      "Strategic hospital positioning, targeted patient lead generation, doctor personal branding, and multi-channel digital campaigns to scale OPD footfall and institutional revenue.",
+    tags: ["Patient Acquisition", "Digital Marketing", "Brand Equity"],
+    code: "SOP-MKT",
+    icon: "branding",
+    href: DevRoutes.BRANDING,
     image: {
-      src: "/images/home/clinic-audit.jpg",
-      alt: "Clinical quality director in a saree and white coat reviewing an audit checklist with a doctor on a hospital ward",
-    },
-  },
-  {
-    title: "Lab & Janitorial Sanitization",
-    description:
-      "Terminal OT sterilizations, Bio-Medical Waste barcoding (BMWM 2016), color-coded cleanroom zones, and ICMR lab standards.",
-    tags: ["OT Terminal Clean", "BMWM Barcoding"],
-    code: "SOP-HSK",
-    icon: "sanitization",
-    image: {
-      src: "/images/home/janitorial-sanitization.jpg",
-      alt: "Hospital housekeeping staff in masks and gloves machine-scrubbing a corridor floor and disinfecting handrails beside a colour-coded trolley",
+      src: "/images/branding/doctor-consult.jpg",
+      alt: "Senior consultant and a younger doctor in white coats reviewing a patient file together on a hospital ward",
     },
   },
   {
@@ -100,6 +92,10 @@ export const servicePillars: readonly ServicePillar[] = [
     code: "SOP-STF",
     icon: "staffing",
     href: DevRoutes.STAFFING,
+    image: {
+      src: "/images/staffing/nursing.jpg",
+      alt: "ICU nurses in scrubs adjusting an IV line for a resting patient beside a bedside vital-signs monitor",
+    },
   },
   {
     title: "Patient Feedback Systems",
@@ -109,15 +105,23 @@ export const servicePillars: readonly ServicePillar[] = [
     code: "SOP-PFS",
     icon: "feedback",
     href: DevRoutes.PATIENT_FEEDBACK,
+    image: {
+      src: "/images/patient-feedback/touchpoint-bedside.jpg",
+      alt: "Patient relations executive with a tablet collecting bedside feedback from a smiling inpatient while a nurse checks her IV",
+    },
   },
   {
-    title: "Nursing Assistant OJT",
+    title: "Nursing Training",
     description:
       "Rigorous bedside simulation, geriatric care handling, pressure-ulcer prevention, sterile catheter management, and Basic Life Support (BLS) training.",
     tags: ["Bedside Simulation", "BLS Certified"],
     code: "SOP-OJT",
     icon: "training",
     href: DevRoutes.NURSING_TRAINING,
+    image: {
+      src: "/images/nursing-training/training-hero.jpg",
+      alt: "Nurse educator briefing nursing aide trainees in scrubs around a patient-care manikin in a simulation ward",
+    },
   },
 ];
 
@@ -198,9 +202,9 @@ export const caseStudy = {
         "Stationed certified supervisors onsite 24/7 with immediate response protocols for theatre turnarounds.",
     },
     {
-      title: "Microfiber & BMWM Enforcement",
+      title: "Sterility & BMWM Protocol Enforcement",
       description:
-        "Replaced manual floor scrubs with hospital-grade vaporized disinfectant protocols between operative cases.",
+        "Instituted strict sterile turnover controls and hospital-grade vaporized disinfection protocols between operative cases.",
     },
   ],
 } as const;
@@ -221,6 +225,8 @@ export const auditCta = {
   shareFields: [
     "Hospital / Clinic Name",
     "Medical Superintendent / Lead Name",
+    "Official Contact Phone",
+    "Official Institutional Email",
     "Inpatient Bed Capacity",
     "Operational Services Required",
     "Primary Healthcare Facility Location",
@@ -247,9 +253,9 @@ export const directory = {
     {
       title: "Operations & Maintenance (O&M)",
       links: [
-        { label: "Janitorial & OT Cleanroom", href: DevRoutes.CONTACT },
+        { label: "Biomedical & Lab Maintenance", href: DevRoutes.CONTACT },
         { label: "Healthcare Facility Staffing", href: DevRoutes.STAFFING },
-        { label: "Nursing Assistant OJT", href: DevRoutes.NURSING_TRAINING },
+        { label: "Nursing Training", href: DevRoutes.NURSING_TRAINING },
       ],
     },
     {
