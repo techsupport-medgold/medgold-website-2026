@@ -12,7 +12,6 @@ export const DevRoutes = {
   INDEX: DEV_PREFIX,
   HOME: `${DEV_PREFIX}/home`,
   ABOUT: `${DEV_PREFIX}/about-us`,
-  SERVICES: `${DEV_PREFIX}/services`,
   STAFFING: `${DEV_PREFIX}/hospital-healthcare-medical-facility-staffing-services`,
   PHARMACY_AUDIT: `${DEV_PREFIX}/pharmacy-stock-audit-growth-services`,
   BRANDING: `${DEV_PREFIX}/hospital-clinic-branding-marketing-services`,
@@ -39,7 +38,7 @@ export const SERVICE_NAV: readonly NavItem[] = [
 export const DEV_NAV: readonly NavItem[] = [
   { href: DevRoutes.HOME, label: "Home" },
   { href: DevRoutes.ABOUT, label: "About" },
-  { href: DevRoutes.SERVICES, label: "Services", children: SERVICE_NAV },
+  { href: `${DevRoutes.HOME}#services`, label: "Services", children: SERVICE_NAV },
   { href: DevRoutes.CAREERS, label: "Careers" },
   { href: DevRoutes.CONTACT, label: "Contact Us" },
 ];

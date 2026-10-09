@@ -26,14 +26,6 @@ export default function ServiceBreadcrumb({ current, badges }: ServiceBreadcrumb
             <li aria-hidden="true">
               <ChevronRight className="size-3.5" />
             </li>
-            <li>
-              <Link href={DevRoutes.SERVICES} className={crumbLinkClass}>
-                Services
-              </Link>
-            </li>
-            <li aria-hidden="true">
-              <ChevronRight className="size-3.5" />
-            </li>
             <li aria-current="page" className="text-primary-deep">
               {current}
             </li>

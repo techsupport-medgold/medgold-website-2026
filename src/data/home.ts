@@ -239,15 +239,15 @@ export const directory = {
       title: "Clinical Audits",
       links: [
         { label: "Pharmacy Audit Services", href: DevRoutes.PHARMACY_AUDIT },
-        { label: "Hospital & Clinic Audits", href: DevRoutes.SERVICES },
-        { label: "Medical Record Maintenance", href: DevRoutes.SERVICES },
+        { label: "Hospital & Clinic Audits", href: DevRoutes.CONTACT },
+        { label: "Medical Record Maintenance", href: DevRoutes.CONTACT },
         { label: "Patient Feedback Systems", href: DevRoutes.PATIENT_FEEDBACK },
       ],
     },
     {
       title: "Operations & Maintenance (O&M)",
       links: [
-        { label: "Janitorial & OT Cleanroom", href: DevRoutes.SERVICES },
+        { label: "Janitorial & OT Cleanroom", href: DevRoutes.CONTACT },
         { label: "Healthcare Facility Staffing", href: DevRoutes.STAFFING },
         { label: "Nursing Assistant OJT", href: DevRoutes.NURSING_TRAINING },
       ],
