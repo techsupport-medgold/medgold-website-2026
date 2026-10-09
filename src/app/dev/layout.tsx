@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
 import Footer from "@@/components/common/Footer";
 import Header from "@@/components/common/Header";
-import { SITE } from "@@/config/site";
-
 /** Everything under /dev is a pre-launch preview: reachable by URL, never indexed. */
 export const metadata: Metadata = {
-  title: {
-    template: `%s (Preview) | ${SITE.name}`,
-    default: `Preview | ${SITE.name}`,
-  },
   robots: {
     index: false,
     follow: false,
