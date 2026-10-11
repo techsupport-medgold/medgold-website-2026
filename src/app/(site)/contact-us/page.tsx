@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ExternalLink, MapPin, MessageCircle, Navigation, Phone, UserRound } from "lucide-react";
+import { ExternalLink, Mail, MapPin, MessageCircle, Navigation, Phone, UserRound } from "lucide-react";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import EnquiryForm from "@@/components/contact/EnquiryForm";
 import { Button } from "@@/components/ui/button";
@@ -55,6 +55,15 @@ export default function ContactPage() {
                   <span className="block text-sm font-medium text-ink-muted">Call</span>
                   <span className="block font-semibold text-link group-hover:underline">
                     {SITE.contact.phone}
+                  </span>
+                </span>
+              </a>
+              <a href={`mailto:${SITE.contact.email}`} className={cardClass}>
+                <Mail className="size-6 shrink-0 text-primary" aria-hidden="true" />
+                <span>
+                  <span className="block text-sm font-medium text-ink-muted">Email</span>
+                  <span className="block break-all font-semibold text-link group-hover:underline">
+                    {SITE.contact.email}
                   </span>
                 </span>
               </a>

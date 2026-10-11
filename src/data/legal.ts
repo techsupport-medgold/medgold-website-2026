@@ -19,6 +19,7 @@ export const TERMS_LAST_UPDATED = "12 October 2026";
 const contactList: LegalListItem[] = [
   { term: "Name", text: SITE.contact.person.replace(/^Mr\.\s*/, "") },
   { term: "Phone", text: SITE.contact.phone },
+  { term: "Email", text: SITE.contact.email },
   { term: "Address", text: SITE.address.full },
 ];
 

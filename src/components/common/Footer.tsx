@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, MapPin, MessageCircle, Phone, UserRound } from "lucide-react";
+import { ArrowRight, Mail, MapPin, MessageCircle, Phone, UserRound } from "lucide-react";
 import Logo from "@@/components/common/Logo";
 import { Button } from "@@/components/ui/button";
 import { MAIN_NAV, Routes, LEGAL_NAV, SERVICE_NAV } from "@@/config/routes";
@@ -79,6 +79,12 @@ export default function Footer() {
                 <a href={`tel:${SITE.contact.phoneHref}`} className={linkClass}>
                   <Phone className="size-4 text-primary" aria-hidden="true" />
                   {SITE.contact.phone}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${SITE.contact.email}`} className={linkClass}>
+                  <Mail className="size-4 text-primary" aria-hidden="true" />
+                  {SITE.contact.email}
                 </a>
               </li>
               <li>
