@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Case Studies",
   description: "Hospital operations, audit and growth case studies from Med Gold. This page is in development.",
   alternates: { canonical: Routes.CASE_STUDIES },
+  robots: { index: false, follow: true },
 };
 
 export default function CaseStudiesPage() {
