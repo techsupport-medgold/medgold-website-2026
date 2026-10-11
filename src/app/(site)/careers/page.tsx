@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import TrainersSection from "@@/components/careers/TrainersSection";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import { Routes } from "@@/config/routes";
 import { CAREERS_SEO, careersHero } from "@@/data/careers";
@@ -22,6 +23,7 @@ export default function CareersPage() {
           <p className="mt-6 text-lg text-ink-muted">{careersHero.intro}</p>
         </div>
       </section>
+      <TrainersSection />
     </>
   );
 }
