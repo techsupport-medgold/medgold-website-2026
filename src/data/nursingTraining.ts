@@ -41,7 +41,7 @@ export const hero = {
     title: "Nursing Training & Skills Development Center",
     location: "Kolathur, Chennai",
     description: "Hands-on ICU & Ward simulations with state-of-the-art medical equipment handling.",
-    locationLabel: "Location:",  },
+  },
 };
 
 export type ProfileIcon = "diploma" | "anm" | "gnm" | "bsc" | "aide" | "ward";

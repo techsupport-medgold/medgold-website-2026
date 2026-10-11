@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, CircleCheck, Lock, Mail, MessageCircle, Phone, Send, type LucideIcon } from "lucide-react";
+import { ArrowRight, CircleCheck, Lock, Send, type LucideIcon } from "lucide-react";
 import { Button } from "@@/components/ui/button";
 import IconBadge from "@@/components/ui/icon-badge";
 import Reveal from "@@/components/ui/reveal";
 import SectionHeader from "@@/components/ui/section-header";
 import { Routes } from "@@/config/routes";
-import { SITE, whatsappUrl } from "@@/config/site";
 import { cn } from "@@/lib/utils";
 
 export type ServiceCtaPoint = { icon: LucideIcon; title?: string; text: string };
@@ -31,9 +30,6 @@ const TONES = {
   raised: "bg-surface-raised",
   muted: "bg-surface-muted",
 } as const;
-
-const chipClass =
-  "inline-flex min-h-11 items-center gap-2 rounded-pill bg-surface-raised px-4 py-2 text-sm font-semibold text-primary-deep transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-white hover:shadow-card-hover motion-reduce:hover:translate-y-0 [&:hover_svg]:text-gold";
 
 export default function ServiceCta({
   id,
@@ -80,34 +76,6 @@ export default function ServiceCta({
                 ))}
               </ul>
             ) : null}
-
-            <ul className="mt-8 flex flex-wrap gap-3" aria-label="Contact details">
-              <li>
-                <a href={`tel:${SITE.contact.phoneHref}`} className={chipClass}>
-                  <Phone className="size-4 text-gold-ink" aria-hidden="true" />
-                  {SITE.contact.phone}
-                </a>
-              </li>
-              <li>
-                <a href={`tel:${SITE.contact.phoneAltHref}`} className={chipClass}>
-                  <Phone className="size-4 text-gold-ink" aria-hidden="true" />
-                  {SITE.contact.phoneAlt}
-                </a>
-              </li>
-              <li className="min-w-0">
-                <a href={`mailto:${SITE.contact.email}`} className={cn(chipClass, "break-all")}>
-                  <Mail className="size-4 shrink-0 text-gold-ink" aria-hidden="true" />
-                  {SITE.contact.email}
-                </a>
-              </li>
-              <li>
-                <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className={chipClass}>
-                  <MessageCircle className="size-4 text-gold-ink" aria-hidden="true" />
-                  WhatsApp
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </li>
-            </ul>
           </div>
 
           <div className="relative flex min-w-0 flex-col justify-between gap-6 rounded-card bg-surface-raised p-6 sm:p-8 lg:col-span-5">

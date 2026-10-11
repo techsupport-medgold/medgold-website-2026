@@ -17,7 +17,7 @@ export const hero = {
   badge: "MEDGOLD HEALTHCARE — AN ISO 9001:2015 CERTIFIED COMPANY",
   heading: "Medical & Healthcare Manpower Services & Clinical Staffing Solutions",
   intro:
-    "End-to-end credentialed healthcare staffing and career development for hospitals, clinics, diagnostic labs, and pharmacies across Chennai and South India. Empowering institutions with qualified clinical manpower while advancing healthcare professionals through real hospital training.",  addressLabel: "Address:",
+    "End-to-end credentialed healthcare staffing and career development for hospitals, clinics, diagnostic labs, and pharmacies across Chennai and South India. Empowering institutions with qualified clinical manpower while advancing healthcare professionals through real hospital training.",
   webLabel: "Web:",
   primaryCta: "Request Staffing Roster",
   secondaryCta: "Upgrade Skills & Training",

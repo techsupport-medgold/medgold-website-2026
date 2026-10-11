@@ -7,7 +7,6 @@ import {
   Globe,
   GraduationCap,
   Hospital,
-  MapPin,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -16,7 +15,7 @@ import CountUp from "@@/components/ui/count-up";
 import IconBadge from "@@/components/ui/icon-badge";
 import ResponsiveImage from "@@/components/ui/responsive-image";
 import { Routes } from "@@/config/routes";
-import { SITE, SITE_URL } from "@@/config/site";
+import { SITE_URL } from "@@/config/site";
 import { hero, type TrustIcon } from "@@/data/staffing";
 
 const TRUST_ICONS: Record<TrustIcon, LucideIcon> = {
@@ -46,13 +45,7 @@ export default function StaffingHero() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted">{hero.intro}</p>
 
-          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Location and website">
-            <li className={chipClass}>
-              <MapPin className={chipIconClass} aria-hidden="true" />
-              <span>
-                <span className="font-bold text-ink">{hero.addressLabel}</span> {SITE.address.full}
-              </span>
-            </li>
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Website">
             <li className={chipClass}>
               <Globe className={chipIconClass} aria-hidden="true" />
               <span>
