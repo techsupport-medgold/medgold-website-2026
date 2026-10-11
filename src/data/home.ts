@@ -179,7 +179,7 @@ export const auditCta = {
     "Get an unbiased evaluation of your facility's operational workflow, statutory compliance, waste management, and patient care standards.",
   benefits: [
     { icon: "response", text: "Response within 4 operational hours across Chennai" },
-    { icon: "scorecard", text: "Complete 42-point NABH conformity readiness scorecard" },
+    { icon: "scorecard", text: "Complete Nursing Training & Development" },
     { icon: "briefing", text: "Zero-obligation executive briefing for Medical Directors" },
   ] satisfies { icon: AuditBenefitIcon; text: string }[],
   shareHeading: "Share with our audit team",
