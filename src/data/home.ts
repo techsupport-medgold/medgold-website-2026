@@ -16,10 +16,10 @@ export const homeHero = {
   primaryCta: "Schedule Operations Audit",
   compliance: ["NABH 5th Edition Aligned", "ISO 9001:2015 Clinical Quality", "BMWM 2016 Certification"],
   image: {
-    src: "/images/staffing/staffing-hero.jpg",
-    alt: "Med Gold clinical team of a doctor, nurses in teal scrubs, a technician and a coordinator standing together in a Chennai hospital lobby",
+    src: "/images/home/home-hero.jpg",
+    alt: "Hospital operations manager and senior nurse reviewing a tablet in a modern hospital corridor while a biomedical engineer services a patient monitor",
   },
-  imageTag: "Clinical Staffing & Roster Command • Chennai Metro Hub",
+  imageTag: "Hospital Operations Command • Chennai Metro Hub",
   imageStatus: "Online",
   metricCards: [
     { value: "99.8%", label: "Shift Fill & Roster Adherence", tone: "primary" },
