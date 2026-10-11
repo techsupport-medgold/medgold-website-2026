@@ -2,7 +2,7 @@
 export const CONTACT_SEO = {
   title: "Contact Us",
   description:
-    "Contact Med Gold: send an enquiry about appointments, health check-ups, or careers, or call and WhatsApp our team directly.",
+    "Contact MedGold Healthcare send an enquiry about appointments, training or careers, or call and WhatsApp our team directly.",
 };
 
 export const contactHero = {

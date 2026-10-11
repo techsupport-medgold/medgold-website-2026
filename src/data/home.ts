@@ -5,9 +5,8 @@ import { absoluteUrl } from "@@/config/site";
 export const HOME_PAGE_URL = absoluteUrl(Routes.HOME);
 
 export const HOME_SEO = {
-  title: "Hospital Healthcare Operations Management and Maintenance Company Chennai India",
-  description:
-    "From NABH-compliant clinical audits to sterile housekeeping, nursing aide upskilling and digital records, Med Gold powers hospital operations across Chennai.",
+  title: "Hospital Operations Management and Maintenance Company",
+  description: "MedGold Healthcare offers hospital operations management and maintenance services in Chennai India",
 };
 
 export const homeHero = {

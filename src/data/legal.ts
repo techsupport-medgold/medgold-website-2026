@@ -25,13 +25,13 @@ const contactList: LegalListItem[] = [
 export const PRIVACY_SEO = {
   title: "Privacy Policy",
   description:
-    "How MedGold Healthcare collects, uses, shares and protects personal and health data under India's DPDP Act 2023 across our audit, staffing and training services.",
+    "Read MedGold Healthcare's Privacy Policy to learn how we collect, use, protect, and share personal and health data across our healthcare services.",
 };
 
 export const TERMS_SEO = {
-  title: "Terms of Service",
+  title: "Terms & Conditions",
   description:
-    "Terms governing use of the MedGold Healthcare website and our pharmacy audit, healthcare staffing, nursing training and patient feedback integration services.",
+    "Review MedGold Healthcare's Terms & Conditions governing use of our website and services, including pharmacy audit, staffing, training, and feedback systems.",
 };
 
 export const privacySections: LegalSection[] = [

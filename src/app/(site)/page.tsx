@@ -6,6 +6,8 @@ import ServicePillars from "@@/components/home/ServicePillars";
 import TrustMetrics from "@@/components/home/TrustMetrics";
 import ServiceCta from "@@/components/services/ServiceCta";
 import JsonLd from "@@/components/common/JsonLd";
+import { Routes } from "@@/config/routes";
+import { SITE } from "@@/config/site";
 import { auditCta, HOME_PAGE_URL, HOME_SEO, type AuditBenefitIcon } from "@@/data/home";
 import { webPageSchema } from "@@/lib/schema";
 
@@ -13,6 +15,19 @@ export const metadata: Metadata = {
   title: { absolute: HOME_SEO.title },
   description: HOME_SEO.description,
   alternates: { canonical: HOME_PAGE_URL },
+  openGraph: {
+    title: HOME_SEO.title,
+    description: HOME_SEO.description,
+    url: Routes.HOME,
+    siteName: SITE.name,
+    locale: SITE.locale,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_SEO.title,
+    description: HOME_SEO.description,
+  },
 };
 
 const AUDIT_ICONS: Record<AuditBenefitIcon, LucideIcon> = {
