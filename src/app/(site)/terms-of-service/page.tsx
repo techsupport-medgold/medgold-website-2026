@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPage from "@@/components/legal/LegalPage";
 import { Routes } from "@@/config/routes";
-import { TERMS_SEO, termsSections } from "@@/data/legal";
+import { LEGAL_PLACEHOLDER_NOTE, TERMS_LAST_UPDATED, TERMS_SEO, termsSections } from "@@/data/legal";
 
 export const metadata: Metadata = {
   title: TERMS_SEO.title,
@@ -10,5 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default function TermsPage() {
-  return <LegalPage title="Terms of Service" path={Routes.TERMS} sections={termsSections} />;
+  return (
+    <LegalPage
+      title="Terms of Service"
+      path={Routes.TERMS}
+      lastUpdated={TERMS_LAST_UPDATED}
+      note={LEGAL_PLACEHOLDER_NOTE}
+      sections={termsSections}
+    />
+  );
 }
