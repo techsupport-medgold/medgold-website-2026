@@ -11,13 +11,10 @@ export const HOME_SEO = {
 };
 
 export const homeHero = {
-  badge:
-    "Chennai's foremost hospital audit, O&M and healthcare growth partner • 120+ healthcare facilities managed",
   heading: "MedGold Healthcare",
   intro:
     "From NABH-compliant clinical audits to clinical facility staffing, nursing aide upskilling, and digital medical records, we power healthcare continuity across Chennai and Kanchipuram with zero operational disruptions.",
   primaryCta: "Schedule Operations Audit",
-  secondaryCta: "Explore Core Healthcare Services",
   compliance: ["NABH 5th Edition Aligned", "ISO 9001:2015 Clinical Quality", "BMWM 2016 Certification"],
   image: {
     src: "/images/staffing/staffing-hero.jpg",
@@ -32,7 +29,7 @@ export const homeHero = {
 } as const;
 
 export const trustMetrics = [
-  { eyebrow: "Clinical compliance", value: "140+", label: "Hospital & Clinic Audits Completed" },
+  { eyebrow: "Pharmacy Stock Audit", value: "140+", label: "Hospital & Clinic Audits Completed" },
   { eyebrow: "Facility scope", value: "3,500+", label: "Hospital Beds Under Active Quality SOPs" },
   { eyebrow: "Trained personnel", value: "1,200+", label: "Clinical Staff & Nursing Aides Deployed" },
   { eyebrow: "Emergency response", value: "<45 min", label: "Average Rapid Dispatch Time in Chennai" },
@@ -52,7 +49,6 @@ export type ServicePillar = {
   subtitle?: string;
   description: string;
   tags: readonly string[];
-  code: string;
   icon: PillarIcon;
   image?: { src: string; alt: string };
   href?: string;
@@ -65,7 +61,6 @@ export const servicePillars: readonly ServicePillar[] = [
     description:
       "Physical stock verification & valuation, purchase/sales SOP development, KPI & KRA frameworks, staff training, and leakage eradication.",
     tags: ["Stock Audit & Valuation", "Zero Expiry Losses", "SOP & KPI Systems"],
-    code: "SOP-PHA",
     icon: "pharmacy",
     href: Routes.PHARMACY_AUDIT,
     image: {
@@ -79,7 +74,6 @@ export const servicePillars: readonly ServicePillar[] = [
     description:
       "Strategic hospital positioning, targeted patient lead generation, doctor personal branding, and multi-channel digital campaigns to scale OPD footfall and institutional revenue.",
     tags: ["Patient Acquisition", "Digital Marketing", "Brand Equity"],
-    code: "SOP-MKT",
     icon: "branding",
     href: Routes.BRANDING,
     image: {
@@ -90,9 +84,8 @@ export const servicePillars: readonly ServicePillar[] = [
   {
     title: "Healthcare Facility Staffing",
     description:
-      "Vetted Duty Medical Officers (DMOs), NABH-oriented ICU charge nurses, lab tech professionals, radiology technicians, and hospital operations dispatchers on demand.",
+      "Vetted Duty Medical Officers (DMOs), nurses, doctors, receptionists, hospital executives, lab tech professionals, radiology technicians, and hospital operations dispatchers on demand.",
     tags: ["ICU Specialist Nurses", "Duty Doctors"],
-    code: "SOP-STF",
     icon: "staffing",
     href: Routes.STAFFING,
     image: {
@@ -105,7 +98,6 @@ export const servicePillars: readonly ServicePillar[] = [
     description:
       "Bedside touchpoint feedback collection, automated NPS reporting, real-time grievance escalation for nursing superintendents, and qualitative inpatient sentiment indexing.",
     tags: ["Digital Bedside NPS", "Instant Escalation"],
-    code: "SOP-PFS",
     icon: "feedback",
     href: Routes.PATIENT_FEEDBACK,
     image: {
@@ -118,7 +110,6 @@ export const servicePillars: readonly ServicePillar[] = [
     description:
       "Rigorous bedside simulation, geriatric care handling, pressure-ulcer prevention, sterile catheter management, and Basic Life Support (BLS) training.",
     tags: ["Bedside Simulation", "BLS Certified"],
-    code: "SOP-OJT",
     icon: "training",
     href: Routes.NURSING_TRAINING,
     image: {

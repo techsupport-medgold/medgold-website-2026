@@ -37,7 +37,7 @@ export default function ServicePillars() {
           const Icon = ICONS[pillar.icon];
           const number = String(index + 1).padStart(2, "0");
           return (
-            <Reveal as="li" key={pillar.code} delay={stagger(index % 3)}>
+            <Reveal as="li" key={pillar.title} delay={stagger(index % 3)}>
               <Card padding="none" interactive className="group h-full overflow-hidden">
                 {pillar.image ? (
                   <div className="relative">
@@ -77,7 +77,7 @@ export default function ServicePillars() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto flex items-center justify-between border-t border-border-muted pt-2">
+                  <div className="mt-auto flex items-center border-t border-border-muted pt-2">
                     <Link
                       href={pillar.href ?? Routes.CONTACT}
                       className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary after:absolute after:inset-0 after:rounded-card hover:text-primary-deep"
@@ -85,9 +85,7 @@ export default function ServicePillars() {
                       {servicesIntro.linkLabel}
                       <span className="sr-only">: {pillar.title}</span>
                       <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-                    </Link>
-                    <span className="font-mono text-xs font-semibold text-ink-subtle">{pillar.code}</span>
-                  </div>
+                    </Link>                  </div>
                 </div>
               </Card>
             </Reveal>

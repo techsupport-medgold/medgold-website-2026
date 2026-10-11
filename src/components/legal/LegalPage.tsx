@@ -1,4 +1,3 @@
-import { Info } from "lucide-react";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import type { LegalListItem, LegalSection } from "@@/data/legal";
 
@@ -6,7 +5,6 @@ type LegalPageProps = {
   title: string;
   path: string;
   lastUpdated: string;
-  note?: string;
   sections: LegalSection[];
 };
 
@@ -34,7 +32,7 @@ function Paragraphs({ items }: { items: string[] }) {
   ));
 }
 
-export default function LegalPage({ title, path, lastUpdated, note, sections }: LegalPageProps) {
+export default function LegalPage({ title, path, lastUpdated, sections }: LegalPageProps) {
   return (
     <>
       <Breadcrumb current={title} path={path} />
@@ -71,16 +69,6 @@ export default function LegalPage({ title, path, lastUpdated, note, sections }: 
           </nav>
 
           <div className="max-w-3xl">
-            {note && (
-              <p
-                role="note"
-                className="mb-10 flex items-start gap-3 rounded-lg border border-gold/50 bg-gold/10 p-4 text-sm text-ink"
-              >
-                <Info className="mt-0.5 size-4 shrink-0 text-gold-ink" aria-hidden="true" />
-                {note}
-              </p>
-            )}
-
             {sections.map((section, index) => (
               <section
                 key={section.id}
@@ -96,7 +84,8 @@ export default function LegalPage({ title, path, lastUpdated, note, sections }: 
                 {section.subsections?.map((subsection) => (
                   <div key={subsection.heading} className="mt-6">
                     <h3 className="text-lg font-semibold text-ink">{subsection.heading}</h3>
-                    <LegalList items={subsection.list} />
+                    {subsection.paragraphs && <Paragraphs items={subsection.paragraphs} />}
+                    {subsection.list && <LegalList items={subsection.list} />}
                   </div>
                 ))}
                 {section.closing && <Paragraphs items={section.closing} />}

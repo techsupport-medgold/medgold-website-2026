@@ -2,7 +2,7 @@ import { SITE, SITE_URL } from "@@/config/site";
 
 export type LegalListItem = string | { term: string; text: string };
 
-export type LegalSubsection = { heading: string; list: LegalListItem[] };
+export type LegalSubsection = { heading: string; paragraphs?: string[]; list?: LegalListItem[] };
 
 export type LegalSection = {
   id: string;
@@ -14,17 +14,12 @@ export type LegalSection = {
 };
 
 export const PRIVACY_LAST_UPDATED = "12 October 2026";
-export const TERMS_LAST_UPDATED = "26 September 2026";
+export const TERMS_LAST_UPDATED = "12 October 2026";
 
-/** Terms of Service is still placeholder copy pending legal review. */
-export const LEGAL_PLACEHOLDER_NOTE =
-  "Placeholder content for review. Final text must be approved by Med Gold's legal advisor before launch.";
-
-const contactLines = [
-  `Contact person: ${SITE.contact.person}`,
-  `Phone: ${SITE.contact.phone}`,
-  `WhatsApp: ${SITE.contact.phone}`,
-  `Address: ${SITE.address.full}`,
+const contactList: LegalListItem[] = [
+  { term: "Name", text: SITE.contact.person.replace(/^Mr\.\s*/, "") },
+  { term: "Phone", text: SITE.contact.phone },
+  { term: "Address", text: SITE.address.full },
 ];
 
 export const PRIVACY_SEO = {
@@ -36,7 +31,7 @@ export const PRIVACY_SEO = {
 export const TERMS_SEO = {
   title: "Terms of Service",
   description:
-    "The terms and conditions that apply when you use the Med Gold website, including our medical disclaimer and enquiry terms.",
+    "Terms governing use of the MedGold Healthcare website and our pharmacy audit, healthcare staffing, nursing training and patient feedback integration services.",
 };
 
 export const privacySections: LegalSection[] = [
@@ -321,87 +316,245 @@ export const privacySections: LegalSection[] = [
     paragraphs: [
       "If you have any questions, concerns, or complaints regarding this Privacy Policy or our data processing practices, please contact our Grievance Officer / Data Protection Officer:",
     ],
-    list: [
-      { term: "Name", text: SITE.contact.person.replace(/^Mr\.\s*/, "") },
-      { term: "Phone", text: SITE.contact.phone },
-      { term: "Address", text: SITE.address.full },
-    ],
+    list: contactList,
   },
 ];
 
 export const termsSections: LegalSection[] = [
   {
-    id: "acceptance",
-    heading: "Acceptance of terms",
+    id: "introduction",
+    heading: "Introduction",
     paragraphs: [
-      `By accessing or using the ${SITE.name} website, you agree to these Terms of Service. If you do not agree, please do not use the website.`,
+      `Welcome to MedGold Healthcare ("MedGold," "we," "us," or "our"). These Terms & Conditions ("Terms") govern your access to and use of our website at ${SITE_URL}/ and all related services, including Hospital Pharmacy Audit, Healthcare Staffing, Nursing Training, and Patient Feedback System Integration (collectively, the "Services").`,
+      "By accessing, browsing, or using our website or Services, you agree to be bound by these Terms and our Privacy Policy. If you do not agree, please do not use our website or Services.",
     ],
   },
   {
-    id: "use-of-website",
-    heading: "Use of the website",
-    paragraphs: ["You agree to use this website only for lawful purposes. You must not:"],
+    id: "definitions",
+    heading: "1. Definitions",
+    paragraphs: [],
     list: [
-      "Submit false or misleading information",
-      "Attempt to gain unauthorised access to the website or its systems",
-      "Use the website in a way that could damage, disable, or impair it",
+      { term: '"User," "you," or "your"', text: "means any person or entity accessing or using the website or Services." },
+      {
+        term: '"Services"',
+        text: "means all services offered by MedGold, including Hospital Pharmacy Audit, Healthcare Staffing, Nursing Training, Patient Feedback System Integration, and any related consulting or support services.",
+      },
+      {
+        term: '"Content"',
+        text: "means all text, graphics, logos, software, data, reports, training materials, and other materials made available through the website or Services.",
+      },
+      {
+        term: '"Client"',
+        text: "means a hospital, clinic, healthcare institution, or other organization that engages MedGold for Services.",
+      },
+      {
+        term: '"Personal Data" and "Protected Health Information" (PHI)',
+        text: "have the meanings given in our Privacy Policy and applicable law.",
+      },
     ],
   },
   {
-    id: "medical-disclaimer",
-    heading: "Medical disclaimer",
+    id: "eligibility",
+    heading: "2. Eligibility",
     paragraphs: [
-      "The content on this website is for general information only. It is not medical advice and should not replace a consultation with a qualified doctor.",
-      "Do not ignore professional medical advice or delay seeking it because of something you read on this website.",
-      "In a medical emergency, call 112 or go to the nearest hospital immediately.",
+      "You must be at least 18 years of age and legally capable of entering into a binding contract to use our website or Services. If you use the Services on behalf of an organization, you represent and warrant that you have authority to bind that organization to these Terms.",
     ],
   },
   {
-    id: "appointments-enquiries",
-    heading: "Appointments and enquiries",
+    id: "acceptance",
+    heading: "3. Acceptance of Terms",
     paragraphs: [
-      "Submitting an enquiry does not confirm an appointment. Our team will contact you to confirm availability, timing, and any applicable fees.",
+      "By using the website or Services, you confirm that you have read, understood, and agreed to these Terms. We may update these Terms from time to time. Continued use after changes are posted constitutes acceptance of the revised Terms.",
+    ],
+  },
+  {
+    id: "services",
+    heading: "4. Services",
+    paragraphs: [],
+    subsections: [
+      {
+        heading: "4.1 Hospital Pharmacy Audit",
+        paragraphs: [
+          "MedGold provides advisory and operational pharmacy audit services designed to review medication management, pharmacy workflows, compliance practices, and related processes. Audit findings are based on information made available to us and are provided for quality improvement and operational purposes. Our audits are not a substitute for statutory audits, regulatory inspections, or professional legal or medical advice.",
+        ],
+      },
+      {
+        heading: "4.2 Healthcare Staffing",
+        paragraphs: [
+          "MedGold facilitates recruitment, screening, credential verification, and placement of healthcare professionals, including nurses and pharmacists. Unless expressly stated in a separate written agreement, MedGold acts as a staffing facilitator and not as the employer of placed professionals. Clients are responsible for final hiring decisions, employment terms, compliance with labour laws, and workplace supervision.",
+        ],
+      },
+      {
+        heading: "4.3 Nursing Training",
+        paragraphs: [
+          "MedGold offers nursing training programs, assessments, and related educational services. Completion certificates are issued subject to satisfactory participation and assessment. Participation in training does not guarantee employment or placement. Trainees must comply with program rules, codes of conduct, and clinical training requirements.",
+        ],
+      },
+      {
+        heading: "4.4 Patient Feedback System Integration",
+        paragraphs: [
+          "MedGold supports the collection, integration, and analysis of patient feedback for healthcare quality improvement. Feedback may be anonymized or aggregated for reporting. Patient feedback systems are not intended for medical emergencies or urgent clinical communication. Healthcare providers remain responsible for obtaining any necessary patient consents and for using feedback in compliance with applicable laws.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "no-medical-advice",
+    heading: "5. No Medical Advice; No Doctor-Patient Relationship",
+    paragraphs: [
+      "The content on our website and in our Services is for informational and operational purposes only. It does not constitute medical advice, diagnosis, or treatment. No doctor-patient, nurse-patient, or other clinical relationship is created by your use of the website or Services. In case of a medical emergency, contact emergency services or a qualified healthcare professional immediately.",
+    ],
+  },
+  {
+    id: "user-responsibilities",
+    heading: "6. User Accounts and Responsibilities",
+    paragraphs: ["Where you create an account or provide information, you agree to:"],
+    list: [
+      "Provide accurate, current, and complete information.",
+      "Maintain the confidentiality of your login credentials.",
+      "Notify us promptly of any unauthorized use.",
+      "Accept responsibility for all activity under your account.",
+    ],
+  },
+  {
+    id: "client-obligations",
+    heading: "7. Client and Healthcare Provider Obligations",
+    paragraphs: ["If you are a Client or healthcare provider using our Services, you agree to:"],
+    list: [
+      "Obtain all necessary patient, employee, and candidate consents.",
+      "Comply with applicable healthcare, privacy, employment, and data protection laws.",
+      "Ensure that information shared with MedGold is accurate and lawfully provided.",
+      "Use our Services only for lawful and legitimate purposes.",
+      "Maintain appropriate security and access controls within your organization.",
+    ],
+  },
+  {
+    id: "prohibited-conduct",
+    heading: "8. Prohibited Conduct",
+    paragraphs: ["You agree not to:"],
+    list: [
+      "Use the website or Services for any unlawful, fraudulent, or harmful purpose.",
+      "Upload or transmit viruses, malware, or harmful code.",
+      "Attempt to gain unauthorized access to our systems or data.",
+      "Interfere with the operation, security, or availability of the website or Services.",
+      "Copy, scrape, reverse engineer, or misuse our Content or technology.",
+      "Submit false, misleading, or infringing information.",
+      "Violate any applicable law, regulation, or professional obligation.",
+    ],
+  },
+  {
+    id: "fees",
+    heading: "9. Fees and Payment",
+    paragraphs: [
+      "Fees for Services are set out in separate proposals, agreements, or invoices. Unless otherwise stated, all fees are exclusive of applicable taxes. Payment terms, late fees, and refund policies will be specified in the relevant agreement. We reserve the right to suspend or terminate Services for non-payment.",
     ],
   },
   {
     id: "intellectual-property",
-    heading: "Intellectual property",
+    heading: "10. Intellectual Property",
     paragraphs: [
-      `All content on this website, including text, images, logos, and design, belongs to ${SITE.legalName} or its licensors. You may not copy, reproduce, or distribute it without our written permission.`,
+      "All Content, trademarks, logos, software, audit tools, training materials, reports, and methodologies are owned by MedGold or its licensors and are protected by applicable intellectual property laws. You may not reproduce, distribute, modify, or create derivative works without our prior written consent.",
+      "If you submit feedback, suggestions, or other content, you grant MedGold a non-exclusive, worldwide, royalty-free license to use, reproduce, and incorporate that content for service improvement and business purposes, subject to our Privacy Policy.",
+    ],
+  },
+  {
+    id: "confidentiality",
+    heading: "11. Confidentiality",
+    paragraphs: [
+      "Each party may receive confidential information from the other. You agree to protect MedGold's confidential information and to use it only for the purposes of the Services. These obligations do not apply to information that is publicly available, independently developed, or required to be disclosed by law.",
+    ],
+  },
+  {
+    id: "privacy",
+    heading: "12. Privacy and Data Protection",
+    paragraphs: [
+      "Your use of the website and Services is also governed by our Privacy Policy. We process Personal Data and PHI in accordance with applicable laws, including the Digital Personal Data Protection Act, 2023, the Digital Personal Data Protection Rules, 2025, the Information Technology Act, 2000, and, where applicable, HIPAA-related principles. By using our Services, you consent to such processing as described in our Privacy Policy.",
     ],
   },
   {
     id: "third-party-links",
-    heading: "Third-party links",
+    heading: "13. Third-Party Links and Services",
     paragraphs: [
-      "Our website may link to third-party services such as WhatsApp. We are not responsible for the content, policies, or practices of those services.",
+      "Our website may contain links to third-party websites or services. We are not responsible for the content, privacy practices, or terms of any third party. Your use of third-party services is at your own risk.",
+    ],
+  },
+  {
+    id: "disclaimers",
+    heading: "14. Disclaimers",
+    paragraphs: [
+      'The website and Services are provided on an "as is" and "as available" basis. To the maximum extent permitted by law, MedGold disclaims all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not warrant that the website or Services will be uninterrupted, error-free, or completely secure. We do not guarantee any specific audit outcome, staffing placement, training result, or feedback outcome.',
     ],
   },
   {
     id: "limitation-of-liability",
-    heading: "Limitation of liability",
+    heading: "15. Limitation of Liability",
     paragraphs: [
-      `To the fullest extent permitted by law, ${SITE.legalName} is not liable for any loss or damage arising from your use of this website or reliance on its content.`,
+      "To the maximum extent permitted by law, MedGold shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or business opportunities, arising out of or related to your use of the website or Services.",
+    ],
+  },
+  {
+    id: "indemnification",
+    heading: "16. Indemnification",
+    paragraphs: [
+      "You agree to indemnify, defend, and hold harmless MedGold, its officers, directors, employees, and agents from any claims, liabilities, damages, losses, or expenses arising from:",
+    ],
+    list: [
+      "Your use of the website or Services.",
+      "Your violation of these Terms.",
+      "Your violation of any law or third-party rights.",
+      "Any data or information you provide to us.",
+    ],
+  },
+  {
+    id: "termination",
+    heading: "17. Term and Termination",
+    paragraphs: [
+      "We may suspend or terminate your access to the website or Services at any time, with or without notice, for conduct that violates these Terms or applicable law. You may stop using the Services at any time. Provisions relating to intellectual property, confidentiality, disclaimers, limitation of liability, indemnification, and governing law shall survive termination.",
     ],
   },
   {
     id: "governing-law",
-    heading: "Governing law",
+    heading: "18. Governing Law and Dispute Resolution",
     paragraphs: [
-      "These Terms of Service are governed by the laws of India. Any disputes are subject to the exclusive jurisdiction of the courts of Tamil Nadu.",
+      "These Terms shall be governed by and construed in accordance with the laws of India. Subject to any separate written agreement, the courts at Chennai, India, shall have exclusive jurisdiction over any disputes arising out of or relating to these Terms or the Services.",
     ],
   },
   {
     id: "changes",
-    heading: "Changes to these terms",
+    heading: "19. Changes to These Terms",
     paragraphs: [
-      'We may update these Terms of Service from time to time. Any changes will be posted on this page with a revised "Last updated" date.',
+      'We may update these Terms from time to time. The revised Terms will be posted on this page with an updated "Last Updated" date. Your continued use of the website or Services after changes are posted constitutes acceptance of the revised Terms.',
+    ],
+  },
+  {
+    id: "miscellaneous",
+    heading: "20. Miscellaneous",
+    paragraphs: [],
+    list: [
+      {
+        term: "Entire Agreement",
+        text: "These Terms, together with our Privacy Policy and any separate written agreement, constitute the entire agreement between you and MedGold regarding the website and Services.",
+      },
+      { term: "Severability", text: "If any provision is found unenforceable, the remaining provisions shall remain in full force." },
+      { term: "Waiver", text: "Our failure to enforce any provision does not constitute a waiver." },
+      {
+        term: "Assignment",
+        text: "You may not assign these Terms without our written consent. We may assign our rights and obligations.",
+      },
+      {
+        term: "Force Majeure",
+        text: "We are not liable for delays or failures caused by events beyond our reasonable control.",
+      },
+      {
+        term: "Relationship",
+        text: "Nothing in these Terms creates a partnership, agency, joint venture, or employment relationship unless expressly stated.",
+      },
     ],
   },
   {
     id: "contact",
-    heading: "Contact us",
-    paragraphs: ["If you have any questions about these Terms of Service, please contact us:"],
-    list: contactLines,
+    heading: "21. Contact Information",
+    paragraphs: ["For questions about these Terms & Conditions, please contact:"],
+    list: contactList,
   },
 ];
