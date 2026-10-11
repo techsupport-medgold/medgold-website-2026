@@ -13,7 +13,7 @@ import { Button } from "@@/components/ui/button";
 import CountUp from "@@/components/ui/count-up";
 import IconBadge from "@@/components/ui/icon-badge";
 import Pill from "@@/components/ui/pill";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { hero, snapshot, type HeroFeatureIcon } from "@@/data/pharmacyAudit";
 import { cn } from "@@/lib/utils";
 
@@ -71,7 +71,7 @@ export default function AuditHero() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" className="h-auto min-h-12 shrink whitespace-normal px-6 py-3 font-semibold">
-              <Link href={DevRoutes.CONTACT}>
+              <Link href={Routes.CONTACT}>
                 <CalendarCheck aria-hidden="true" />
                 {hero.primaryCta}
                 <ArrowRight aria-hidden="true" />

@@ -15,7 +15,7 @@ import { Button } from "@@/components/ui/button";
 import CountUp from "@@/components/ui/count-up";
 import IconBadge from "@@/components/ui/icon-badge";
 import ResponsiveImage from "@@/components/ui/responsive-image";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { SITE, SITE_URL } from "@@/config/site";
 import { hero, type TrustIcon } from "@@/data/staffing";
 
@@ -63,7 +63,7 @@ export default function StaffingHero() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" className="h-auto min-h-12 shrink whitespace-normal px-6 py-3 font-semibold">
-              <Link href={DevRoutes.CONTACT}>
+              <Link href={Routes.CONTACT}>
                 {hero.primaryCta}
                 <ArrowRight aria-hidden="true" />
               </Link>
@@ -74,7 +74,7 @@ export default function StaffingHero() {
               variant="outline"
               className="h-auto min-h-12 shrink whitespace-normal border-primary/30 bg-surface/80 px-6 py-3 font-semibold text-primary-deep hover:border-primary hover:bg-surface hover:text-primary"
             >
-              <Link href={DevRoutes.NURSING_TRAINING}>
+              <Link href={Routes.NURSING_TRAINING}>
                 <GraduationCap aria-hidden="true" />
                 {hero.secondaryCta}
               </Link>

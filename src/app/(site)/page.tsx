@@ -7,11 +7,14 @@ import HomeHero from "@@/components/home/HomeHero";
 import ServicePillars from "@@/components/home/ServicePillars";
 import TrustMetrics from "@@/components/home/TrustMetrics";
 import ServiceCta from "@@/components/services/ServiceCta";
-import { auditCta, HOME_SEO, type AuditBenefitIcon } from "@@/data/home";
+import JsonLd from "@@/components/common/JsonLd";
+import { auditCta, HOME_PAGE_URL, HOME_SEO, type AuditBenefitIcon } from "@@/data/home";
+import { webPageSchema } from "@@/lib/schema";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_SEO.title },
   description: HOME_SEO.description,
+  alternates: { canonical: HOME_PAGE_URL },
 };
 
 const AUDIT_ICONS: Record<AuditBenefitIcon, LucideIcon> = {
@@ -20,9 +23,13 @@ const AUDIT_ICONS: Record<AuditBenefitIcon, LucideIcon> = {
   briefing: Handshake,
 };
 
-export default function DevHomePage() {
+export default function HomePage() {
   return (
     <>
+      <JsonLd
+        id="webpage-schema"
+        data={webPageSchema({ url: HOME_PAGE_URL, name: HOME_SEO.title, description: HOME_SEO.description })}
+      />
       <HomeHero />
       <TrustMetrics />
       <ServicePillars />

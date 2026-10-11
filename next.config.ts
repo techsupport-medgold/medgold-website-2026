@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { DEV_PREFIX } from "./src/config/routes";
+import { Routes } from "./src/config/routes";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://medgold.com";
 const apexHost = new URL(siteUrl).host.replace(/^www\./, "");
@@ -19,15 +19,15 @@ const nextConfig: NextConfig = {
         destination: `https://${apexHost}/:path*`,
         permanent: true,
       },
+      // Pre-launch preview URLs
+      { source: "/dev", destination: Routes.HOME, permanent: true },
+      { source: "/dev/home", destination: Routes.HOME, permanent: true },
+      { source: "/dev/:path*", destination: "/:path*", permanent: true },
       ...[
-        ["about", "about-us"],
-        ["contact", "contact-us"],
-        ["terms", "terms-of-service"],
-      ].map(([from, to]) => ({
-        source: `${DEV_PREFIX}/${from}`,
-        destination: `${DEV_PREFIX}/${to}`,
-        permanent: false,
-      })),
+        ["/about", Routes.ABOUT],
+        ["/contact", Routes.CONTACT],
+        ["/terms", Routes.TERMS],
+      ].map(([source, destination]) => ({ source, destination, permanent: true })),
     ];
   },
 
@@ -66,10 +66,6 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      ...[DEV_PREFIX, `${DEV_PREFIX}/:path*`].map((source) => ({
-        source,
-        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
-      })),
     ];
   },
 };

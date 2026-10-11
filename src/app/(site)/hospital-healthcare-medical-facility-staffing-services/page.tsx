@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Zap } from "lucide-react";
 import Breadcrumb from "@@/components/common/Breadcrumb";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import StatsBar from "@@/components/services/StatsBar";
 import ComparisonSection from "@@/components/staffing/ComparisonSection";
@@ -14,13 +14,14 @@ import { breadcrumb, impactStats, requisition, STAFFING_SEO } from "@@/data/staf
 export const metadata: Metadata = {
   title: STAFFING_SEO.title,
   description: STAFFING_SEO.description,
+  alternates: { canonical: Routes.STAFFING },
 };
 
 export default function StaffingServicePage() {
   return (
     <>
       <Breadcrumb
-        path={DevRoutes.STAFFING}
+        path={Routes.STAFFING}
         current={breadcrumb.current}
         badges={[
           { label: breadcrumb.rosterBadge },

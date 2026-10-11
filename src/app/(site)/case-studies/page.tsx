@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@@/components/common/Breadcrumb";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 
 export const metadata: Metadata = {
   title: "Case Studies",
   description: "Hospital operations, audit and growth case studies from Med Gold. This page is in development.",
+  alternates: { canonical: Routes.CASE_STUDIES },
 };
 
 export default function CaseStudiesPage() {
   return (
     <>
-      <Breadcrumb current="Case Studies" path={DevRoutes.CASE_STUDIES} />
+      <Breadcrumb current="Case Studies" path={Routes.CASE_STUDIES} />
       <section aria-labelledby="case-studies-heading" className="py-20 sm:py-24">
         <div className="container max-w-3xl">
           <span className="gold-rule" aria-hidden="true" />
@@ -21,7 +22,7 @@ export default function CaseStudiesPage() {
           <p className="mt-6 text-lg text-ink-muted">
             This page is in development. Case studies from hospitals and clinics we support will be added before launch.
             To discuss results for your facility,{" "}
-            <Link href={DevRoutes.CONTACT} className="text-link underline underline-offset-2 hover:no-underline">
+            <Link href={Routes.CONTACT} className="text-link underline underline-offset-2 hover:no-underline">
               contact our team
             </Link>
             .

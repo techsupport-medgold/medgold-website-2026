@@ -7,13 +7,14 @@ import TrainingComparison from "@@/components/nursing-training/TrainingCompariso
 import TrainingHero from "@@/components/nursing-training/TrainingHero";
 import TrainingPillars from "@@/components/nursing-training/TrainingPillars";
 import Breadcrumb from "@@/components/common/Breadcrumb";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { breadcrumb, NURSING_TRAINING_SEO, requisition, type AssuranceIcon } from "@@/data/nursingTraining";
 
 export const metadata: Metadata = {
   title: NURSING_TRAINING_SEO.title,
   description: NURSING_TRAINING_SEO.description,
+  alternates: { canonical: Routes.NURSING_TRAINING },
 };
 
 const ASSURANCE_ICONS: Record<AssuranceIcon, LucideIcon> = {
@@ -32,7 +33,7 @@ export default function NursingTrainingPage() {
   return (
     <>
       <Breadcrumb
-        path={DevRoutes.NURSING_TRAINING}
+        path={Routes.NURSING_TRAINING}
         current={breadcrumb.current}
         badges={breadcrumb.badges.map((badge) => ({ label: badge.label, icon: BADGE_ICONS[badge.icon] }))}      />
       <TrainingHero />

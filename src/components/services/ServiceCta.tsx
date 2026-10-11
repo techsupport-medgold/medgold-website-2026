@@ -4,7 +4,7 @@ import { Button } from "@@/components/ui/button";
 import IconBadge from "@@/components/ui/icon-badge";
 import Reveal from "@@/components/ui/reveal";
 import SectionHeader from "@@/components/ui/section-header";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { SITE, whatsappUrl } from "@@/config/site";
 import { cn } from "@@/lib/utils";
 
@@ -137,7 +137,7 @@ export default function ServiceCta({
                 size="lg"
                 className="mt-4 h-auto min-h-12 w-full whitespace-normal px-5 py-3 text-center text-sm font-semibold"
               >
-                <Link href={DevRoutes.CONTACT}>
+                <Link href={Routes.CONTACT}>
                   <CtaIcon aria-hidden="true" />
                   {cta.label}
                   <ArrowRight aria-hidden="true" />

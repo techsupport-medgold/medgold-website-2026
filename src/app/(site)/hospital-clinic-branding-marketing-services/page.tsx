@@ -6,7 +6,7 @@ import GrowthProcess from "@@/components/branding/GrowthProcess";
 import GrowthServices from "@@/components/branding/GrowthServices";
 import WhyChooseSection from "@@/components/branding/WhyChooseSection";
 import Breadcrumb from "@@/components/common/Breadcrumb";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { BRANDING_PAGE_URL, BRANDING_SEO, breadcrumb, cta } from "@@/data/branding";
 
@@ -20,7 +20,7 @@ export default function BrandingServicePage() {
   return (
     <>
       <Breadcrumb
-        path={DevRoutes.BRANDING}
+        path={Routes.BRANDING}
         current={breadcrumb.current}
         badges={[
           { label: breadcrumb.badge, tone: "gold" },

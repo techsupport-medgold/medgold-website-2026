@@ -12,7 +12,7 @@ export const SITE = {
   title: "Hospital Healthcare Operations Management and Maintenance Company Chennai India",
   tagline: "Gold-standard healthcare, built around you.",
   description:
-    "Med Gold is launching soon: patient-first healthcare with experienced doctors, modern diagnostics, and compassionate care. Get in touch to learn more.",
+    "Med Gold is a Chennai hospital operations partner: NABH clinical audits, facility staffing, pharmacy stock audits, nursing training and hospital branding.",
   keywords: [
     "Med Gold",
     "healthcare",
@@ -28,8 +28,6 @@ export const SITE = {
   logo: "/images/logo-medgold.svg",
   favicon: "/images/fav.svg",
   launchYear: 2026,
-  /** ISO date with IST offset; NEXT_PUBLIC_LAUNCH_DATE overrides the announced date. */
-  launchDate: process.env.NEXT_PUBLIC_LAUNCH_DATE || "2026-11-08T00:00:00+05:30",
   country: "IN",
   contact: {
     person: "Mr. Sundramurthi",

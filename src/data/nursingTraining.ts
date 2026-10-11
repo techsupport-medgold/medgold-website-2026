@@ -1,4 +1,4 @@
-/** Copy for the Nursing Training service page, previewed at /dev/nursing-training. */
+/** Copy for the Nursing Training service page. */
 export const NURSING_TRAINING_SEO = {
   title: "Nursing Training & Skills Development in Chennai",
   description:

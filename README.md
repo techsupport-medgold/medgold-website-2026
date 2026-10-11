@@ -1,6 +1,6 @@
 # Med Gold Website
 
-Coming-soon website for Med Gold, built on the same stack and conventions as the AVR Energies site.
+Website for Med Gold, a Chennai hospital operations partner, built on the same stack and conventions as the AVR Energies site.
 
 ## Stack
 
@@ -29,7 +29,6 @@ npm run dev                  # http://localhost:3000
 | Variable | Purpose |
 |----------|---------|
 | `NEXT_PUBLIC_SITE_URL` | Public origin; drives canonical URLs, sitemap, robots, OG, JSON-LD |
-| `NEXT_PUBLIC_LAUNCH_DATE` | Optional countdown override, ISO with offset (default 8 Nov 2026 IST) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console meta tag |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster meta tag |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager (only loaded when set) |
@@ -39,34 +38,25 @@ npm run dev                  # http://localhost:3000
 
 ```text
 src/
-  app/          routes, metadata, robots.ts, sitemap.ts, manifest.ts, OG image + icons
-  app/dev/      pre-launch pages (/dev, /dev/home, /dev/about-us), all noindex
-  components/   ui/ (shadcn), common/ (Logo, Footer, JsonLd, Analytics),
-                coming-soon/ (countdown page), home/ (future homepage sections)
-  config/       site.ts - brand, domain, contact, launch date; routes.ts - Routes + DevRoutes
+  app/          root layout, metadata, robots.ts, sitemap.ts, manifest.ts, OG image + icons
+  app/(site)/   every public page (Header + Footer layout); (site)/page.tsx is the homepage
+  components/   ui/ (shadcn), common/ (Logo, Header, Footer, Breadcrumb, JsonLd, Analytics),
+                home/, services/ and per-page sections
+  config/       site.ts - brand, domain, contact; routes.ts - Routes + navigation
   data/         page copy and SEO constants
   lib/          utils, JSON-LD schema builders, brand image helper
   styles/       globals.scss, _tailwind.scss (tokens), base/, components/
 ```
 
-## Coming-soon page and launch countdown
+## Pages
 
-`/` is a single-screen coming-soon page with a countdown and the contact details from
-`src/config/site.ts`. The launch date is **8 November 2026, 00:00 IST** (`SITE.launchDate`).
-To change it, edit `site.ts` or set `NEXT_PUBLIC_LAUNCH_DATE` (ISO with IST offset) in
-`.env.local` / Vercel, then redeploy. After the date passes the page shows "We are launching now."
+Every public page lives in `src/app/(site)/<slug>/page.tsx` and is served at `/<slug>`.
+All pages are `index, follow` and listed in `src/app/sitemap.ts`, except the internal
+`/style-guide`, which is `noindex`.
 
-## Pages in development (`/dev/...`)
-
-Only `/` is indexed. Every page built before launch lives in `src/app/dev/<page>/` and is served
-at `/dev/<page>`, for example `/dev/home` (future homepage) and `/dev/about-us`. `/dev` lists them.
-All `/dev` URLs are `noindex, nofollow` (meta tag + `X-Robots-Tag` header) and out of the sitemap.
-
-- New page: create `src/app/dev/<page>/page.tsx`, add it to `DevRoutes` in
-  `src/config/routes.ts` and to the list in `src/app/dev/page.tsx`.
-- Launch a page: move it to its final path (`dev/home` becomes `/`), remove it from `DevRoutes`,
-  and add it to `ROUTES` in `src/app/sitemap.ts`.
-- `/dev` is also disallowed in `robots.txt` (`src/app/robots.ts`).
+- New page: create `src/app/(site)/<slug>/page.tsx`, add the path to `Routes` in
+  `src/config/routes.ts`, and add it to `ROUTES` in `src/app/sitemap.ts`.
+- The old pre-launch `/dev/*` URLs 301-redirect to their root paths (`next.config.ts`).
 
 ## Deploying to Vercel
 
@@ -87,9 +77,9 @@ Twitter cards with generated 1200x630 images, generated favicon / apple icon, we
 `robots.txt`, `sitemap.xml`, JSON-LD (`MedicalOrganization`, `WebSite`, `WebPage`),
 self-hosted fonts, static rendering, security headers, and `www` to apex redirect.
 
-Before launch:
+After launch:
 
-1. Confirm the domain (`NEXT_PUBLIC_SITE_URL`) and the launch date in `src/config/site.ts`.
+1. Confirm the domain (`NEXT_PUBLIC_SITE_URL`) in Vercel.
 2. Add Search Console / Bing verification tokens and submit `/sitemap.xml`.
 3. Validate structured data with the [Rich Results Test](https://search.google.com/test/rich-results).
 

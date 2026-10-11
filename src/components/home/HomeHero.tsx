@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, BadgeCheck, CircleCheck, LayoutGrid, ShieldCheck } from "lucide-react";
 import { Button } from "@@/components/ui/button";
 import ResponsiveImage from "@@/components/ui/responsive-image";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { homeHero } from "@@/data/home";
 import { cn } from "@@/lib/utils";
 
@@ -28,7 +28,7 @@ export default function HomeHero() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" className="h-auto min-h-12 shrink whitespace-normal px-6 py-3 font-semibold">
-              <Link href={DevRoutes.CONTACT}>
+              <Link href={Routes.CONTACT}>
                 <ShieldCheck aria-hidden="true" />
                 {homeHero.primaryCta}
                 <ArrowRight aria-hidden="true" />

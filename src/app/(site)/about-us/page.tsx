@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@@/components/common/Breadcrumb";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 
 export const metadata: Metadata = {
   title: "About",
   description: "About Med Gold. This page is in development.",
+  alternates: { canonical: Routes.ABOUT },
 };
 
 export default function AboutPage() {
   return (
     <>
-      <Breadcrumb current="About Us" path={DevRoutes.ABOUT} />
+      <Breadcrumb current="About Us" path={Routes.ABOUT} />
       <section aria-labelledby="about-heading" className="py-20 sm:py-24">
         <div className="container max-w-3xl">
           <span className="gold-rule" aria-hidden="true" />

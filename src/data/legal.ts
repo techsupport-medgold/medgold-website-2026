@@ -1,6 +1,6 @@
 import { SITE } from "@@/config/site";
 
-/** Placeholder legal copy, previewed at /dev/privacy-policy and /dev/terms-of-service. Must be reviewed by a legal advisor before launch. */
+/** Placeholder legal copy. Must be reviewed by a legal advisor. */
 
 export type LegalSection = {
   id: string;

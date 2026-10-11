@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronRight, type LucideIcon } from "lucide-react";
 import JsonLd from "@@/components/common/JsonLd";
 import Pill from "@@/components/ui/pill";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { breadcrumbSchema } from "@@/lib/schema";
 
 const crumbLinkClass = "link-underline inline-flex min-h-11 items-center hover:text-primary sm:min-h-0";
@@ -17,7 +17,7 @@ type BreadcrumbProps = {
 
 export default function Breadcrumb({ current, path, badges }: BreadcrumbProps) {
   const trail = [
-    { name: "Home", path: DevRoutes.HOME },
+    { name: "Home", path: Routes.HOME },
     { name: current, path },
   ];
 
@@ -28,7 +28,7 @@ export default function Breadcrumb({ current, path, badges }: BreadcrumbProps) {
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-1 text-xs font-semibold text-ink-muted">
             <li>
-              <Link href={DevRoutes.HOME} className={crumbLinkClass}>
+              <Link href={Routes.HOME} className={crumbLinkClass}>
                 Home
               </Link>
             </li>

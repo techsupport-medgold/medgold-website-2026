@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import Reveal from "@@/components/ui/reveal";
 import { stagger } from "@@/lib/motion";
 import { Eyebrow } from "@@/components/ui/section-header";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { directory } from "@@/data/home";
 
 export default function HomeDirectory() {
@@ -18,7 +18,7 @@ export default function HomeDirectory() {
             </h2>
           </div>
           <Link
-            href={DevRoutes.CONTACT}
+            href={Routes.CONTACT}
             className="hover-lift inline-flex min-h-11 w-fit items-center gap-2 rounded-pill bg-surface px-5 text-sm font-semibold text-primary-deep shadow-card hover:text-primary"
           >
             {directory.contactLabel}

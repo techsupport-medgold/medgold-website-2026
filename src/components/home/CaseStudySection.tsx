@@ -6,7 +6,7 @@ import Reveal from "@@/components/ui/reveal";
 import Section from "@@/components/ui/section";
 import { Eyebrow } from "@@/components/ui/section-header";
 import Timeline from "@@/components/ui/timeline";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { caseStudy } from "@@/data/home";
 
 export default function CaseStudySection() {
@@ -36,13 +36,13 @@ export default function CaseStudySection() {
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button asChild size="lg" variant="accent" className="h-auto min-h-12 whitespace-normal px-6 py-3 font-semibold">
-              <Link href={DevRoutes.CONTACT}>
+              <Link href={Routes.CONTACT}>
                 {caseStudy.primaryCta}
                 <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
             <Link
-              href={DevRoutes.CONTACT}
+              href={Routes.CONTACT}
               className="link-underline inline-flex min-h-11 w-fit items-center gap-1.5 px-2 text-sm font-semibold text-white"
             >
               {caseStudy.secondaryCta}

@@ -7,13 +7,14 @@ import EvidenceBar from "@@/components/pharmacy-audit/EvidenceBar";
 import FrameworkSection from "@@/components/pharmacy-audit/FrameworkSection";
 import ProblemsSection from "@@/components/pharmacy-audit/ProblemsSection";
 import Breadcrumb from "@@/components/common/Breadcrumb";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { booking, breadcrumb, PHARMACY_AUDIT_SEO, type BookingBenefitIcon } from "@@/data/pharmacyAudit";
 
 export const metadata: Metadata = {
   title: PHARMACY_AUDIT_SEO.title,
   description: PHARMACY_AUDIT_SEO.description,
+  alternates: { canonical: Routes.PHARMACY_AUDIT },
 };
 
 const BENEFIT_ICONS: Record<BookingBenefitIcon, LucideIcon> = {
@@ -27,7 +28,7 @@ export default function PharmacyAuditPage() {
   return (
     <>
       <Breadcrumb
-        path={DevRoutes.PHARMACY_AUDIT}
+        path={Routes.PHARMACY_AUDIT}
         current={breadcrumb.current}
         badges={[{ label: breadcrumb.tagline }]}      />
       <AuditHero />

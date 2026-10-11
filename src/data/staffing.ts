@@ -1,4 +1,4 @@
-/** Copy for the Healthcare Facility Staffing service page, previewed at /dev/hospital-healthcare-medical-facility-staffing-services. */
+/** Copy for the Healthcare Facility Staffing service page. */
 export const STAFFING_SEO = {
   title: "Hospital & Healthcare Staffing Services in Chennai",
   description:

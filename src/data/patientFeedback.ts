@@ -1,4 +1,4 @@
-/** Copy for the Patient Feedback System service page, previewed at /dev/patient-feedback-collection-system-integration-services. */
+/** Copy for the Patient Feedback System service page. */
 export const PATIENT_FEEDBACK_SEO = {
   title: "Patient Feedback System for Hospitals in Chennai",
   description:

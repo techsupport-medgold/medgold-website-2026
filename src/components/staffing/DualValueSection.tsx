@@ -6,7 +6,7 @@ import Pill from "@@/components/ui/pill";
 import Reveal from "@@/components/ui/reveal";
 import Section from "@@/components/ui/section";
 import SectionHeader from "@@/components/ui/section-header";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { dualValue, type DualValueCard, type DualValueIcon } from "@@/data/staffing";
 import { stagger } from "@@/lib/motion";
 import { cn } from "@@/lib/utils";
@@ -22,7 +22,7 @@ function CardLink({ card }: { card: DualValueCard }) {
     card.accent === "gold" ? "text-gold-ink hover:text-ink" : "text-primary-deep hover:text-primary",
   );
   return (
-    <Link href={DevRoutes.CONTACT} className={className}>
+    <Link href={Routes.CONTACT} className={className}>
       <span className="link-underline">{card.link.label}</span>
       <ArrowRight
         className="size-4 shrink-0 transition-transform duration-300 group-hover/link:translate-x-1"

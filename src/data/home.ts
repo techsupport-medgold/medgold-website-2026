@@ -1,6 +1,9 @@
-import { DevRoutes, LEGAL_NAV } from "@@/config/routes";
+import { Routes, LEGAL_NAV } from "@@/config/routes";
+import { absoluteUrl } from "@@/config/site";
 
-/** Copy for the future homepage, previewed at /dev/home. */
+/** Copy for the homepage. */
+export const HOME_PAGE_URL = absoluteUrl(Routes.HOME);
+
 export const HOME_SEO = {
   title: "Hospital Healthcare Operations Management and Maintenance Company Chennai India",
   description:
@@ -64,7 +67,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["Stock Audit & Valuation", "Zero Expiry Losses", "SOP & KPI Systems"],
     code: "SOP-PHA",
     icon: "pharmacy",
-    href: DevRoutes.PHARMACY_AUDIT,
+    href: Routes.PHARMACY_AUDIT,
     image: {
       src: "/images/home/pharmacy-audit.jpg",
       alt: "Hospital pharmacist scanning medicine stock on store-room shelves, with a stock dashboard and cold-chain refrigerator nearby",
@@ -78,7 +81,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["Patient Acquisition", "Digital Marketing", "Brand Equity"],
     code: "SOP-MKT",
     icon: "branding",
-    href: DevRoutes.BRANDING,
+    href: Routes.BRANDING,
     image: {
       src: "/images/branding/doctor-consult.jpg",
       alt: "Senior consultant and a younger doctor in white coats reviewing a patient file together on a hospital ward",
@@ -91,7 +94,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["ICU Specialist Nurses", "Duty Doctors"],
     code: "SOP-STF",
     icon: "staffing",
-    href: DevRoutes.STAFFING,
+    href: Routes.STAFFING,
     image: {
       src: "/images/staffing/nursing.jpg",
       alt: "ICU nurses in scrubs adjusting an IV line for a resting patient beside a bedside vital-signs monitor",
@@ -104,7 +107,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["Digital Bedside NPS", "Instant Escalation"],
     code: "SOP-PFS",
     icon: "feedback",
-    href: DevRoutes.PATIENT_FEEDBACK,
+    href: Routes.PATIENT_FEEDBACK,
     image: {
       src: "/images/patient-feedback/touchpoint-bedside.jpg",
       alt: "Patient relations executive with a tablet collecting bedside feedback from a smiling inpatient while a nurse checks her IV",
@@ -117,7 +120,7 @@ export const servicePillars: readonly ServicePillar[] = [
     tags: ["Bedside Simulation", "BLS Certified"],
     code: "SOP-OJT",
     icon: "training",
-    href: DevRoutes.NURSING_TRAINING,
+    href: Routes.NURSING_TRAINING,
     image: {
       src: "/images/nursing-training/training-hero.jpg",
       alt: "Nurse educator briefing nursing aide trainees in scrubs around a patient-care manikin in a simulation ward",
@@ -244,27 +247,27 @@ export const directory = {
     {
       title: "Clinical Audits",
       links: [
-        { label: "Pharmacy Audit Services", href: DevRoutes.PHARMACY_AUDIT },
-        { label: "Hospital & Clinic Audits", href: DevRoutes.CONTACT },
-        { label: "Medical Record Maintenance", href: DevRoutes.CONTACT },
-        { label: "Patient Feedback Systems", href: DevRoutes.PATIENT_FEEDBACK },
+        { label: "Pharmacy Audit Services", href: Routes.PHARMACY_AUDIT },
+        { label: "Hospital & Clinic Audits", href: Routes.CONTACT },
+        { label: "Medical Record Maintenance", href: Routes.CONTACT },
+        { label: "Patient Feedback Systems", href: Routes.PATIENT_FEEDBACK },
       ],
     },
     {
       title: "Operations & Maintenance (O&M)",
       links: [
-        { label: "Biomedical & Lab Maintenance", href: DevRoutes.CONTACT },
-        { label: "Healthcare Facility Staffing", href: DevRoutes.STAFFING },
-        { label: "Nursing Training", href: DevRoutes.NURSING_TRAINING },
+        { label: "Biomedical & Lab Maintenance", href: Routes.CONTACT },
+        { label: "Healthcare Facility Staffing", href: Routes.STAFFING },
+        { label: "Nursing Training", href: Routes.NURSING_TRAINING },
       ],
     },
     {
       title: "Enterprise Hub",
       links: [
-        { label: "About MedGold Operations", href: DevRoutes.ABOUT },
-        { label: "South India Case Studies", href: DevRoutes.CASE_STUDIES },
-        { label: "Operations & Growth Careers", href: DevRoutes.CAREERS },
-        { label: "Connect with Ops Desk", href: DevRoutes.CONTACT },
+        { label: "About MedGold Operations", href: Routes.ABOUT },
+        { label: "South India Case Studies", href: Routes.CASE_STUDIES },
+        { label: "Operations & Growth Careers", href: Routes.CAREERS },
+        { label: "Connect with Ops Desk", href: Routes.CONTACT },
       ],
     },
     {

@@ -1,4 +1,4 @@
-/** Copy for the careers page, previewed at /dev/careers. */
+/** Copy for the careers page. */
 export const CAREERS_SEO = {
   title: "Careers",
   description: "Careers at Med Gold. This page is in development.",

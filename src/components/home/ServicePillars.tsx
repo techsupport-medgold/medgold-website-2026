@@ -16,7 +16,7 @@ import Reveal from "@@/components/ui/reveal";
 import { stagger } from "@@/lib/motion";
 import Section from "@@/components/ui/section";
 import SectionHeader from "@@/components/ui/section-header";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { servicePillars, servicesIntro, type PillarIcon } from "@@/data/home";
 
 const ICONS: Record<PillarIcon, LucideIcon> = {
@@ -79,7 +79,7 @@ export default function ServicePillars() {
                   </ul>
                   <div className="mt-auto flex items-center justify-between border-t border-border-muted pt-2">
                     <Link
-                      href={pillar.href ?? DevRoutes.CONTACT}
+                      href={pillar.href ?? Routes.CONTACT}
                       className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary after:absolute after:inset-0 after:rounded-card hover:text-primary-deep"
                     >
                       {servicesIntro.linkLabel}

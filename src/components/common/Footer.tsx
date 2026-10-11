@@ -2,14 +2,14 @@ import Link from "next/link";
 import { ArrowRight, MapPin, MessageCircle, Phone, UserRound } from "lucide-react";
 import Logo from "@@/components/common/Logo";
 import { Button } from "@@/components/ui/button";
-import { DEV_NAV, DevRoutes, LEGAL_NAV, SERVICE_NAV } from "@@/config/routes";
+import { MAIN_NAV, Routes, LEGAL_NAV, SERVICE_NAV } from "@@/config/routes";
 import { SITE, whatsappUrl } from "@@/config/site";
 
 const linkClass =
   "inline-flex min-h-11 items-center gap-2 text-sm text-ink-muted transition-colors hover:text-primary";
 const headingClass = "text-xs font-bold uppercase tracking-[0.14em] text-primary-deep";
 
-const QUICK_LINKS = DEV_NAV.filter((item) => !item.children);
+const QUICK_LINKS = MAIN_NAV.filter((item) => !item.children);
 
 export default function Footer() {
   return (
@@ -23,7 +23,7 @@ export default function Footer() {
             </p>
           </div>
           <Button asChild size="lg" variant="accent" className="h-12 w-fit px-6 font-semibold">
-            <Link href={DevRoutes.CONTACT}>
+            <Link href={Routes.CONTACT}>
               Talk to our team
               <ArrowRight aria-hidden="true" />
             </Link>

@@ -1,4 +1,4 @@
-/** Copy for the Pharmacy Stock Audit & Profit Consulting service page, previewed at /dev/pharmacy-stock-audit-growth-services. */
+/** Copy for the Pharmacy Stock Audit & Profit Consulting service page. */
 export const PHARMACY_AUDIT_SEO = {
   title: "Pharmacy Stock Audit & Profit Consulting",
   description:
