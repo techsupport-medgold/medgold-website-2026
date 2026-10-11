@@ -27,10 +27,7 @@ const BENEFIT_ICONS: Record<BookingBenefitIcon, LucideIcon> = {
 export default function PharmacyAuditPage() {
   return (
     <>
-      <Breadcrumb
-        path={Routes.PHARMACY_AUDIT}
-        current={breadcrumb.current}
-        badges={[{ label: breadcrumb.tagline }]}      />
+      <Breadcrumb path={Routes.PHARMACY_AUDIT} current={breadcrumb.current} />
       <AuditHero />
       <EvidenceBar />
       <ProblemsSection />

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CalendarCheck, ShieldCheck } from "lucide-react";
+import { CalendarCheck } from "lucide-react";
 import BenefitsSection from "@@/components/patient-feedback/BenefitsSection";
 import CaptureTouchpoints from "@@/components/patient-feedback/CaptureTouchpoints";
 import FeedbackEstimator from "@@/components/patient-feedback/FeedbackEstimator";
@@ -20,14 +20,7 @@ export const metadata: Metadata = {
 export default function PatientFeedbackServicePage() {
   return (
     <>
-      <Breadcrumb
-        path={Routes.PATIENT_FEEDBACK}
-        current={breadcrumb.current}
-        badges={[
-          { label: breadcrumb.badge },
-          { label: breadcrumb.compliance, icon: ShieldCheck, tone: "gold" },
-        ]}
-      />
+      <Breadcrumb path={Routes.PATIENT_FEEDBACK} current={breadcrumb.current} />
       <FeedbackHero />
       <StatsBar label="Patient feedback results" stats={stats} alternate />
       <CaptureTouchpoints />

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BadgeCheck, Rocket } from "lucide-react";
+import { Rocket } from "lucide-react";
 import BrandingHero from "@@/components/branding/BrandingHero";
 import EcosystemBanner from "@@/components/branding/EcosystemBanner";
 import GrowthProcess from "@@/components/branding/GrowthProcess";
@@ -19,14 +19,7 @@ export const metadata: Metadata = {
 export default function BrandingServicePage() {
   return (
     <>
-      <Breadcrumb
-        path={Routes.BRANDING}
-        current={breadcrumb.current}
-        badges={[
-          { label: breadcrumb.badge, tone: "gold" },
-          { label: breadcrumb.specialist },
-          { label: breadcrumb.compliance, icon: BadgeCheck, tone: "neutral" },
-        ]}      />
+      <Breadcrumb path={Routes.BRANDING} current={breadcrumb.current} />
       <BrandingHero />
       <EcosystemBanner />
       <GrowthServices />

@@ -12,9 +12,6 @@ export const BRANDING_SEO = {
 
 export const breadcrumb = {
   current: "Digital Marketing & Hospital Growth Solutions",
-  badge: "Brochure Certified",
-  specialist: "Healthcare-Specialized Agency",
-  compliance: "Ethical Medical Marketing (NMC Aligned)",
 } as const;
 
 export type PromiseIcon = "visibility" | "patients" | "revenue" | "brand";

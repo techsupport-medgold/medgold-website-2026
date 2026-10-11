@@ -7,11 +7,6 @@ export const NURSING_TRAINING_SEO = {
 
 export const breadcrumb = {
   current: "Nursing Training & Skills Development Program",
-  badges: [
-    { icon: "iso", label: "ISO 9001:2015 Certified Company" },
-    { icon: "hospital", label: "Real Hospital Environment" },
-    { icon: "placement", label: "Job Placement Assistance" },
-  ],
 } as const;
 
 export type TrainingTrustIcon = "hospital" | "placement" | "faculty" | "certified";

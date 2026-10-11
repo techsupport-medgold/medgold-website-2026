@@ -7,7 +7,6 @@ export const PHARMACY_AUDIT_SEO = {
 
 export const breadcrumb = {
   current: "Pharmacy Stock Audit & Profit Consulting",
-  tagline: "Reduce Losses • Increase Profit • Scale Faster",
 };
 
 export type HeroFeatureIcon = "verify" | "sop" | "kpi" | "liquidation";

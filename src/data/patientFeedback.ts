@@ -7,8 +7,6 @@ export const PATIENT_FEEDBACK_SEO = {
 
 export const breadcrumb = {
   current: "Patient Feedback System (SOP-PFS)",
-  badge: "Patient Feedback System (SOP-PFS)",
-  compliance: "DISHA Compliant",
 } as const;
 
 export const hero = {

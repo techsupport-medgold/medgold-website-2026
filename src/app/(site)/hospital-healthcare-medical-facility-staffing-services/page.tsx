@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Zap } from "lucide-react";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
@@ -20,14 +19,7 @@ export const metadata: Metadata = {
 export default function StaffingServicePage() {
   return (
     <>
-      <Breadcrumb
-        path={Routes.STAFFING}
-        current={breadcrumb.current}
-        badges={[
-          { label: breadcrumb.rosterBadge },
-          { label: breadcrumb.slaBadge, icon: Zap, tone: "gold" },
-        ]}
-      />
+      <Breadcrumb path={Routes.STAFFING} current={breadcrumb.current} />
       <StaffingHero />
       <StatsBar label="Staffing impact" stats={impactStats} />
       <DualValueSection />

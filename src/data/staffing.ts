@@ -7,8 +7,6 @@ export const STAFFING_SEO = {
 
 export const breadcrumb = {
   current: "Hospital Healthcare Staffing Services",
-  rosterBadge: "Verified Clinical Roster Active | TNMC & TNC Compliant",
-  slaBadge: "<4-Hour Emergency Reliever & Backfill SLA",
 };
 
 export type TrustIcon = "iso" | "training" | "placement" | "faculty";

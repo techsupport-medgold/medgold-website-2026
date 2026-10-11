@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Award, Briefcase, ClipboardCheck, Clock, Hospital, IdCard, ShieldCheck, type LucideIcon } from "lucide-react";
+import { ClipboardCheck, Clock, IdCard, ShieldCheck, type LucideIcon } from "lucide-react";
 import CohortPlanner from "@@/components/nursing-training/CohortPlanner";
 import CurriculumSection from "@@/components/nursing-training/CurriculumSection";
 import TraineeProfiles from "@@/components/nursing-training/TraineeProfiles";
@@ -23,19 +23,10 @@ const ASSURANCE_ICONS: Record<AssuranceIcon, LucideIcon> = {
   card: IdCard,
 };
 
-const BADGE_ICONS: Record<(typeof breadcrumb.badges)[number]["icon"], LucideIcon> = {
-  iso: Award,
-  hospital: Hospital,
-  placement: Briefcase,
-};
-
 export default function NursingTrainingPage() {
   return (
     <>
-      <Breadcrumb
-        path={Routes.NURSING_TRAINING}
-        current={breadcrumb.current}
-        badges={breadcrumb.badges.map((badge) => ({ label: badge.label, icon: BADGE_ICONS[badge.icon] }))}      />
+      <Breadcrumb path={Routes.NURSING_TRAINING} current={breadcrumb.current} />
       <TrainingHero />
       <TraineeProfiles />
       <TrainingPillars />
