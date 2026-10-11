@@ -129,7 +129,7 @@ export const advantage = {
   cards: [
     {
       icon: "audits",
-      title: "Clinical & Facility Audits",
+      title: "Pharmacy Stock Audit",
       description:
         "NABH 5th Edition, pharmacy cold chain, bio-waste, and statutory pre-inspection readiness conducted by accredited hospital auditors.",
     },
@@ -157,50 +157,17 @@ export const opsPanel = {
     { label: "Daily bio-waste logged", value: "8.2 Tons", note: "100% CPCB Barcoded", tone: "muted" },
   ],
   bars: [
-    { label: "Emergency & ICU Operational Hygiene Readiness", value: 99.94, display: "99.94%", tone: "primary" },
-    { label: "OT Airflow & Laminar Particle Count Compliance", value: 99.2, display: "99.20%", tone: "gold" },
+    { label: "Medical Facility Staffing", value: 99.94, display: "99.94%", tone: "primary" },
+    { label: "Patient Feedback Collected", value: 99.2, display: "99.20%", tone: "gold" },
     {
-      label: "Pharmacy Temperature Sensors (2°C - 8°C Strict Cold Chain)",
+      label: "Hospital & Pharmacy Growth",
       value: 100,
       display: "100.0%",
       tone: "primary",
     },
   ],
-  note: "Daily automated audits synced with NABH 5th Edition digital logs.",
-  linkLabel: "Request Demo Portal Access",
-} as const;
-
-export const caseStudy = {
-  badge: "Institutional Impact Case Study • Chennai Medical Corridor",
-  heading:
-    "450-Bed Tertiary Care Hospital in Chennai Achieves 38% Faster OT Turnaround & Zero Clinical Disruption",
-  intro:
-    "Facing persistent delays between emergency surgeries and frequent workflow bottlenecks, this leading multi-speciality facility engaged MedGold to re-engineer their facility management workflows and operating theatre sanitation squads.",
-  metrics: [
-    { value: "38%", label: "OT Turnaround Acceleration" },
-    { value: "0 hrs", label: "Unplanned Clinical Halts (12 Mos)" },
-    { value: "100%", label: "NABH Re-Accreditation Score" },
-  ],
-  primaryCta: "Read Full Case Documentation",
-  secondaryCta: "Request Facility Benchmark",
-  roadmapHeading: "Deployment roadmap",
-  roadmap: [
-    {
-      title: "Comprehensive Gap Audit",
-      description:
-        "Assessed 610 biomedical assets, documented calibration drifts, and benchmarked OT cleaning workflows.",
-    },
-    {
-      title: "Embedded Facility Operations Desk",
-      description:
-        "Stationed certified supervisors onsite 24/7 with immediate response protocols for theatre turnarounds.",
-    },
-    {
-      title: "Sterility & BMWM Protocol Enforcement",
-      description:
-        "Instituted strict sterile turnover controls and hospital-grade vaporized disinfection protocols between operative cases.",
-    },
-  ],
+  note: "Request an Audit",
+  linkLabel: "Contact us",
 } as const;
 
 export type AuditBenefitIcon = "response" | "scorecard" | "briefing";

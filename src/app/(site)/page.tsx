@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ClipboardCheck, FileCheck2, Handshake, Timer, type LucideIcon } from "lucide-react";
 import AdvantageSection from "@@/components/home/AdvantageSection";
-import CaseStudySection from "@@/components/home/CaseStudySection";
 import HomeDirectory from "@@/components/home/HomeDirectory";
 import HomeHero from "@@/components/home/HomeHero";
 import ServicePillars from "@@/components/home/ServicePillars";
@@ -34,7 +33,6 @@ export default function HomePage() {
       <TrustMetrics />
       <ServicePillars />
       <AdvantageSection />
-      <CaseStudySection />
       <ServiceCta
         headingId="audit-heading"
         eyebrow={auditCta.eyebrow}
