@@ -78,7 +78,12 @@ export default function ServiceCta({
             ) : null}
           </div>
 
-          <div className="relative flex min-w-0 flex-col justify-between gap-6 rounded-card bg-surface-raised p-6 sm:p-8 lg:col-span-5">
+          <div
+            className={cn(
+              "relative flex min-w-0 flex-col gap-6 rounded-card bg-surface-raised p-6 sm:p-8 lg:col-span-5",
+              shareFields?.length ? "justify-between" : "justify-center",
+            )}
+          >
             {shareFields?.length ? (
               <div>
                 <h3 className="text-sm font-semibold text-primary-deep">{shareHeading}</h3>

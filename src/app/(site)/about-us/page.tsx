@@ -1,28 +1,62 @@
 import type { Metadata } from "next";
+import { Send } from "lucide-react";
+import AboutHero from "@@/components/about/AboutHero";
+import ApproachSection from "@@/components/about/ApproachSection";
+import CoreValues from "@@/components/about/CoreValues";
+import MissionVision from "@@/components/about/MissionVision";
+import WhoWeAre from "@@/components/about/WhoWeAre";
+import WhoWeServe from "@@/components/about/WhoWeServe";
 import Breadcrumb from "@@/components/common/Breadcrumb";
+import JsonLd from "@@/components/common/JsonLd";
+import ServiceCta from "@@/components/services/ServiceCta";
 import { Routes } from "@@/config/routes";
+import { SITE } from "@@/config/site";
+import { ABOUT_PAGE_URL, ABOUT_SEO, cta } from "@@/data/about";
+import { webPageSchema } from "@@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "About Med Gold. This page is in development.",
+  title: ABOUT_SEO.title,
+  description: ABOUT_SEO.description,
   alternates: { canonical: Routes.ABOUT },
+  openGraph: {
+    title: `${ABOUT_SEO.title} | ${SITE.name}`,
+    description: ABOUT_SEO.description,
+    url: Routes.ABOUT,
+    siteName: SITE.name,
+    locale: SITE.locale,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${ABOUT_SEO.title} | ${SITE.name}`,
+    description: ABOUT_SEO.description,
+  },
 };
 
 export default function AboutPage() {
   return (
     <>
+      <JsonLd
+        id="webpage-schema"
+        data={webPageSchema({ url: ABOUT_PAGE_URL, name: ABOUT_SEO.title, description: ABOUT_SEO.description })}
+      />
       <Breadcrumb current="About Us" path={Routes.ABOUT} />
-      <section aria-labelledby="about-heading" className="py-20 sm:py-24">
-        <div className="container max-w-3xl">
-          <span className="gold-rule" aria-hidden="true" />
-          <h1 id="about-heading" className="mt-4 text-4xl font-bold sm:text-5xl">
-            About Med Gold
-          </h1>
-          <p className="mt-6 text-lg text-ink-muted">
-            This page is in development. Content will be added before launch.
-          </p>
-        </div>
-      </section>
+      <AboutHero />
+      <WhoWeAre />
+      <MissionVision />
+      <CoreValues />
+      <ApproachSection />
+      <WhoWeServe />
+      <ServiceCta
+        id="about-cta"
+        headingId="about-cta-heading"
+        eyebrow={cta.eyebrow}
+        heading={cta.heading}
+        subheading={cta.subheading}
+        intro={cta.intro}
+        cta={{ label: cta.button, icon: Send }}
+        tone="raised"
+      />
     </>
   );
 }
