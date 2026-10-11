@@ -56,7 +56,6 @@ All pages are `index, follow` and listed in `src/app/sitemap.ts`, except the int
 
 - New page: create `src/app/(site)/<slug>/page.tsx`, add the path to `Routes` in
   `src/config/routes.ts`, and add it to `ROUTES` in `src/app/sitemap.ts`.
-- The old pre-launch `/dev/*` URLs 301-redirect to their root paths (`next.config.ts`).
 
 ## Deploying to Vercel
 

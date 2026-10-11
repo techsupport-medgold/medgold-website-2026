@@ -28,7 +28,7 @@ alwaysApply: true
   is `src/app/(site)/page.tsx`.
 - Paths live only in `Routes` in `src/config/routes.ts`; link with `Routes.X`, never a string.
 - Pages are `index, follow` by default (root layout). Only non-indexable pages override `robots`.
-- Old `/dev/*` preview URLs 301-redirect to their root paths in `next.config.ts`; keep them.
+- Old `/dev/*` preview URLs intentionally return 404; do not add redirects for them.
 
 ### Adding a page
 

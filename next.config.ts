@@ -19,10 +19,6 @@ const nextConfig: NextConfig = {
         destination: `https://${apexHost}/:path*`,
         permanent: true,
       },
-      // Pre-launch preview URLs
-      { source: "/dev", destination: Routes.HOME, permanent: true },
-      { source: "/dev/home", destination: Routes.HOME, permanent: true },
-      { source: "/dev/:path*", destination: "/:path*", permanent: true },
       ...[
         ["/about", Routes.ABOUT],
         ["/contact", Routes.CONTACT],
