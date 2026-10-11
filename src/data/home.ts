@@ -1,4 +1,4 @@
-import { Routes, LEGAL_NAV } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { absoluteUrl } from "@@/config/site";
 
 /** Copy for the homepage. */
@@ -193,45 +193,4 @@ export const auditCta = {
     "Primary Healthcare Facility Location",
   ],
   cta: "Submit Assessment Request & Deploy Audit Team",
-};
-
-export type DirectoryLink = { label: string; href?: string };
-
-export const directory = {
-  columns: [
-    {
-      title: "Clinical Audits",
-      links: [
-        { label: "Pharmacy Audit Services", href: Routes.PHARMACY_AUDIT },
-        { label: "Hospital & Clinic Audits", href: Routes.CONTACT },
-        { label: "Medical Record Maintenance", href: Routes.CONTACT },
-        { label: "Patient Feedback Systems", href: Routes.PATIENT_FEEDBACK },
-      ],
-    },
-    {
-      title: "Operations & Maintenance (O&M)",
-      links: [
-        { label: "Biomedical & Lab Maintenance", href: Routes.CONTACT },
-        { label: "Healthcare Facility Staffing", href: Routes.STAFFING },
-        { label: "Nursing Training", href: Routes.NURSING_TRAINING },
-      ],
-    },
-    {
-      title: "Enterprise Hub",
-      links: [
-        { label: "About MedGold Operations", href: Routes.ABOUT },
-        { label: "South India Case Studies", href: Routes.CASE_STUDIES },
-        { label: "Operations & Growth Careers", href: Routes.CAREERS },
-        { label: "Connect with Ops Desk", href: Routes.CONTACT },
-      ],
-    },
-    {
-      title: "Statutory & Quality",
-      links: [
-        { label: "Healthcare Privacy Policy", href: LEGAL_NAV[0].href },
-        { label: "Institutional Terms of Service", href: LEGAL_NAV[1].href },
-        { label: "NABH / ISO 9001:2015" },
-      ],
-    },
-  ] satisfies { title: string; links: DirectoryLink[] }[],
 };

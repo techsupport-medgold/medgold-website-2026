@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ClipboardCheck, FileCheck2, Handshake, Timer, type LucideIcon } from "lucide-react";
 import AdvantageSection from "@@/components/home/AdvantageSection";
-import HomeDirectory from "@@/components/home/HomeDirectory";
 import HomeHero from "@@/components/home/HomeHero";
 import ServicePillars from "@@/components/home/ServicePillars";
 import TrustMetrics from "@@/components/home/TrustMetrics";
@@ -43,7 +42,6 @@ export default function HomePage() {
         shareFields={auditCta.shareFields}
         cta={{ label: auditCta.cta, icon: ClipboardCheck }}
       />
-      <HomeDirectory />
     </>
   );
 }
