@@ -17,6 +17,7 @@ export const organizationSchema = {
   image: absoluteUrl("/opengraph-image"),
   description: SITE.description,
   telephone: SITE.contact.phoneHref,
+  email: SITE.contact.email,
   address: {
     "@type": "PostalAddress",
     streetAddress: `${SITE.address.street}, ${SITE.address.locality}`,
@@ -35,6 +36,7 @@ export const organizationSchema = {
     "@type": "ContactPoint",
     contactType: "customer service",
     telephone: SITE.contact.phoneHref,
+    email: SITE.contact.email,
     areaServed: SITE.country,
     availableLanguage: ["English"],
   },

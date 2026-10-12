@@ -48,7 +48,7 @@ Contrast rules (WCAG 2.2 AA):
 - Tailwind only scans `src/pages`, `src/components`, and `src/app` (see `tailwind.config.ts`).
   Keep class-string tables under `src/components`, not `src/lib`.
 - Page-scoped SCSS lives in `src/styles/pages/<page>.scss` under a page class
-  (e.g. `.coming-soon-page`) and is forwarded from `src/styles/globals.scss`.
+  (e.g. `.home-page`) and is forwarded from `src/styles/globals.scss`.
 
 ## Buttons
 

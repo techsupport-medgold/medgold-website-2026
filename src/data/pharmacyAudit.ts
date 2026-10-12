@@ -1,4 +1,4 @@
-/** Copy for the Pharmacy Stock Audit & Profit Consulting service page, previewed at /dev/pharmacy-stock-audit-growth-services. */
+/** Copy for the Pharmacy Stock Audit & Profit Consulting service page. */
 export const PHARMACY_AUDIT_SEO = {
   title: "Pharmacy Stock Audit & Profit Consulting",
   description:
@@ -7,7 +7,6 @@ export const PHARMACY_AUDIT_SEO = {
 
 export const breadcrumb = {
   current: "Pharmacy Stock Audit & Profit Consulting",
-  tagline: "Reduce Losses • Increase Profit • Scale Faster",
 };
 
 export type HeroFeatureIcon = "verify" | "sop" | "kpi" | "liquidation";

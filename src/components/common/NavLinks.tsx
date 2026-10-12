@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ServicesMenu from "@@/components/common/ServicesMenu";
-import { DEV_NAV, DevRoutes } from "@@/config/routes";
+import { MAIN_NAV, Routes } from "@@/config/routes";
 import { cn } from "@@/lib/utils";
 
 type NavLinksProps = {
@@ -22,7 +22,7 @@ const DESKTOP_INDICATOR =
 export default function NavLinks({ variant, className, linkClassName, onNavigate }: NavLinksProps) {
   const pathname = usePathname();
   // The desktop header already has a "Contact Us" button; phones hide that button, so they keep the link.
-  const items = variant === "desktop" ? DEV_NAV.filter((item) => item.href !== DevRoutes.CONTACT) : DEV_NAV;
+  const items = variant === "desktop" ? MAIN_NAV.filter((item) => item.href !== Routes.CONTACT) : MAIN_NAV;
 
   return (
     <ul className={className}>

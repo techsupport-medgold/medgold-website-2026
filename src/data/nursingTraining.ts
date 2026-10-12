@@ -1,4 +1,4 @@
-/** Copy for the Nursing Training service page, previewed at /dev/nursing-training. */
+/** Copy for the Nursing Training service page. */
 export const NURSING_TRAINING_SEO = {
   title: "Nursing Training & Skills Development in Chennai",
   description:
@@ -7,11 +7,6 @@ export const NURSING_TRAINING_SEO = {
 
 export const breadcrumb = {
   current: "Nursing Training & Skills Development Program",
-  badges: [
-    { icon: "iso", label: "ISO 9001:2015 Certified Company" },
-    { icon: "hospital", label: "Real Hospital Environment" },
-    { icon: "placement", label: "Job Placement Assistance" },
-  ],
 } as const;
 
 export type TrainingTrustIcon = "hospital" | "placement" | "faculty" | "certified";
@@ -41,7 +36,7 @@ export const hero = {
     title: "Nursing Training & Skills Development Center",
     location: "Kolathur, Chennai",
     description: "Hands-on ICU & Ward simulations with state-of-the-art medical equipment handling.",
-    locationLabel: "Location:",  },
+  },
 };
 
 export type ProfileIcon = "diploma" | "anm" | "gnm" | "bsc" | "aide" | "ward";

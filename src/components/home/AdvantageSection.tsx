@@ -8,7 +8,7 @@ import Reveal from "@@/components/ui/reveal";
 import { stagger } from "@@/lib/motion";
 import Section from "@@/components/ui/section";
 import SectionHeader from "@@/components/ui/section-header";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { advantage, opsPanel, type AdvantageIcon } from "@@/data/home";
 import { cn } from "@@/lib/utils";
 
@@ -94,7 +94,7 @@ export default function AdvantageSection() {
               {opsPanel.note}
             </p>
             <Link
-              href={DevRoutes.CONTACT}
+              href={Routes.CONTACT}
               className="group inline-flex min-h-11 shrink-0 items-center gap-1 text-sm font-bold text-gold hover:text-white"
             >
               {opsPanel.linkLabel}

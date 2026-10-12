@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, CircleCheck, LayoutGrid, ShieldCheck } from "lucide-react";
+import { ArrowRight, BadgeCheck, CircleCheck, ShieldCheck } from "lucide-react";
 import { Button } from "@@/components/ui/button";
 import ResponsiveImage from "@@/components/ui/responsive-image";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 import { homeHero } from "@@/data/home";
 import { cn } from "@@/lib/utils";
 
@@ -13,14 +13,9 @@ export default function HomeHero() {
     <section aria-labelledby="home-heading" className="brand-wash">
       <div className="container grid items-center gap-12 pb-20 pt-10 sm:pt-14 lg:grid-cols-12 lg:gap-10 lg:pb-24">
         <div className="min-w-0 lg:col-span-6">
-          <p className="inline-flex max-w-full items-start gap-2.5 rounded-2xl border border-primary/10 bg-surface/90 px-4 py-2 text-xs font-semibold text-primary-deep shadow-card backdrop-blur sm:items-center sm:rounded-full">
-            <span className="status-dot mt-1 shrink-0 sm:mt-0" aria-hidden="true" />
-            {homeHero.badge}
-          </p>
-
           <h1
             id="home-heading"
-            className="mt-6 font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-primary-deep sm:text-5xl lg:text-[3.4rem]"
+            className="font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-primary-deep sm:text-5xl lg:text-[3.4rem]"
           >
             {homeHero.heading}
           </h1>
@@ -28,22 +23,11 @@ export default function HomeHero() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" className="h-auto min-h-12 shrink whitespace-normal px-6 py-3 font-semibold">
-              <Link href={DevRoutes.CONTACT}>
+              <Link href={Routes.CONTACT}>
                 <ShieldCheck aria-hidden="true" />
                 {homeHero.primaryCta}
                 <ArrowRight aria-hidden="true" />
               </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-auto min-h-12 shrink whitespace-normal border-primary/30 bg-surface/80 px-6 py-3 font-semibold text-primary-deep hover:border-primary hover:bg-surface hover:text-primary"
-            >
-              <a href="#services">
-                <LayoutGrid aria-hidden="true" />
-                {homeHero.secondaryCta}
-              </a>
             </Button>
           </div>
 

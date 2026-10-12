@@ -1,8 +1,8 @@
 import { absoluteUrl } from "@@/config/site";
-import { DevRoutes } from "@@/config/routes";
+import { Routes } from "@@/config/routes";
 
-/** Copy for the Hospital Branding & Marketing service page, previewed at /dev/hospital-clinic-branding-marketing-services. */
-export const BRANDING_PAGE_URL = absoluteUrl(DevRoutes.BRANDING);
+/** Copy for the Hospital Branding & Marketing service page. */
+export const BRANDING_PAGE_URL = absoluteUrl(Routes.BRANDING);
 
 export const BRANDING_SEO = {
   title: "Hospital Branding & Digital Marketing Services in Chennai",
@@ -12,9 +12,6 @@ export const BRANDING_SEO = {
 
 export const breadcrumb = {
   current: "Digital Marketing & Hospital Growth Solutions",
-  badge: "Brochure Certified",
-  specialist: "Healthcare-Specialized Agency",
-  compliance: "Ethical Medical Marketing (NMC Aligned)",
 } as const;
 
 export type PromiseIcon = "visibility" | "patients" | "revenue" | "brand";

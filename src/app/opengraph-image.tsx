@@ -40,7 +40,7 @@ export default async function OpengraphImage() {
               textTransform: "uppercase",
             }}
           >
-            Coming soon
+            Hospital operations partner · Chennai
           </div>
           <div
             style={{

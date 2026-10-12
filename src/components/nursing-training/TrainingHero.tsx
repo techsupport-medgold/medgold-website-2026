@@ -14,7 +14,7 @@ import { Button } from "@@/components/ui/button";
 import IconBadge from "@@/components/ui/icon-badge";
 import Pill from "@@/components/ui/pill";
 import ResponsiveImage from "@@/components/ui/responsive-image";
-import { SITE, SITE_URL } from "@@/config/site";
+import { SITE_URL } from "@@/config/site";
 import { hero, type TrainingTrustIcon } from "@@/data/nursingTraining";
 
 const TRUST_ICONS: Record<TrainingTrustIcon, LucideIcon> = {
@@ -106,10 +106,7 @@ export default function TrainingHero() {
                 {hero.card.location}
               </Pill>
             </div>
-            <p className="text-xs leading-relaxed text-ink-muted">
-              <span className="font-semibold text-ink">{hero.card.locationLabel}</span> {SITE.address.full}.{" "}
-              {hero.card.description}
-            </p>
+            <p className="text-xs leading-relaxed text-ink-muted">{hero.card.description}</p>
             <div className="border-t border-border-muted pt-3">
               <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-ink">
                 <Globe className="size-3.5" aria-hidden="true" />

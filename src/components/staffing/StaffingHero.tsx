@@ -7,7 +7,6 @@ import {
   Globe,
   GraduationCap,
   Hospital,
-  MapPin,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -15,8 +14,8 @@ import { Button } from "@@/components/ui/button";
 import CountUp from "@@/components/ui/count-up";
 import IconBadge from "@@/components/ui/icon-badge";
 import ResponsiveImage from "@@/components/ui/responsive-image";
-import { DevRoutes } from "@@/config/routes";
-import { SITE, SITE_URL } from "@@/config/site";
+import { Routes } from "@@/config/routes";
+import { SITE_URL } from "@@/config/site";
 import { hero, type TrustIcon } from "@@/data/staffing";
 
 const TRUST_ICONS: Record<TrustIcon, LucideIcon> = {
@@ -46,13 +45,7 @@ export default function StaffingHero() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted">{hero.intro}</p>
 
-          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Location and website">
-            <li className={chipClass}>
-              <MapPin className={chipIconClass} aria-hidden="true" />
-              <span>
-                <span className="font-bold text-ink">{hero.addressLabel}</span> {SITE.address.full}
-              </span>
-            </li>
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Website">
             <li className={chipClass}>
               <Globe className={chipIconClass} aria-hidden="true" />
               <span>
@@ -63,7 +56,7 @@ export default function StaffingHero() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" className="h-auto min-h-12 shrink whitespace-normal px-6 py-3 font-semibold">
-              <Link href={DevRoutes.CONTACT}>
+              <Link href={Routes.CONTACT}>
                 {hero.primaryCta}
                 <ArrowRight aria-hidden="true" />
               </Link>
@@ -74,7 +67,7 @@ export default function StaffingHero() {
               variant="outline"
               className="h-auto min-h-12 shrink whitespace-normal border-primary/30 bg-surface/80 px-6 py-3 font-semibold text-primary-deep hover:border-primary hover:bg-surface hover:text-primary"
             >
-              <Link href={DevRoutes.NURSING_TRAINING}>
+              <Link href={Routes.NURSING_TRAINING}>
                 <GraduationCap aria-hidden="true" />
                 {hero.secondaryCta}
               </Link>

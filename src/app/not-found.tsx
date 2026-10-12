@@ -18,8 +18,8 @@ export default function NotFound() {
       </p>
       <h1 className="mt-3 text-3xl font-bold sm:text-4xl">Page not found</h1>
       <p className="mt-4 max-w-md text-lg text-ink-muted">
-        Our full website is launching soon. In the meantime, head back to the
-        home page to find out more.
+        The page may have moved or no longer exists. Head back to the home page
+        to explore our healthcare operations services.
       </p>
       <Button asChild size="lg" className="mt-8">
         <Link href="/">Back to home</Link>

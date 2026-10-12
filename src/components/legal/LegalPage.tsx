@@ -1,14 +1,38 @@
-import { Info } from "lucide-react";
 import Breadcrumb from "@@/components/common/Breadcrumb";
-import { LEGAL_LAST_UPDATED, LEGAL_PLACEHOLDER_NOTE, type LegalSection } from "@@/data/legal";
+import type { LegalListItem, LegalSection } from "@@/data/legal";
 
 type LegalPageProps = {
   title: string;
   path: string;
+  lastUpdated: string;
   sections: LegalSection[];
 };
 
-export default function LegalPage({ title, path, sections }: LegalPageProps) {
+function LegalList({ items }: { items: LegalListItem[] }) {
+  return (
+    <ul className="mt-4 list-disc space-y-2 pl-6 leading-relaxed text-ink-muted marker:text-primary">
+      {items.map((item) =>
+        typeof item === "string" ? (
+          <li key={item}>{item}</li>
+        ) : (
+          <li key={item.term}>
+            <strong className="font-semibold text-ink">{item.term}:</strong> {item.text}
+          </li>
+        ),
+      )}
+    </ul>
+  );
+}
+
+function Paragraphs({ items }: { items: string[] }) {
+  return items.map((paragraph) => (
+    <p key={paragraph} className="mt-4 leading-relaxed text-ink-muted">
+      {paragraph}
+    </p>
+  ));
+}
+
+export default function LegalPage({ title, path, lastUpdated, sections }: LegalPageProps) {
   return (
     <>
       <Breadcrumb current={title} path={path} />
@@ -19,7 +43,7 @@ export default function LegalPage({ title, path, sections }: LegalPageProps) {
             <h1 id="legal-heading" className="mt-4 text-4xl font-bold sm:text-5xl">
               {title}
             </h1>
-            <p className="mt-4 text-ink-muted">Last updated: {LEGAL_LAST_UPDATED}</p>
+            <p className="mt-4 text-ink-muted">Last updated: {lastUpdated}</p>
           </div>
         </header>
 
@@ -45,36 +69,26 @@ export default function LegalPage({ title, path, sections }: LegalPageProps) {
           </nav>
 
           <div className="max-w-3xl">
-            <p
-              role="note"
-              className="flex items-start gap-3 rounded-lg border border-gold/50 bg-gold/10 p-4 text-sm text-ink"
-            >
-              <Info className="mt-0.5 size-4 shrink-0 text-gold-ink" aria-hidden="true" />
-              {LEGAL_PLACEHOLDER_NOTE}
-            </p>
-
-            {sections.map((section) => (
+            {sections.map((section, index) => (
               <section
                 key={section.id}
                 id={section.id}
                 aria-labelledby={`${section.id}-heading`}
-                className="mt-10 scroll-mt-32"
+                className={index === 0 ? "scroll-mt-32" : "mt-10 scroll-mt-32"}
               >
                 <h2 id={`${section.id}-heading`} className="text-2xl font-bold">
                   {section.heading}
                 </h2>
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph} className="mt-4 leading-relaxed text-ink-muted">
-                    {paragraph}
-                  </p>
+                <Paragraphs items={section.paragraphs} />
+                {section.list && <LegalList items={section.list} />}
+                {section.subsections?.map((subsection) => (
+                  <div key={subsection.heading} className="mt-6">
+                    <h3 className="text-lg font-semibold text-ink">{subsection.heading}</h3>
+                    {subsection.paragraphs && <Paragraphs items={subsection.paragraphs} />}
+                    {subsection.list && <LegalList items={subsection.list} />}
+                  </div>
                 ))}
-                {section.list && (
-                  <ul className="mt-4 list-disc space-y-2 pl-6 leading-relaxed text-ink-muted marker:text-primary">
-                    {section.list.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                )}
+                {section.closing && <Paragraphs items={section.closing} />}
               </section>
             ))}
           </div>

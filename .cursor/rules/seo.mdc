@@ -21,34 +21,26 @@ alwaysApply: true
 | `src/data/<name>.ts` | Copy, cards, FAQ arrays, plus `*_PAGE_URL` and `*_SEO` constants |
 | `src/components/<feature>/*` | Small sections; `"use client"` only for real interactivity |
 
-## Pre-launch: only the coming-soon page is indexed
+## Site structure
 
-- `/` (countdown coming-soon page) is the only indexable page and the only sitemap entry.
-- **Every page built before launch goes in `src/app/dev/<page>/` and is served at
-  `/dev/<page>`** (the future homepage is `/dev/home`). The `dev/layout.tsx` sets
-  `noindex, nofollow`, and `next.config.ts` adds `X-Robots-Tag: noindex, nofollow` for `/dev/**`,
-  so new dev pages are covered automatically.
-- Add the page to `DevRoutes` in `src/config/routes.ts` and to the list in `src/app/dev/page.tsx`.
-- Do not override `robots` in dev page metadata, and do not add dev pages to `sitemap.ts`.
-- `/dev` is disallowed in `robots.txt` (`src/app/robots.ts`) and also served with noindex;
-  keep both.
-- Do not link to `/dev` pages from the public coming-soon page.
-- The launch date lives only in `SITE.launchDate` (`src/config/site.ts`, overridable via
-  `NEXT_PUBLIC_LAUNCH_DATE`); never hardcode it elsewhere.
+- All public pages live in the `src/app/(site)/` route group, which adds the Header and Footer
+  without changing the URL (`(site)/about-us/page.tsx` is served at `/about-us`). The homepage
+  is `src/app/(site)/page.tsx`.
+- Paths live only in `Routes` in `src/config/routes.ts`; link with `Routes.X`, never a string.
+- Pages are `index, follow` by default (root layout). Only non-indexable pages override `robots`.
+- Old `/dev/*` preview URLs intentionally return 404; do not add redirects for them.
 
-### Launching a page
+### Adding a page
 
-1. Move it from `src/app/dev/<page>` to its final path (e.g. `dev/home` becomes `src/app/page.tsx`,
-   `dev/about` becomes `src/app/about`), and update internal links.
-2. Remove it from `DevRoutes` and the `/dev` index list.
-3. Add it to `ROUTES` in `src/app/sitemap.ts`.
-4. Complete the checklist below (metadata, canonical, OG, JSON-LD).
+1. Create `src/app/(site)/<slug>/page.tsx` and add the path to `Routes`.
+2. Add it to `ROUTES` in `src/app/sitemap.ts` (unless it is noindex).
+3. Complete the checklist below (metadata, canonical, OG, JSON-LD, breadcrumb).
 
 ## Every new public page must
 
 1. Export `metadata` (or `generateMetadata`) with a unique `title` (50-60 chars; the root
    template adds `| Med Gold`), a unique `description` (140-160 chars), and
-   `alternates.canonical` set to the absolute page URL.
+   `alternates.canonical` set to the page URL (`Routes.X` or an absolute `*_PAGE_URL`).
 2. Override `openGraph` / `twitter` title, description, and URL when they differ from
    the defaults; add a route-level `opengraph-image.tsx` when the page deserves its own card.
 3. Be added to `ROUTES` in `src/app/sitemap.ts`.
@@ -71,5 +63,5 @@ alwaysApply: true
 - Do not add analytics scripts directly. GTM loads from `NEXT_PUBLIC_GTM_ID`. Microsoft Clarity loads
  through `@microsoft/clarity` in `ClarityInit`, using `CLARITY_PROJECT_ID` from `src/config/site.ts`
  (overridable via `NEXT_PUBLIC_CLARITY_ID`), on the production site only.
-- Non-indexable pages (thank-you, 404, previews) must set `robots: { index: false }`
+- Non-indexable pages (thank-you, 404, style guide) must set `robots: { index: false }`
   and stay out of the sitemap.
