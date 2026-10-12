@@ -39,12 +39,12 @@ export const SITE = {
     email: "care@medgoldhealthcare.com",
   },
   address: {
-    street: "No.5, Santhosh Nagar Annex",
+    street: "Santosh Nagar, Janaki Raman Nagar, Teacher Colony",
     locality: "Kolathur",
     city: "Chennai",
     region: "Tamil Nadu",
     postalCode: "600099",
-    full: "No.5, Santhosh Nagar Annex, Kolathur, Chennai, Tamil Nadu 600099",
+    full: "Santosh Nagar, Janaki Raman Nagar, Teacher Colony, Kolathur, Chennai, Tamil Nadu 600099",
   },
   geo: { lat: 13.1309443, lng: 80.199499 },
   mapUrl: "https://maps.app.goo.gl/pkUEuPoQ5N37jBJZ9",
@@ -53,6 +53,9 @@ export const SITE = {
 
 /** Public Microsoft Clarity project ID; NEXT_PUBLIC_CLARITY_ID overrides it. */
 export const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "yoaflrji2q";
+
+/** Public Google Tag Manager container ID; NEXT_PUBLIC_GTM_ID overrides it. */
+export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-P8G73P5Q";
 
 export const whatsappUrl = (message?: string) =>
   `https://wa.me/${SITE.contact.whatsapp}${
