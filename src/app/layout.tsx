@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "@@/styles/globals.scss";
-import Analytics, { AnalyticsNoScript } from "@@/components/common/Analytics";
+import Analytics, { AnalyticsNoScript, gtmSnippet } from "@@/components/common/Analytics";
 import JsonLd from "@@/components/common/JsonLd";
-import { BRAND_COLORS, SITE, SITE_URL } from "@@/config/site";
+import { BRAND_COLORS, GTM_ID, SITE, SITE_URL } from "@@/config/site";
 import { organizationSchema, websiteSchema } from "@@/lib/schema";
 
 const inter = Inter({
@@ -86,6 +86,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={SITE.language} className={`${inter.variable} ${jakarta.variable}`} suppressHydrationWarning>
+      <head>
+        {GTM_ID ? (
+          <script id="gtm" dangerouslySetInnerHTML={{ __html: gtmSnippet(GTM_ID) }} />
+        ) : null}
+      </head>
       <body suppressHydrationWarning>
         <AnalyticsNoScript />
         {children}
