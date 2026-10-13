@@ -177,12 +177,11 @@ export const trainers = {
     heading: "Our Expert Trainers",
     intro: "Our senior nursing tutors lead classroom and bedside training for every batch.",
   },
-  // TODO: replace the staff experience years with real numbers.
   staff: [
     {
       name: "Gajalakshmi N",
       role: "Senior Nursing Tutor",
-      experienceYears: 12,
+      experienceYears: 8,
       photo: {
         src: "/images/careers/gajalakshmi-n-senior-nursing-tutor.avif",
         alt: "Gajalakshmi N, Senior Nursing Tutor at MedGold Healthcare",
