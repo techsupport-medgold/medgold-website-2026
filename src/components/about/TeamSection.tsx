@@ -72,7 +72,7 @@ export default function TeamSection() {
           <TrainerPhoto
             person={founder}
             sizes="(min-width: 1024px) 380px, 448px"
-            className="mx-auto aspect-[4/5] w-full max-w-md"
+            className="mx-auto aspect-[4/5] w-full max-w-md lg:aspect-auto lg:h-full lg:min-h-[475px] lg:max-w-none"
           />
           <div className="relative p-6 sm:p-8 lg:self-center lg:p-10 lg:pr-12">
             <Pill tone="gold" size="md">
