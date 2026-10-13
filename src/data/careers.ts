@@ -1,73 +1,44 @@
 /** Copy for the careers page. */
 export const CAREERS_SEO = {
   title: "Careers",
-  description: "Careers at Med Gold. This page is in development.",
+  description:
+    "Apply for nursing, medical, technician and hospital operations jobs at MedGold Healthcare in Chennai. Send your application and our team will contact you.",
 };
 
 export const careersHero = {
   heading: "Careers at Med Gold",
-  intro: "This page is in development. Open roles will be listed here before launch.",
+  intro:
+    "Join our team of nurses, doctors, technicians and hospital professionals across Chennai. Apply below and our team will get back to you.",
 };
 
-export type Trainer = {
-  name: string;
-  role: string;
-  experienceYears: number;
-  bio?: string;
-  photo?: { src: string; alt: string };
-};
+export const positions = [
+  "Staff Nurse",
+  "Nursing Assistant",
+  "Duty Medical Officer",
+  "Lab Technician",
+  "Radiology Technician",
+  "Pharmacist",
+  "Front Office / Receptionist",
+  "Hospital Operations Executive",
+  "Other",
+] as const;
 
-export type Founder = Trainer & { about: string[]; expertise: string[] };
+export const experienceLevels = ["Fresher", "1-2 years", "3-5 years", "5-10 years", "10+ years"] as const;
 
-// TODO: replace with real details (experience years and the founder's about text).
-export const founder: Founder = {
-  name: "Mr. Sundramurthi",
-  role: "Founder, MedGold Healthcare",
-  experienceYears: 20,
-  about: [
-    "Mr. Sundramurthi founded MedGold Healthcare to give hospitals and clinics one dependable partner for the operational work that keeps patient care running smoothly.",
-    "His experience spans hospital operations, pharmacy stock audits, healthcare staffing and nursing education. He personally guides our training programs and the teams we place with partner facilities.",
+export const whyJoin = {
+  heading: "Why work with us",
+  points: [
+    { icon: "growth", title: "Grow your career", text: "Placements with partner hospitals and clinics across Chennai." },
+    { icon: "training", title: "Keep learning", text: "Ongoing training led by our senior nursing tutors." },
+    { icon: "support", title: "Supportive team", text: "A coordinator who stays in touch from interview to onboarding." },
   ],
-  expertise: [
-    "Hospital Operations",
-    "Pharmacy Stock Audit",
-    "NABH Readiness",
-    "Healthcare Staffing",
-    "Nursing Training",
-    "Patient Feedback Systems",
-    "Hospital Branding",
-  ],
-};
+} as const;
 
-export const trainers = {
-  founderHeader: {
-    eyebrow: "Learn from experienced leaders",
-    heading: "Meet Our Founder",
-    intro: "The vision and experience behind MedGold Healthcare's training and operations.",
-  },
-  staffHeader: {
-    eyebrow: "Hands-on nursing education",
-    heading: "Our Expert Trainers",
-    intro: "Our senior nursing tutors lead classroom and bedside training for every batch.",
-  },
-  staff: [
-    {
-      name: "Gajalakshmi N",
-      role: "Senior Nursing Tutor",
-      experienceYears: 12,
-      photo: {
-        src: "/images/careers/gajalakshmi-n-senior-nursing-tutor.avif",
-        alt: "Gajalakshmi N, Senior Nursing Tutor at MedGold Healthcare",
-      },
-    },
-    {
-      name: "Praveena",
-      role: "Senior Nursing Tutor",
-      experienceYears: 8,
-      photo: {
-        src: "/images/careers/praveena-senior-nursing-tutor.avif",
-        alt: "Praveena, Senior Nursing Tutor at MedGold Healthcare",
-      },
-    },
-  ] satisfies Trainer[] as Trainer[],
+export const nextSteps = {
+  heading: "What happens next",
+  steps: [
+    "Send your application on WhatsApp and attach your resume in the chat.",
+    "Our team reviews your profile and calls you within a few working days.",
+    "Shortlisted candidates are invited for an interview and skills check.",
+  ],
 };

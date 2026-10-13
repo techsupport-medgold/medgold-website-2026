@@ -5,7 +5,7 @@ import Pill from "@@/components/ui/pill";
 import Reveal from "@@/components/ui/reveal";
 import Section from "@@/components/ui/section";
 import SectionHeader from "@@/components/ui/section-header";
-import { founder, trainers, type Trainer } from "@@/data/careers";
+import { founder, trainers, type Trainer } from "@@/data/about";
 import { stagger } from "@@/lib/motion";
 import { cn } from "@@/lib/utils";
 
@@ -47,7 +47,7 @@ function TrainerPhoto({ person, sizes, className }: { person: Trainer; sizes: st
   );
 }
 
-export default function TrainersSection() {
+export default function TeamSection() {
   const staff = [...trainers.staff].sort((a, b) => b.experienceYears - a.experienceYears);
 
   return (

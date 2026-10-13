@@ -4,6 +4,7 @@ import AboutHero from "@@/components/about/AboutHero";
 import ApproachSection from "@@/components/about/ApproachSection";
 import CoreValues from "@@/components/about/CoreValues";
 import MissionVision from "@@/components/about/MissionVision";
+import TeamSection from "@@/components/about/TeamSection";
 import WhoWeAre from "@@/components/about/WhoWeAre";
 import WhoWeServe from "@@/components/about/WhoWeServe";
 import Breadcrumb from "@@/components/common/Breadcrumb";
@@ -43,6 +44,7 @@ export default function AboutPage() {
       <Breadcrumb current="About Us" path={Routes.ABOUT} />
       <AboutHero />
       <WhoWeAre />
+      <TeamSection />
       <MissionVision />
       <CoreValues />
       <ApproachSection />
