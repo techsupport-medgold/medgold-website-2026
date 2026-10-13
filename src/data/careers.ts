@@ -1,23 +1,44 @@
 /** Copy for the careers page. */
 export const CAREERS_SEO = {
   title: "Careers",
-  description: "Careers at Med Gold. This page is in development.",
+  description:
+    "Apply for nursing, medical, technician and hospital operations jobs at MedGold Healthcare in Chennai. Send your application and our team will contact you.",
 };
 
 export const careersHero = {
   heading: "Careers at Med Gold",
-  intro: "This page is in development. Open roles will be listed here before launch.",
+  intro:
+    "Join our team of nurses, doctors, technicians and hospital professionals across Chennai. Apply below and our team will get back to you.",
 };
 
-export type Trainer = { name: string; role: string; bio?: string; photo?: { src: string; alt: string } };
+export const positions = [
+  "Staff Nurse",
+  "Nursing Assistant",
+  "Duty Medical Officer",
+  "Lab Technician",
+  "Radiology Technician",
+  "Pharmacist",
+  "Front Office / Receptionist",
+  "Hospital Operations Executive",
+  "Other",
+] as const;
 
-export const trainers = {
-  eyebrow: "Learn from experienced leaders",
-  heading: "Meet Our Founder & Trainers",
-  intro: "Our training programs are led by the Med Gold founder and practising doctors.",
-  people: [
-    { name: "Mr. Sundramurthi", role: "Founder, MedGold Healthcare" },
-    { name: "Dr. Name", role: "Designation" },
-    { name: "Dr. Name", role: "Designation" },
-  ] satisfies Trainer[] as Trainer[],
+export const experienceLevels = ["Fresher", "1-2 years", "3-5 years", "5-10 years", "10+ years"] as const;
+
+export const whyJoin = {
+  heading: "Why work with us",
+  points: [
+    { icon: "growth", title: "Grow your career", text: "Placements with partner hospitals and clinics across Chennai." },
+    { icon: "training", title: "Keep learning", text: "Ongoing training led by our senior nursing tutors." },
+    { icon: "support", title: "Supportive team", text: "A coordinator who stays in touch from interview to onboarding." },
+  ],
+} as const;
+
+export const nextSteps = {
+  heading: "What happens next",
+  steps: [
+    "Send your application on WhatsApp and attach your resume in the chat.",
+    "Our team reviews your profile and calls you within a few working days.",
+    "Shortlisted candidates are invited for an interview and skills check.",
+  ],
 };
