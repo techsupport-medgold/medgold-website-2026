@@ -40,9 +40,16 @@ export const founder: Founder = {
 };
 
 export const trainers = {
-  eyebrow: "Learn from experienced leaders",
-  heading: "Meet Our Founder & Trainers",
-  intro: "Our training programs are led by the Med Gold founder and our senior nursing tutors.",
+  founderHeader: {
+    eyebrow: "Learn from experienced leaders",
+    heading: "Meet Our Founder",
+    intro: "The vision and experience behind MedGold Healthcare's training and operations.",
+  },
+  staffHeader: {
+    eyebrow: "Hands-on nursing education",
+    heading: "Our Expert Trainers",
+    intro: "Our senior nursing tutors lead classroom and bedside training for every batch.",
+  },
   staff: [
     {
       name: "Gajalakshmi N",

@@ -51,8 +51,13 @@ export default function TrainersSection() {
   const staff = [...trainers.staff].sort((a, b) => b.experienceYears - a.experienceYears);
 
   return (
-    <Section tone="raised" aria-labelledby="trainers-heading">
-      <SectionHeader id="trainers-heading" eyebrow={trainers.eyebrow} title={trainers.heading} intro={trainers.intro} />
+    <Section tone="raised" aria-labelledby="founder-heading">
+      <SectionHeader
+        id="founder-heading"
+        eyebrow={trainers.founderHeader.eyebrow}
+        title={trainers.founderHeader.heading}
+        intro={trainers.founderHeader.intro}
+      />
 
       <Reveal className="mt-10">
         <Card padding="none" interactive className="group relative overflow-hidden lg:grid lg:grid-cols-5">
@@ -91,7 +96,15 @@ export default function TrainersSection() {
         </Card>
       </Reveal>
 
-      <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <SectionHeader
+        id="staff-heading"
+        className="mt-16"
+        eyebrow={trainers.staffHeader.eyebrow}
+        title={trainers.staffHeader.heading}
+        intro={trainers.staffHeader.intro}
+      />
+
+      <ul aria-labelledby="staff-heading" className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {staff.map((person, index) => (
           <Reveal as="li" key={person.name} delay={stagger(index)}>
             <Card padding="none" interactive className="group h-full overflow-hidden">
