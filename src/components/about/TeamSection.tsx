@@ -115,7 +115,7 @@ export default function TeamSection() {
               <TrainerPhoto
                 person={person}
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="rounded-t-card"
+                className="aspect-[4/5] rounded-t-card"
               />
               <div className="p-6">
                 <h3 className="relative inline-block font-display text-xl font-bold text-primary-deep after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-gold after:transition-all after:duration-500 group-hover:after:w-full motion-reduce:after:transition-none">
