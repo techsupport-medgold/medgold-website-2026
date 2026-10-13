@@ -60,17 +60,21 @@ export default function TeamSection() {
       />
 
       <Reveal className="mt-10">
-        <Card padding="none" interactive className="group relative overflow-hidden lg:grid lg:grid-cols-5">
+        <Card
+          padding="none"
+          interactive
+          className="group relative overflow-hidden lg:grid lg:grid-cols-[minmax(0,380px)_1fr]"
+        >
           <span
             className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-gold/15 blur-3xl transition-transform duration-700 ease-out-expo group-hover:scale-150 motion-reduce:transform-none"
             aria-hidden="true"
           />
           <TrainerPhoto
             person={founder}
-            sizes="(min-width: 1024px) 40vw, 100vw"
-            className="lg:col-span-2 lg:aspect-auto lg:h-full lg:min-h-[420px]"
+            sizes="(min-width: 1024px) 380px, 448px"
+            className="mx-auto aspect-[4/5] w-full max-w-md lg:aspect-auto lg:h-full lg:min-h-[475px] lg:max-w-none"
           />
-          <div className="relative p-6 sm:p-8 lg:col-span-3 lg:p-10">
+          <div className="relative p-6 sm:p-8 lg:self-center lg:p-10 lg:pr-12">
             <Pill tone="gold" size="md">
               <span className="status-dot" aria-hidden="true" />
               {founder.experienceYears}+ Years Experience
@@ -111,7 +115,7 @@ export default function TeamSection() {
               <TrainerPhoto
                 person={person}
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="rounded-t-card"
+                className="aspect-[4/5] rounded-t-card"
               />
               <div className="p-6">
                 <h3 className="relative inline-block font-display text-xl font-bold text-primary-deep after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-gold after:transition-all after:duration-500 group-hover:after:w-full motion-reduce:after:transition-none">

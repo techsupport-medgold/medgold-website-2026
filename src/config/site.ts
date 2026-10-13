@@ -30,7 +30,7 @@ export const SITE = {
   launchYear: 2026,
   country: "IN",
   contact: {
-    person: "Mr. Sundramurthi",
+    person: "Mr. Sundaramoorthy",
     phone: "+91 91509 37804",
     phoneHref: "+919150937804",
     phoneAlt: "+91 82480 60804",

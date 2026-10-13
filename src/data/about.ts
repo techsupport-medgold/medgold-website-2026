@@ -143,23 +143,26 @@ export type Trainer = {
 
 export type Founder = Trainer & { about: string[]; expertise: string[] };
 
-// TODO: replace with real details (experience years and the founder's about text).
 export const founder: Founder = {
-  name: "Mr. Sundramurthi",
-  role: "Founder, MedGold Healthcare",
-  experienceYears: 20,
+  name: "Mr. Sundaramoorthy",
+  role: "Founder | Mentor | Author | Startup Coach",
+  experienceYears: 36,
+  photo: {
+    src: "/images/careers/sundaramoorthy-founder-medgold-healthcare.avif",
+    alt: "Mr. Sundaramoorthy, Founder of MedGold Healthcare",
+  },
   about: [
-    "Mr. Sundramurthi founded MedGold Healthcare to give hospitals and clinics one dependable partner for the operational work that keeps patient care running smoothly.",
-    "His experience spans hospital operations, pharmacy stock audits, healthcare staffing and nursing education. He personally guides our training programs and the teams we place with partner facilities.",
+    "Mr. Sundaramoorthy is the visionary leader behind MedGold Healthcare. With a career spanning more than 36 years in the healthcare industry, he brings deep, hands-on experience in hospital operations, leadership and business growth to every partnership we build.",
+    "As a professional speaker, mentor and startup coach, he has guided healthcare professionals and entrepreneurs to build stronger teams and sustainable organisations. He is also the creator of the Money Workshop, a practical program on financial growth and personal success that he has run worldwide for over 23 years.",
   ],
   expertise: [
+    "Healthcare Leadership",
     "Hospital Operations",
-    "Pharmacy Stock Audit",
-    "NABH Readiness",
-    "Healthcare Staffing",
-    "Nursing Training",
-    "Patient Feedback Systems",
-    "Hospital Branding",
+    "Business Coaching",
+    "Leadership Skills",
+    "Wealth Creation",
+    "Social Media Marketing",
+    "Startup Mentoring",
   ],
 };
 
@@ -178,7 +181,7 @@ export const trainers = {
     {
       name: "Gajalakshmi N",
       role: "Senior Nursing Tutor",
-      experienceYears: 12,
+      experienceYears: 8,
       photo: {
         src: "/images/careers/gajalakshmi-n-senior-nursing-tutor.avif",
         alt: "Gajalakshmi N, Senior Nursing Tutor at MedGold Healthcare",
