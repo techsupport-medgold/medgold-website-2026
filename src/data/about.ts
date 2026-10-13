@@ -148,6 +148,10 @@ export const founder: Founder = {
   name: "Mr. Sundramurthi",
   role: "Founder, MedGold Healthcare",
   experienceYears: 20,
+  photo: {
+    src: "/images/careers/sundaramoorthy-founder-medgold-healthcare.avif",
+    alt: "Mr. Sundramurthi, Founder of MedGold Healthcare",
+  },
   about: [
     "Mr. Sundramurthi founded MedGold Healthcare to give hospitals and clinics one dependable partner for the operational work that keeps patient care running smoothly.",
     "His experience spans hospital operations, pharmacy stock audits, healthcare staffing and nursing education. He personally guides our training programs and the teams we place with partner facilities.",
