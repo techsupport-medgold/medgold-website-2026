@@ -3,8 +3,19 @@ import { Routes } from "@@/config/routes";
 export type SubmitStatus = "success" | "failed";
 export type FormKind = "enquiry" | "application";
 
-export function thankYouUrl(status: SubmitStatus, form: FormKind): string {
-  return `${Routes.THANK_YOU}?status=${status}&form=${form}`;
+export function thankYouUrl(status: SubmitStatus): string {
+  return `${Routes.THANK_YOU}?status=${status}`;
+}
+
+/** Tells the thank-you page which form was sent, so its URL only needs the status. */
+export const FORM_COOKIE = "medgold-form";
+
+export function rememberForm(form: FormKind): void {
+  try {
+    document.cookie = `${FORM_COOKIE}=${form}; path=${Routes.THANK_YOU}; max-age=600; samesite=lax`;
+  } catch {
+    // Without the cookie the page falls back to the enquiry screen.
+  }
 }
 
 type RawParams = Record<string, string | string[] | undefined>;
@@ -13,11 +24,12 @@ function first(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
 }
 
-export function parseThankYouParams(params: RawParams): { status: SubmitStatus; form: FormKind } {
-  return {
-    status: first(params.status) === "failed" ? "failed" : "success",
-    form: first(params.form) === "application" ? "application" : "enquiry",
-  };
+export function parseStatus(params: RawParams): SubmitStatus {
+  return first(params.status) === "failed" ? "failed" : "success";
+}
+
+export function parseForm(value: string | undefined): FormKind {
+  return value === "application" ? "application" : "enquiry";
 }
 
 type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;

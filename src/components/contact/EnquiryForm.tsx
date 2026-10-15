@@ -15,7 +15,14 @@ import {
   type EnquiryValues,
 } from "@@/lib/enquiry";
 import { HONEYPOT_FIELD } from "@@/lib/form-action";
-import { clearDraft, saveDraft, takeDraft, thankYouUrl, type SubmitStatus } from "@@/lib/thank-you";
+import {
+  clearDraft,
+  rememberForm,
+  saveDraft,
+  takeDraft,
+  thankYouUrl,
+  type SubmitStatus,
+} from "@@/lib/thank-you";
 import { cn } from "@@/lib/utils";
 
 const EMPTY: EnquiryValues = { name: "", phone: "", email: "", type: "", message: "" };
@@ -92,7 +99,8 @@ export default function EnquiryForm() {
       } else {
         saveDraft("enquiry", values);
       }
-      router.push(thankYouUrl(status, "enquiry"));
+      rememberForm("enquiry");
+      router.push(thankYouUrl(status));
     });
   };
 

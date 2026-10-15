@@ -35,7 +35,14 @@ import {
   type ApplicationValues,
 } from "@@/lib/application";
 import { HONEYPOT_FIELD } from "@@/lib/form-action";
-import { clearDraft, saveDraft, takeDraft, thankYouUrl, type SubmitStatus } from "@@/lib/thank-you";
+import {
+  clearDraft,
+  rememberForm,
+  saveDraft,
+  takeDraft,
+  thankYouUrl,
+  type SubmitStatus,
+} from "@@/lib/thank-you";
 import { cn } from "@@/lib/utils";
 
 type FormField = ApplicationField | "resume";
@@ -171,7 +178,8 @@ export default function ApplicationForm() {
       } else {
         saveDraft("application", values);
       }
-      router.push(thankYouUrl(status, "application"));
+      rememberForm("application");
+      router.push(thankYouUrl(status));
     });
   };
 

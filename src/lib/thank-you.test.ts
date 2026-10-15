@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { clearDraft, parseThankYouParams, peekDraft, saveDraft, takeDraft, thankYouUrl } from "@@/lib/thank-you";
+import {
+  clearDraft,
+  parseForm,
+  parseStatus,
+  peekDraft,
+  saveDraft,
+  takeDraft,
+  thankYouUrl,
+} from "@@/lib/thank-you";
 
 function memoryStore() {
   const data = new Map<string, string>();
@@ -11,27 +19,30 @@ function memoryStore() {
 }
 
 describe("thankYouUrl", () => {
-  it("builds the status URL", () => {
-    expect(thankYouUrl("success", "enquiry")).toBe("/thank-you?status=success&form=enquiry");
-    expect(thankYouUrl("failed", "application")).toBe("/thank-you?status=failed&form=application");
+  it("builds the status-only URL", () => {
+    expect(thankYouUrl("success")).toBe("/thank-you?status=success");
+    expect(thankYouUrl("failed")).toBe("/thank-you?status=failed");
   });
 });
 
-describe("parseThankYouParams", () => {
-  it("reads valid values", () => {
-    expect(parseThankYouParams({ status: "failed", form: "application" })).toEqual({
-      status: "failed",
-      form: "application",
-    });
-  });
-
-  it("falls back to success and enquiry", () => {
-    expect(parseThankYouParams({})).toEqual({ status: "success", form: "enquiry" });
-    expect(parseThankYouParams({ status: "oops", form: "other" })).toEqual({ status: "success", form: "enquiry" });
+describe("parseStatus", () => {
+  it("reads failed and falls back to success", () => {
+    expect(parseStatus({ status: "failed" })).toBe("failed");
+    expect(parseStatus({})).toBe("success");
+    expect(parseStatus({ status: "oops" })).toBe("success");
   });
 
   it("uses the first value when a param repeats", () => {
-    expect(parseThankYouParams({ status: ["failed", "success"] }).status).toBe("failed");
+    expect(parseStatus({ status: ["failed", "success"] })).toBe("failed");
+  });
+});
+
+describe("parseForm", () => {
+  it("reads application and falls back to enquiry", () => {
+    expect(parseForm("application")).toBe("application");
+    expect(parseForm("enquiry")).toBe("enquiry");
+    expect(parseForm(undefined)).toBe("enquiry");
+    expect(parseForm("other")).toBe("enquiry");
   });
 });
 
