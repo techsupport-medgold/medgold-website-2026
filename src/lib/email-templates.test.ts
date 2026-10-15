@@ -34,6 +34,21 @@ describe("escapeHtml", () => {
   });
 });
 
+describe("email header", () => {
+  it("shows the inline logo in every template", () => {
+    const emails = [
+      applicationCompanyEmail(application, "cv.pdf"),
+      applicationCandidateEmail(application),
+      enquiryCompanyEmail(enquiry),
+      enquiryAcknowledgementEmail(enquiry),
+    ];
+    for (const email of emails) {
+      expect(email.html).toContain('src="cid:medgold-logo"');
+      expect(email.html).toContain('alt="MedGold Healthcare"');
+    }
+  });
+});
+
 describe("application emails", () => {
   it("builds the company copy with every filled field", () => {
     const email = applicationCompanyEmail(application, "priya-cv.pdf");

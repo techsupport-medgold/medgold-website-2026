@@ -1,6 +1,7 @@
 import "server-only";
 import nodemailer, { type Transporter } from "nodemailer";
 import { SITE } from "@@/config/site";
+import { EMAIL_LOGO } from "@@/lib/email-logo";
 
 export type MailAttachment = { filename: string; content: Buffer; contentType?: string };
 
@@ -38,7 +39,20 @@ export async function sendMail(mail: Mail): Promise<void> {
     secure: true,
     auth: { user, pass },
   });
-  await transporter.sendMail({ from: { name: "MedGold Healthcare", address: user }, ...mail });
+  await transporter.sendMail({
+    from: { name: "MedGold Healthcare", address: user },
+    ...mail,
+    attachments: [
+      {
+        filename: "medgold-logo.png",
+        content: Buffer.from(EMAIL_LOGO.base64, "base64"),
+        contentType: "image/png",
+        cid: EMAIL_LOGO.cid,
+        contentDisposition: "inline",
+      },
+      ...(mail.attachments ?? []),
+    ],
+  });
 }
 
 export const MAIL_FAILURE_MESSAGE = `We couldn't send your details right now. Please try again, or reach us on WhatsApp or call ${SITE.contact.phone}.`;

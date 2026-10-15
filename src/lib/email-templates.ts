@@ -1,5 +1,6 @@
 import { SITE } from "@@/config/site";
 import type { ApplicationValues } from "@@/lib/application";
+import { EMAIL_LOGO } from "@@/lib/email-logo";
 import { normalizeIndianMobile, type EnquiryValues } from "@@/lib/enquiry";
 
 export type EmailContent = { subject: string; html: string; text: string };
@@ -70,9 +71,8 @@ function layout({ preheader, heading, body }: { preheader: string; heading: stri
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF3F4;padding:24px 12px;">
 <tr><td align="center">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;">
-<tr><td style="background:${COLORS.deep};padding:20px 28px;border-bottom:4px solid ${COLORS.gold};">
-  <span style="color:#ffffff;font-size:20px;font-weight:700;letter-spacing:0.5px;">MED<span style="color:${COLORS.gold};">GOLD</span></span>
-  <span style="display:block;color:#CFE3E8;font-size:11px;letter-spacing:3px;margin-top:2px;">HEALTHCARE</span>
+<tr><td style="background:#ffffff;padding:22px 28px;border-top:4px solid ${COLORS.primary};border-bottom:4px solid ${COLORS.gold};">
+  <img src="cid:${EMAIL_LOGO.cid}" width="${EMAIL_LOGO.width}" height="${EMAIL_LOGO.height}" alt="${BRAND}" style="display:block;border:0;outline:none;text-decoration:none;height:auto;max-width:100%;">
 </td></tr>
 <tr><td style="padding:28px;color:${COLORS.ink};font-size:15px;line-height:1.6;">
   <h1 style="margin:0 0 12px;font-size:22px;color:${COLORS.deep};">${escapeHtml(heading)}</h1>
