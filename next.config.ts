@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
 
+  experimental: {
+    serverActions: {
+      // A 4 MB resume plus multipart overhead; Vercel rejects request bodies over 4.5 MB.
+      bodySizeLimit: "5mb",
+    },
+  },
+
   async redirects() {
     return [
       {

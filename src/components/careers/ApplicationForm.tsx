@@ -1,18 +1,25 @@
 "use client";
 
-import { useRef, useState, type ChangeEvent, type FormEvent, type InputHTMLAttributes } from "react";
-import { CheckCircle2, ChevronDown, MessageCircle, Phone, Send } from "lucide-react";
+import { useRef, useState, useTransition, type ChangeEvent, type FormEvent, type InputHTMLAttributes } from "react";
+import { CheckCircle2, ChevronDown, FileText, Loader2, MessageCircle, Phone, Send, X } from "lucide-react";
+import { submitApplication } from "@@/app/(site)/careers/actions";
 import { Button } from "@@/components/ui/button";
 import { SITE, whatsappUrl } from "@@/config/site";
 import { experienceLevels, positions } from "@@/data/careers";
 import {
+  RESUME_ACCEPT,
   buildApplicationMessage,
+  formatFileSize,
   validateApplication,
-  type ApplicationErrors,
+  validateResume,
   type ApplicationField,
   type ApplicationValues,
 } from "@@/lib/application";
+import { HONEYPOT_FIELD } from "@@/lib/form-action";
 import { cn } from "@@/lib/utils";
+
+type FormField = ApplicationField | "resume";
+type FormErrors = Partial<Record<FormField, string>>;
 
 const EMPTY: ApplicationValues = {
   name: "",
@@ -24,8 +31,18 @@ const EMPTY: ApplicationValues = {
   city: "",
   note: "",
 };
-const FIELD_ORDER: ApplicationField[] = ["name", "phone", "email", "position", "experience", "qualification", "city", "note"];
-const LABELS: Record<ApplicationField, string> = {
+const FIELD_ORDER: FormField[] = [
+  "name",
+  "phone",
+  "email",
+  "position",
+  "experience",
+  "qualification",
+  "city",
+  "resume",
+  "note",
+];
+const LABELS: Record<FormField, string> = {
   name: "Full name",
   phone: "Mobile number",
   email: "Email",
@@ -33,6 +50,7 @@ const LABELS: Record<ApplicationField, string> = {
   experience: "Years of experience",
   qualification: "Highest qualification",
   city: "Current city",
+  resume: "Resume",
   note: "Anything else we should know",
 };
 
@@ -41,10 +59,15 @@ const controlClass =
 
 export default function ApplicationForm() {
   const [values, setValues] = useState<ApplicationValues>(EMPTY);
-  const [errors, setErrors] = useState<ApplicationErrors>({});
+  const [resume, setResume] = useState<File | null>(null);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [showSummary, setShowSummary] = useState(false);
-  const [sentUrl, setSentUrl] = useState<string | null>(null);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
   const successRef = useRef<HTMLDivElement>(null);
+  const sendErrorRef = useRef<HTMLDivElement>(null);
+  const resumeInputRef = useRef<HTMLInputElement>(null);
 
   const onChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const field = event.target.name as ApplicationField;
@@ -55,65 +78,87 @@ export default function ApplicationForm() {
     );
   };
 
+  const onResumeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null;
+    setResume(file);
+    setErrors((current) => ({ ...current, resume: file ? (validateResume(file) ?? undefined) : current.resume }));
+  };
+
+  const clearResume = () => {
+    setResume(null);
+    if (resumeInputRef.current) {
+      resumeInputRef.current.value = "";
+      resumeInputRef.current.focus();
+    }
+  };
+
+  const showErrors = (nextErrors: FormErrors) => {
+    setErrors(nextErrors);
+    const firstInvalid = FIELD_ORDER.find((field) => nextErrors[field]);
+    if (!firstInvalid) {
+      return false;
+    }
+    setShowSummary(true);
+    document.getElementById(`application-${firstInvalid}`)?.focus();
+    return true;
+  };
+
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const nextErrors = validateApplication(values);
-    setErrors(nextErrors);
-
-    const firstInvalid = FIELD_ORDER.find((field) => nextErrors[field]);
-    if (firstInvalid) {
-      setShowSummary(true);
-      document.getElementById(`application-${firstInvalid}`)?.focus();
+    setSendError(null);
+    const resumeError = validateResume(resume);
+    const nextErrors: FormErrors = { ...validateApplication(values), ...(resumeError ? { resume: resumeError } : {}) };
+    if (showErrors(nextErrors) || !resume) {
       return;
     }
 
-    const url = whatsappUrl(buildApplicationMessage(values));
-    window.open(url, "_blank", "noopener,noreferrer");
-    setShowSummary(false);
-    setSentUrl(url);
-    setValues(EMPTY);
-    requestAnimationFrame(() => successRef.current?.focus());
+    const formData = new FormData(event.currentTarget);
+    formData.set("resume", resume);
+
+    startTransition(async () => {
+      try {
+        const result = await submitApplication(formData);
+        if (result.ok) {
+          setShowSummary(false);
+          setSentTo(values.email.trim());
+          setValues(EMPTY);
+          setResume(null);
+          requestAnimationFrame(() => successRef.current?.focus());
+          return;
+        }
+        if (result.fieldErrors && showErrors(result.fieldErrors)) {
+          return;
+        }
+        setSendError(result.error);
+      } catch {
+        setSendError(
+          `We couldn't send your application right now. Please try again, or reach us on WhatsApp or call ${SITE.contact.phone}.`,
+        );
+      }
+      requestAnimationFrame(() => sendErrorRef.current?.focus());
+    });
   };
 
   const errorList = FIELD_ORDER.filter((field) => errors[field]);
 
-  if (sentUrl) {
+  if (sentTo !== null) {
     return (
       <div
         ref={successRef}
         tabIndex={-1}
         role="status"
-        className="rounded-lg border border-primary/30 bg-primary/5 p-6 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:p-8"
+        className="rounded-lg border border-primary/30 bg-primary/5 p-6 animate-in fade-in-0 slide-in-from-bottom-2 duration-700 fill-mode-both focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 motion-reduce:animate-none sm:p-8"
       >
         <CheckCircle2 className="size-8 text-primary" aria-hidden="true" />
-        <h2 className="mt-4 text-2xl font-bold">Your application is ready to send</h2>
+        <h2 className="mt-4 text-2xl font-bold">Application sent</h2>
         <p className="mt-3 text-ink-muted">
-          We opened WhatsApp with your details filled in. Press send, then attach your resume in the same chat. If
-          WhatsApp didn&apos;t open, use the button below or call us.
+          Thank you for applying. We&apos;ve emailed a confirmation to{" "}
+          <strong className="break-all text-ink">{sentTo}</strong>. Our team will review your resume and call you if
+          your profile matches the role.
         </p>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <Button asChild size="lg" className="hover:bg-primary-deep">
-            <a href={sentUrl} target="_blank" rel="noopener noreferrer">
-              <MessageCircle aria-hidden="true" />
-              Open WhatsApp
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="border-primary/40 text-primary hover:bg-primary/5 hover:text-primary"
-          >
-            <a href={`tel:${SITE.contact.phoneHref}`}>
-              <Phone aria-hidden="true" />
-              Call {SITE.contact.phone}
-            </a>
-          </Button>
-        </div>
         <button
           type="button"
-          onClick={() => setSentUrl(null)}
+          onClick={() => setSentTo(null)}
           className="mt-6 inline-flex min-h-11 items-center text-sm font-medium text-link underline-offset-4 hover:underline"
         >
           Send another application
@@ -132,14 +177,14 @@ export default function ApplicationForm() {
     className: controlClass,
   });
 
-  const fieldError = (field: ApplicationField) =>
+  const fieldError = (field: FormField) =>
     errors[field] ? (
       <p id={`application-${field}-error`} className="mt-2 text-sm font-medium text-destructive">
         {errors[field]}
       </p>
     ) : null;
 
-  const label = (field: ApplicationField, required: boolean) => (
+  const label = (field: FormField, required: boolean) => (
     <label htmlFor={`application-${field}`} className="block text-sm font-semibold text-ink">
       {LABELS[field]}
       {required ? (
@@ -190,7 +235,8 @@ export default function ApplicationForm() {
       noValidate
       onSubmit={onSubmit}
       aria-labelledby="application-heading"
-      className="rounded-lg border border-border-muted bg-surface p-6 shadow-card sm:p-8"
+      aria-busy={isPending || undefined}
+      className="relative rounded-lg border border-border-muted bg-surface p-6 shadow-card sm:p-8"
     >
       <h2 id="application-heading" className="text-2xl font-bold">
         Apply for a job
@@ -217,6 +263,11 @@ export default function ApplicationForm() {
         </div>
       )}
 
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor={HONEYPOT_FIELD}>Leave this field empty</label>
+        <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">{textField("name", true, { type: "text", autoComplete: "name" })}</div>
         <div>
@@ -228,23 +279,94 @@ export default function ApplicationForm() {
           })}
         </div>
         <div>
-          {textField("email", false, { type: "email", autoComplete: "email", placeholder: "name@example.com" })}
+          {textField("email", true, { type: "email", autoComplete: "email", placeholder: "name@example.com" })}
         </div>
         <div>{selectField("position", positions)}</div>
         <div>{selectField("experience", experienceLevels)}</div>
         <div>{textField("qualification", true, { type: "text", placeholder: "e.g. B.Sc Nursing, GNM, DMLT" })}</div>
         <div>{textField("city", false, { type: "text", autoComplete: "address-level2", placeholder: "e.g. Chennai" })}</div>
+
+        <div className="sm:col-span-2">
+          {label("resume", true)}
+          <p id="application-resume-hint" className="mt-1 text-sm text-ink-subtle">
+            PDF, DOC or DOCX, up to 4 MB.
+          </p>
+          <input
+            ref={resumeInputRef}
+            id="application-resume"
+            type="file"
+            accept={RESUME_ACCEPT}
+            onChange={onResumeChange}
+            aria-required="true"
+            aria-invalid={errors.resume ? true : undefined}
+            aria-describedby={errors.resume ? "application-resume-hint application-resume-error" : "application-resume-hint"}
+            className={cn(
+              controlClass,
+              "cursor-pointer border-dashed py-2.5 text-sm text-ink-muted file:mr-4 file:min-h-9 file:cursor-pointer file:rounded-md file:border-0 file:bg-primary/10 file:px-4 file:text-sm file:font-semibold file:text-primary-deep file:transition-colors hover:file:bg-primary hover:file:text-white",
+              resume && "hidden",
+            )}
+          />
+          {resume ? (
+            <div className="mt-2 flex items-center gap-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2 animate-in fade-in-0 duration-300 motion-reduce:animate-none">
+              <FileText className="size-5 shrink-0 text-primary" aria-hidden="true" />
+              <p className="min-w-0 flex-1 text-sm">
+                <span className="block truncate font-semibold text-ink">{resume.name}</span>
+                <span className="text-ink-subtle">{formatFileSize(resume.size)}</span>
+              </p>
+              <button
+                type="button"
+                onClick={clearResume}
+                className="inline-flex min-h-11 items-center gap-1 rounded-md px-3 text-sm font-medium text-link hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+              >
+                <X className="size-4" aria-hidden="true" />
+                Remove<span className="sr-only"> {resume.name}</span>
+              </button>
+            </div>
+          ) : null}
+          {fieldError("resume")}
+        </div>
+
         <div className="sm:col-span-2">
           {label("note", false)}
           <textarea rows={4} {...fieldProps("note")} className={cn(controlClass, "resize-y")} />
         </div>
       </div>
 
+      {sendError ? (
+        <div
+          ref={sendErrorRef}
+          tabIndex={-1}
+          role="alert"
+          className="mt-6 rounded-md border border-destructive/40 bg-destructive/5 p-4 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        >
+          <p className="font-semibold text-destructive">{sendError}</p>
+          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+            <Button asChild size="sm" variant="outline" className="border-primary/40 text-primary hover:bg-primary/5">
+              <a href={whatsappUrl(buildApplicationMessage(values))} target="_blank" rel="noopener noreferrer">
+                <MessageCircle aria-hidden="true" />
+                Apply on WhatsApp
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </Button>
+            <Button asChild size="sm" variant="outline" className="border-primary/40 text-primary hover:bg-primary/5">
+              <a href={`tel:${SITE.contact.phoneHref}`}>
+                <Phone aria-hidden="true" />
+                Call {SITE.contact.phone}
+              </a>
+            </Button>
+          </div>
+        </div>
+      ) : null}
+
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-ink-subtle">Submitting opens WhatsApp. Attach your resume in the chat.</p>
-        <Button type="submit" size="lg" className="hover:bg-primary-deep">
-          <Send aria-hidden="true" />
-          Apply via WhatsApp
+        <p className="text-sm text-ink-subtle">We&apos;ll email you a confirmation once your application is sent.</p>
+        <Button type="submit" size="lg" disabled={isPending} className="hover:bg-primary-deep">
+          {isPending ? (
+            <Loader2 className="animate-spin motion-reduce:animate-none" aria-hidden="true" />
+          ) : (
+            <Send aria-hidden="true" />
+          )}
+          {isPending ? "Sending..." : "Submit application"}
         </Button>
       </div>
     </form>

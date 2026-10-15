@@ -37,7 +37,7 @@ export const whyJoin = {
 export const nextSteps = {
   heading: "What happens next",
   steps: [
-    "Send your application on WhatsApp and attach your resume in the chat.",
+    "Submit the form with your resume. We email you a confirmation straight away.",
     "Our team reviews your profile and calls you within a few working days.",
     "Shortlisted candidates are invited for an interview and skills check.",
   ],

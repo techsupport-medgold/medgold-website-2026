@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { CheckCircle2, ChevronDown, MessageCircle, Phone, Send } from "lucide-react";
+import { useRef, useState, useTransition, type ChangeEvent, type FormEvent } from "react";
+import { CheckCircle2, ChevronDown, Loader2, MessageCircle, Phone, Send } from "lucide-react";
+import { submitEnquiry } from "@@/app/(site)/contact-us/actions";
 import { Button } from "@@/components/ui/button";
 import { SITE, whatsappUrl } from "@@/config/site";
 import { enquiryTypes } from "@@/data/contact";
@@ -12,6 +13,7 @@ import {
   type EnquiryField,
   type EnquiryValues,
 } from "@@/lib/enquiry";
+import { HONEYPOT_FIELD } from "@@/lib/form-action";
 import { cn } from "@@/lib/utils";
 
 const EMPTY: EnquiryValues = { name: "", phone: "", email: "", type: "", message: "" };
@@ -31,8 +33,11 @@ export default function EnquiryForm() {
   const [values, setValues] = useState<EnquiryValues>(EMPTY);
   const [errors, setErrors] = useState<EnquiryErrors>({});
   const [showSummary, setShowSummary] = useState(false);
-  const [sentUrl, setSentUrl] = useState<string | null>(null);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const [sent, setSent] = useState<{ email: string } | null>(null);
+  const [isPending, startTransition] = useTransition();
   const successRef = useRef<HTMLDivElement>(null);
+  const sendErrorRef = useRef<HTMLDivElement>(null);
 
   const onChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const field = event.target.name as EnquiryField;
@@ -45,60 +50,72 @@ export default function EnquiryForm() {
     );
   };
 
+  const showErrors = (nextErrors: EnquiryErrors) => {
+    setErrors(nextErrors);
+    const firstInvalid = FIELD_ORDER.find((field) => nextErrors[field]);
+    if (!firstInvalid) {
+      return false;
+    }
+    setShowSummary(true);
+    document.getElementById(`enquiry-${firstInvalid}`)?.focus();
+    return true;
+  };
+
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const nextErrors = validateEnquiry(values);
-    setErrors(nextErrors);
-
-    const firstInvalid = FIELD_ORDER.find((field) => nextErrors[field]);
-    if (firstInvalid) {
-      setShowSummary(true);
-      document.getElementById(`enquiry-${firstInvalid}`)?.focus();
+    setSendError(null);
+    if (showErrors(validateEnquiry(values))) {
       return;
     }
 
-    const url = whatsappUrl(buildEnquiryMessage(values));
-    window.open(url, "_blank", "noopener,noreferrer");
-    setShowSummary(false);
-    setSentUrl(url);
-    setValues(EMPTY);
-    requestAnimationFrame(() => successRef.current?.focus());
+    const formData = new FormData(event.currentTarget);
+    startTransition(async () => {
+      try {
+        const result = await submitEnquiry(formData);
+        if (result.ok) {
+          setShowSummary(false);
+          setSent({ email: values.email.trim() });
+          setValues(EMPTY);
+          requestAnimationFrame(() => successRef.current?.focus());
+          return;
+        }
+        if (result.fieldErrors && showErrors(result.fieldErrors)) {
+          return;
+        }
+        setSendError(result.error);
+      } catch {
+        setSendError(
+          `We couldn't send your enquiry right now. Please try again, or reach us on WhatsApp or call ${SITE.contact.phone}.`,
+        );
+      }
+      requestAnimationFrame(() => sendErrorRef.current?.focus());
+    });
   };
 
   const errorList = FIELD_ORDER.filter((field) => errors[field]);
 
-  if (sentUrl) {
+  if (sent) {
     return (
       <div
         ref={successRef}
         tabIndex={-1}
         role="status"
-        className="rounded-lg border border-primary/30 bg-primary/5 p-6 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:p-8"
+        className="rounded-lg border border-primary/30 bg-primary/5 p-6 animate-in fade-in-0 slide-in-from-bottom-2 duration-700 fill-mode-both focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 motion-reduce:animate-none sm:p-8"
       >
         <CheckCircle2 className="size-8 text-primary" aria-hidden="true" />
-        <h2 className="mt-4 text-2xl font-bold">Your enquiry is ready to send</h2>
+        <h2 className="mt-4 text-2xl font-bold">Enquiry sent</h2>
         <p className="mt-3 text-ink-muted">
-          We opened WhatsApp with your message filled in. Press send in WhatsApp to reach our
-          team. If it didn&apos;t open, use the button below or call us.
+          Thank you for contacting us. Our team will get back to you soon.
+          {sent.email ? (
+            <>
+              {" "}
+              We&apos;ve emailed a copy of your enquiry to <strong className="break-all text-ink">{sent.email}</strong>.
+            </>
+          ) : null}
         </p>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <Button asChild size="lg" className="hover:bg-primary-deep">
-            <a href={sentUrl} target="_blank" rel="noopener noreferrer">
-              <MessageCircle aria-hidden="true" />
-              Open WhatsApp
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="border-primary/40 text-primary hover:bg-primary/5 hover:text-primary">
-            <a href={`tel:${SITE.contact.phoneHref}`}>
-              <Phone aria-hidden="true" />
-              Call {SITE.contact.phone}
-            </a>
-          </Button>
-        </div>
         <button
           type="button"
-          onClick={() => setSentUrl(null)}
+          onClick={() => setSent(null)}
           className="mt-6 inline-flex min-h-11 items-center text-sm font-medium text-link underline-offset-4 hover:underline"
         >
           Send another enquiry
@@ -140,7 +157,8 @@ export default function EnquiryForm() {
       noValidate
       onSubmit={onSubmit}
       aria-labelledby="enquiry-heading"
-      className="rounded-lg border border-border-muted bg-surface p-6 shadow-card sm:p-8"
+      aria-busy={isPending || undefined}
+      className="relative rounded-lg border border-border-muted bg-surface p-6 shadow-card sm:p-8"
     >
       <h2 id="enquiry-heading" className="text-2xl font-bold">
         Send an enquiry
@@ -166,6 +184,11 @@ export default function EnquiryForm() {
           </ul>
         </div>
       )}
+
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor={HONEYPOT_FIELD}>Leave this field empty</label>
+        <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" />
+      </div>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
@@ -229,13 +252,41 @@ export default function EnquiryForm() {
         </div>
       </div>
 
+      {sendError ? (
+        <div
+          ref={sendErrorRef}
+          tabIndex={-1}
+          role="alert"
+          className="mt-6 rounded-md border border-destructive/40 bg-destructive/5 p-4 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        >
+          <p className="font-semibold text-destructive">{sendError}</p>
+          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+            <Button asChild size="sm" variant="outline" className="border-primary/40 text-primary hover:bg-primary/5">
+              <a href={whatsappUrl(buildEnquiryMessage(values))} target="_blank" rel="noopener noreferrer">
+                <MessageCircle aria-hidden="true" />
+                Send on WhatsApp
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </Button>
+            <Button asChild size="sm" variant="outline" className="border-primary/40 text-primary hover:bg-primary/5">
+              <a href={`tel:${SITE.contact.phoneHref}`}>
+                <Phone aria-hidden="true" />
+                Call {SITE.contact.phone}
+              </a>
+            </Button>
+          </div>
+        </div>
+      ) : null}
+
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-ink-subtle">
-          Submitting opens WhatsApp with your message ready to send.
-        </p>
-        <Button type="submit" size="lg" className="hover:bg-primary-deep">
-          <Send aria-hidden="true" />
-          Send enquiry
+        <p className="text-sm text-ink-subtle">Add your email to receive a copy of your enquiry.</p>
+        <Button type="submit" size="lg" disabled={isPending} className="hover:bg-primary-deep">
+          {isPending ? (
+            <Loader2 className="animate-spin motion-reduce:animate-none" aria-hidden="true" />
+          ) : (
+            <Send aria-hidden="true" />
+          )}
+          {isPending ? "Sending..." : "Send enquiry"}
         </Button>
       </div>
     </form>

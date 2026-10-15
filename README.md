@@ -33,6 +33,9 @@ npm run dev                  # http://localhost:3000
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster meta tag |
 | `NEXT_PUBLIC_GTM_ID` | Optional override for the Google Tag Manager container ID (default in `src/config/site.ts`) |
 | `NEXT_PUBLIC_CLARITY_ID` | Optional override for the Microsoft Clarity project ID (default in `src/config/site.ts`; loads on the production site only) |
+| `SMTP_USER` | Gmail or Workspace address that sends form emails (server only) |
+| `SMTP_APP_PASSWORD` | App Password for `SMTP_USER` (server only, keep secret) |
+| `MAIL_TO` | Inbox for applications and enquiries; comma-separate for several |
 
 ## Project structure
 
@@ -57,6 +60,41 @@ All pages are `index, follow` and listed in `src/app/sitemap.ts`, except the int
 - New page: create `src/app/(site)/<slug>/page.tsx`, add the path to `Routes` in
   `src/config/routes.ts`, and add it to `ROUTES` in `src/app/sitemap.ts`.
 
+## Form emails
+
+The careers application form (`/careers`, with a resume upload) and the contact enquiry form
+(`/contact-us`) send email through Gmail SMTP using an App Password. Each submission sends two
+emails: a company copy to `MAIL_TO` (with the resume attached for applications) and an
+acknowledgement to the applicant or enquirer (enquiries only when they gave an email).
+Code: `src/lib/mailer.ts`, `src/lib/email-templates.ts`, and the `actions.ts` next to each page.
+
+Setup (currently `sundharmedgold@gmail.com`):
+
+1. Sign in to the sending account, open [Google Account Security](https://myaccount.google.com/security)
+   and turn on **2-Step Verification**.
+2. Open [App Passwords](https://myaccount.google.com/apppasswords), create one named
+   "MedGold website" and copy the 16-character password.
+3. Add to `.env.local` (never commit this file):
+
+   ```bash
+   SMTP_USER=sundharmedgold@gmail.com
+   SMTP_APP_PASSWORD=abcdefghijklmnop
+   MAIL_TO=sundharmedgold@gmail.com
+   ```
+
+4. Restart `npm run dev` and submit a test application (with a PDF) and a test enquiry.
+5. In Vercel, open Project Settings > Environment Variables, add the same three keys for
+   Production and Preview, then redeploy.
+
+Moving to Google Workspace later (for example `care@medgoldhealthcare.com`): turn on 2-Step
+Verification for that user, create an App Password for it, and update `SMTP_USER`,
+`SMTP_APP_PASSWORD` and `MAIL_TO`. No code changes are needed. If App Passwords are not offered,
+a Workspace admin must allow 2-Step Verification under Admin console > Security >
+Authentication > 2-Step Verification.
+
+If email is not configured or Gmail rejects the login, the forms show an error with WhatsApp and
+call buttons as a backup, and the server logs the reason.
+
 ## Deploying to Vercel
 
 The repo deploys from GitHub (`techsupport-medgold/website`, branch `main`).
@@ -64,7 +102,7 @@ The repo deploys from GitHub (`techsupport-medgold/website`, branch `main`).
 1. In [Vercel](https://vercel.com/new), import the GitHub repo and keep the Next.js preset
    (build `next build`, no output directory override).
 2. Add environment variables for Production: `NEXT_PUBLIC_SITE_URL` (e.g. `https://medgold.com`),
-   plus verification/analytics IDs when available.
+   plus verification/analytics IDs when available, and the form email keys (see Form emails).
 3. Under Settings > Domains, add the apex domain and `www`. The app redirects `www` to the apex.
 4. Every push to `main` deploys to production; other branches get preview URLs, which Vercel
    serves with `X-Robots-Tag: noindex` so they are never indexed.
