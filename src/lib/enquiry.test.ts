@@ -9,7 +9,7 @@ import {
 const valid: EnquiryValues = {
   name: "Priya Raman",
   phone: "98765 43210",
-  email: "",
+  email: "priya@example.com",
   type: "Appointment",
   message: "I would like to book a consultation next week.",
 };
@@ -37,12 +37,17 @@ describe("validateEnquiry", () => {
 
   it("flags missing required fields", () => {
     const errors = validateEnquiry({ name: "", phone: "", email: "", type: "", message: "" });
-    expect(Object.keys(errors).sort()).toEqual(["message", "name", "phone", "type"]);
+    expect(Object.keys(errors).sort()).toEqual(["email", "message", "name", "phone", "type"]);
   });
 
-  it("flags an invalid optional email only when provided", () => {
-    expect(validateEnquiry({ ...valid, email: "not-an-email" }).email).toBeDefined();
-    expect(validateEnquiry({ ...valid, email: "priya@example.com" }).email).toBeUndefined();
+  it("requires a valid email", () => {
+    expect(validateEnquiry({ ...valid, email: "" }).email).toContain("so we can reply");
+    expect(validateEnquiry({ ...valid, email: "not-an-email" }).email).toContain("valid email");
+  });
+
+  it("requires a message of at least 20 characters", () => {
+    expect(validateEnquiry({ ...valid, message: "a".repeat(19) }).message).toContain("at least 20 characters");
+    expect(validateEnquiry({ ...valid, message: `  ${"a".repeat(20)}  ` }).message).toBeUndefined();
   });
 });
 
@@ -57,6 +62,6 @@ describe("buildEnquiryMessage", () => {
   });
 
   it("omits the email line when blank", () => {
-    expect(buildEnquiryMessage(valid)).not.toContain("Email:");
+    expect(buildEnquiryMessage({ ...valid, email: "" })).not.toContain("Email:");
   });
 });

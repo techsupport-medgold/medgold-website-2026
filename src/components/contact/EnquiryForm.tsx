@@ -8,6 +8,7 @@ import { SITE, whatsappUrl } from "@@/config/site";
 import { enquiryTypes } from "@@/data/contact";
 import {
   buildEnquiryMessage,
+  ENQUIRY_MESSAGE_MIN,
   validateEnquiry,
   type EnquiryErrors,
   type EnquiryField,
@@ -93,6 +94,7 @@ export default function EnquiryForm() {
   };
 
   const errorList = FIELD_ORDER.filter((field) => errors[field]);
+  const messageLength = values.message.trim().length;
 
   if (sent) {
     return (
@@ -105,13 +107,8 @@ export default function EnquiryForm() {
         <CheckCircle2 className="size-8 text-primary" aria-hidden="true" />
         <h2 className="mt-4 text-2xl font-bold">Enquiry sent</h2>
         <p className="mt-3 text-ink-muted">
-          Thank you for contacting us. Our team will get back to you soon.
-          {sent.email ? (
-            <>
-              {" "}
-              We&apos;ve emailed a copy of your enquiry to <strong className="break-all text-ink">{sent.email}</strong>.
-            </>
-          ) : null}
+          Thank you for contacting us. Our team will get back to you soon. We&apos;ve emailed a copy of your enquiry
+          to <strong className="break-all text-ink">{sent.email}</strong>.
         </p>
         <button
           type="button"
@@ -211,8 +208,14 @@ export default function EnquiryForm() {
         </div>
 
         <div>
-          {label("email", false)}
-          <input type="email" autoComplete="email" placeholder="name@example.com" {...fieldProps("email")} />
+          {label("email", true)}
+          <input
+            type="email"
+            autoComplete="email"
+            placeholder="name@example.com"
+            aria-required="true"
+            {...fieldProps("email")}
+          />
           {fieldError("email")}
         </div>
 
@@ -247,7 +250,27 @@ export default function EnquiryForm() {
 
         <div className="sm:col-span-2">
           {label("message", true)}
-          <textarea rows={5} aria-required="true" {...fieldProps("message")} className={cn(controlClass, "resize-y")} />
+          <div className="mt-1 flex items-center justify-between gap-3 text-sm">
+            <p id="enquiry-message-hint" className="text-ink-subtle">
+              Minimum {ENQUIRY_MESSAGE_MIN} characters
+            </p>
+            <p
+              id="enquiry-message-count"
+              className={cn(
+                "tabular-nums transition-colors duration-300",
+                messageLength >= ENQUIRY_MESSAGE_MIN ? "font-semibold text-primary" : "text-ink-subtle",
+              )}
+            >
+              {messageLength} / {ENQUIRY_MESSAGE_MIN}
+            </p>
+          </div>
+          <textarea
+            rows={5}
+            aria-required="true"
+            {...fieldProps("message")}
+            aria-describedby={`enquiry-message-hint enquiry-message-count${errors.message ? " enquiry-message-error" : ""}`}
+            className={cn(controlClass, "resize-y")}
+          />
           {fieldError("message")}
         </div>
       </div>
@@ -279,7 +302,7 @@ export default function EnquiryForm() {
       ) : null}
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-ink-subtle">Add your email to receive a copy of your enquiry.</p>
+        <p className="text-sm text-ink-subtle">We&apos;ll email you a copy of your enquiry.</p>
         <Button type="submit" size="lg" disabled={isPending} className="hover:bg-primary-deep">
           {isPending ? (
             <Loader2 className="animate-spin motion-reduce:animate-none" aria-hidden="true" />

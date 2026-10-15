@@ -22,18 +22,16 @@ export async function submitEnquiry(formData: FormData): Promise<EnquiryResult> 
 
   const email = values.email.trim();
   try {
-    await sendMail({ to: companyInbox(), replyTo: email || undefined, ...enquiryCompanyEmail(values) });
+    await sendMail({ to: companyInbox(), replyTo: email, ...enquiryCompanyEmail(values) });
   } catch (error) {
     console.error("Enquiry email to the company failed", error);
     return { ok: false, error: MAIL_FAILURE_MESSAGE };
   }
 
-  if (email) {
-    try {
-      await sendMail({ to: email, ...enquiryAcknowledgementEmail(values) });
-    } catch (error) {
-      console.error("Enquiry acknowledgement email failed", error);
-    }
+  try {
+    await sendMail({ to: email, ...enquiryAcknowledgementEmail(values) });
+  } catch (error) {
+    console.error("Enquiry acknowledgement email failed", error);
   }
 
   return { ok: true };
