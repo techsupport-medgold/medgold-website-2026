@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "email:logo": "node scripts/build-email-logo.mjs"
+    "email:assets": "node scripts/build-email-assets.mjs"
   },
   "dependencies": {
     "@microsoft/clarity": "^1.0.2",

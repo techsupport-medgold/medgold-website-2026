@@ -9,6 +9,8 @@ export type StatusContent = {
   eyebrow: string;
   heading: string;
   intro: string;
+  /** Shown on the page only; the confirmation email itself skips it. */
+  confirmation?: string;
   note?: string;
   encouragement?: string;
   image?: { src: string; alt: string; badge: string };
@@ -53,7 +55,8 @@ export const THANK_YOU_CONTENT: Record<FormKind, Record<SubmitStatus, StatusCont
       eyebrow: "Application received",
       heading: "Your next great opportunity is on its way",
       intro:
-        "Thank you for choosing MedGold Healthcare. Healthcare professionals like you make every patient's day better, and we're excited to help you find a role where you can grow and thrive. We've emailed you a confirmation.",
+        "Thank you for choosing MedGold Healthcare. Healthcare professionals like you make every patient's day better, and we're excited to help you find a role where you can grow and thrive.",
+      confirmation: "We've emailed you a confirmation.",
       encouragement: "A wonderful opportunity could be just a call away.",
       image: {
         src: "/images/staffing/nursing.jpg",

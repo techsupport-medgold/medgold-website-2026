@@ -1,7 +1,7 @@
 import "server-only";
 import nodemailer, { type Transporter } from "nodemailer";
 import { SITE } from "@@/config/site";
-import { EMAIL_LOGO } from "@@/lib/email-logo";
+import { EMAIL_BANNER, EMAIL_LOGO } from "@@/lib/email-assets";
 
 export type MailAttachment = { filename: string; content: Buffer; contentType?: string };
 
@@ -42,17 +42,26 @@ export async function sendMail(mail: Mail): Promise<void> {
   await transporter.sendMail({
     from: { name: "MedGold Healthcare", address: user },
     ...mail,
-    attachments: [
-      {
-        filename: "medgold-logo.png",
-        content: Buffer.from(EMAIL_LOGO.base64, "base64"),
-        contentType: "image/png",
-        cid: EMAIL_LOGO.cid,
-        contentDisposition: "inline",
-      },
-      ...(mail.attachments ?? []),
-    ],
+    attachments: [...inlineImages(mail.html), ...(mail.attachments ?? [])],
   });
+}
+
+const INLINE_IMAGES = [
+  { asset: EMAIL_LOGO, filename: "medgold-logo.png", contentType: "image/png" },
+  { asset: EMAIL_BANNER, filename: "medgold-careers.jpg", contentType: "image/jpeg" },
+];
+
+/** Attaches only the inline images the HTML actually references, so emails stay small. */
+function inlineImages(html: string) {
+  return INLINE_IMAGES.filter(({ asset }) => html.includes(`cid:${asset.cid}`)).map(
+    ({ asset, filename, contentType }) => ({
+      filename,
+      content: Buffer.from(asset.base64, "base64"),
+      contentType,
+      cid: asset.cid,
+      contentDisposition: "inline" as const,
+    }),
+  );
 }
 
 export const MAIL_FAILURE_MESSAGE = `We couldn't send your details right now. Please try again, or reach us on WhatsApp or call ${SITE.contact.phone}.`;

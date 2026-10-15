@@ -1,6 +1,8 @@
-import { SITE } from "@@/config/site";
-import type { ApplicationValues } from "@@/lib/application";
-import { EMAIL_LOGO } from "@@/lib/email-logo";
+import { Routes } from "@@/config/routes";
+import { SITE, absoluteUrl } from "@@/config/site";
+import { THANK_YOU_CONTENT } from "@@/data/thankYou";
+import { formatFileSize, type ApplicationValues } from "@@/lib/application";
+import { EMAIL_BANNER, EMAIL_LOGO } from "@@/lib/email-assets";
 import { normalizeIndianMobile, type EnquiryValues } from "@@/lib/enquiry";
 
 export type EmailContent = { subject: string; html: string; text: string };
@@ -62,7 +64,22 @@ function button(href: string, label: string): string {
   return `<a href="${escapeHtml(href)}" style="display:inline-block;background:${COLORS.primary};color:#ffffff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 20px;border-radius:8px;">${escapeHtml(label)}</a>`;
 }
 
-function layout({ preheader, heading, body }: { preheader: string; heading: string; body: string }): string {
+type Banner = { cid: string; alt: string; width: number; height: number };
+
+function layout({
+  preheader,
+  heading,
+  eyebrow,
+  banner,
+  body,
+}: {
+  preheader: string;
+  heading: string;
+  eyebrow?: string;
+  banner?: Banner;
+  body: string;
+}): string {
+  const footerLink = "color:#ffffff;text-decoration:underline;";
   return `<!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(heading)}</title></head>
@@ -71,19 +88,32 @@ function layout({ preheader, heading, body }: { preheader: string; heading: stri
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF3F4;padding:24px 12px;">
 <tr><td align="center">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;">
-<tr><td style="background:#ffffff;padding:22px 28px;border-top:4px solid ${COLORS.primary};border-bottom:4px solid ${COLORS.gold};">
-  <img src="cid:${EMAIL_LOGO.cid}" width="${EMAIL_LOGO.width}" height="${EMAIL_LOGO.height}" alt="${BRAND}" style="display:block;border:0;outline:none;text-decoration:none;height:auto;max-width:100%;">
+<tr><td align="center" style="background:#ffffff;padding:24px 28px;border-top:4px solid ${COLORS.primary};border-bottom:4px solid ${COLORS.gold};text-align:center;">
+  <img src="cid:${EMAIL_LOGO.cid}" width="${EMAIL_LOGO.width}" height="${EMAIL_LOGO.height}" alt="${BRAND}" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;height:auto;max-width:100%;">
 </td></tr>
-<tr><td style="padding:28px;color:${COLORS.ink};font-size:15px;line-height:1.6;">
-  <h1 style="margin:0 0 12px;font-size:22px;color:${COLORS.deep};">${escapeHtml(heading)}</h1>
+${
+  banner
+    ? `<tr><td style="padding:0;line-height:0;font-size:0;">
+  <img src="cid:${banner.cid}" width="${banner.width}" height="${banner.height}" alt="${escapeHtml(banner.alt)}" style="display:block;width:100%;max-width:${banner.width}px;height:auto;border:0;outline:none;text-decoration:none;">
+</td></tr>
+`
+    : ""
+}<tr><td style="padding:28px;color:${COLORS.ink};font-size:15px;line-height:1.6;">
+  ${
+    eyebrow
+      ? `<p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${COLORS.goldInk};">${escapeHtml(eyebrow)}</p>
+  <div style="width:40px;height:3px;background:${COLORS.gold};border-radius:2px;margin:0 0 14px;"></div>
+  `
+      : ""
+  }<h1 style="margin:0 0 12px;font-size:22px;color:${COLORS.deep};">${escapeHtml(heading)}</h1>
   ${body}
 </td></tr>
-<tr><td style="padding:20px 28px;background:${COLORS.surface};color:${COLORS.muted};font-size:12px;line-height:1.6;">
-  <strong style="color:${COLORS.deep};">${BRAND}</strong><br>
+<tr><td align="center" style="padding:22px 28px;background:${COLORS.deep};border-top:3px solid ${COLORS.gold};color:#D6E4E7;font-size:12px;line-height:1.7;text-align:center;">
+  <strong style="color:${COLORS.gold};font-size:13px;">${BRAND}</strong><br>
   ${escapeHtml(SITE.address.full)}<br>
-  Phone: <a href="tel:${SITE.contact.phoneHref}" style="color:${COLORS.primary};">${SITE.contact.phone}</a>
-  &nbsp;|&nbsp; Email: <a href="mailto:${SITE.contact.email}" style="color:${COLORS.primary};">${SITE.contact.email}</a><br>
-  <a href="${SITE_LINK}" style="color:${COLORS.primary};">${SITE_LINK.replace(/^https?:\/\//, "")}</a>
+  Phone: <a href="tel:${SITE.contact.phoneHref}" style="${footerLink}">${SITE.contact.phone}</a>
+  &nbsp;|&nbsp; Email: <a href="mailto:${SITE.contact.email}" style="${footerLink}">${SITE.contact.email}</a><br>
+  <a href="${SITE_LINK}" style="${footerLink}">${SITE_LINK.replace(/^https?:\/\//, "")}</a>
 </td></tr>
 </table>
 </td></tr>
@@ -106,7 +136,7 @@ function paragraph(text: string): string {
   return `<p style="margin:0 0 12px;">${text}</p>`;
 }
 
-function applicationRows(values: ApplicationValues, resumeName?: string): Row[] {
+function applicationRows(values: ApplicationValues): Row[] {
   return rowsFrom([
     ["Name", values.name],
     ["Position", values.position],
@@ -115,14 +145,37 @@ function applicationRows(values: ApplicationValues, resumeName?: string): Row[] 
     ["Phone", formatPhone(values.phone)],
     ["Email", values.email],
     ["Current city", values.city],
-    ["Resume", resumeName ?? ""],
     ["Note", values.note],
   ]);
 }
 
-export function applicationCompanyEmail(values: ApplicationValues, resumeName: string): EmailContent {
+export type ResumeInfo = { name: string; size: number };
+
+function fileBadge(fileName: string): string {
+  return /\.pdf$/i.test(fileName) ? "PDF" : "DOC";
+}
+
+function resumeCard(resume: ResumeInfo): string {
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:separate;border:1px solid ${COLORS.border};border-radius:10px;margin:20px 0;">
+<tr>
+  <td width="56" style="padding:14px 0 14px 14px;vertical-align:middle;">
+    <div style="width:44px;height:52px;line-height:52px;border-radius:6px;background:${COLORS.primary};color:#ffffff;font-size:12px;font-weight:700;text-align:center;letter-spacing:1px;">${fileBadge(resume.name)}</div>
+  </td>
+  <td style="padding:14px;vertical-align:middle;">
+    <div style="font-size:12px;color:${COLORS.muted};text-transform:uppercase;letter-spacing:1px;">Resume attached</div>
+    <div style="font-size:15px;font-weight:700;color:${COLORS.ink};word-break:break-all;">${escapeHtml(resume.name)}</div>
+    <div style="font-size:13px;color:${COLORS.muted};">${escapeHtml(formatFileSize(resume.size))}</div>
+  </td>
+</tr>
+<tr><td colspan="2" style="padding:10px 14px;background:#FBF6E6;border-top:1px solid ${COLORS.border};border-radius:0 0 10px 10px;font-size:13px;color:${COLORS.goldInk};">
+  Attached to this email. Open or download it from the attachments below.
+</td></tr>
+</table>`;
+}
+
+export function applicationCompanyEmail(values: ApplicationValues, resume: ResumeInfo): EmailContent {
   const name = oneLine(values.name);
-  const rows = applicationRows(values, resumeName);
+  const rows = applicationRows(values);
   const replyHref = `mailto:${values.email.trim()}?subject=${encodeURIComponent(`Your application for ${oneLine(values.position)} at ${BRAND}`)}`;
   return {
     subject: `New application: ${oneLine(values.position)} - ${name}`,
@@ -130,7 +183,8 @@ export function applicationCompanyEmail(values: ApplicationValues, resumeName: s
       preheader: `${name} applied for ${values.position}.`,
       heading: "New job application",
       body: [
-        paragraph(`<strong>${escapeHtml(name)}</strong> applied for <strong>${escapeHtml(values.position.trim())}</strong> through the careers page. The resume is attached.`),
+        paragraph(`<strong>${escapeHtml(name)}</strong> applied for <strong>${escapeHtml(values.position.trim())}</strong> through the careers page. Their resume is attached below.`),
+        resumeCard(resume),
         detailsTable(rows),
         `<p style="margin:0;">${button(replyHref, "Reply to candidate")}</p>`,
       ].join(""),
@@ -139,44 +193,81 @@ export function applicationCompanyEmail(values: ApplicationValues, resumeName: s
       "New job application from the website",
       "",
       detailsText(rows),
+      `Resume (attached): ${resume.name}, ${formatFileSize(resume.size)}`,
       "",
-      "The resume is attached. Reply to this email to contact the candidate.",
+      "Reply to this email to contact the candidate.",
       "",
       textFooter(),
     ].join("\n"),
   };
 }
 
+function stepsPanel(heading: string, steps: readonly string[]): string {
+  const rows = steps
+    .map(
+      (step, index) => `<tr>
+  <td width="40" style="padding:6px 0;vertical-align:top;">
+    <div style="width:28px;height:28px;line-height:28px;border-radius:14px;background:${COLORS.gold};color:${COLORS.ink};font-size:13px;font-weight:700;text-align:center;">${index + 1}</div>
+  </td>
+  <td style="padding:10px 0 6px;vertical-align:top;font-size:14px;line-height:1.5;color:${COLORS.muted};">${step}</td>
+</tr>`,
+    )
+    .join("");
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#E8F1F3;border-radius:10px;margin:20px 0;">
+<tr><td style="padding:18px 20px;">
+  <div style="font-size:16px;font-weight:700;color:${COLORS.deep};margin-bottom:8px;">${escapeHtml(heading)}</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows}</table>
+</td></tr>
+</table>`;
+}
+
+function pill(text: string): string {
+  return `<p style="margin:16px 0;"><span style="display:inline-block;background:#FBF3D9;color:${COLORS.goldInk};font-size:14px;font-weight:700;padding:8px 16px;border-radius:999px;">&#10022;&nbsp; ${escapeHtml(text)}</span></p>`;
+}
+
 export function applicationCandidateEmail(values: ApplicationValues): EmailContent {
+  const content = THANK_YOU_CONTENT.application.success;
   const name = oneLine(values.name);
   const position = values.position.trim();
+  const phone = formatPhone(values.phone);
+  const steps = [
+    ...(content.steps ?? []).map(escapeHtml),
+    `Keep your phone handy; we will call you on <strong>${escapeHtml(phone)}</strong>.`,
+  ];
+  const heading = `${content.heading}, ${name}`;
+  const encouragement = content.encouragement ?? "";
   return {
     subject: `We received your application - ${BRAND}`,
     html: layout({
-      preheader: `Thank you for applying for ${position}.`,
-      heading: `Thank you for applying, ${name}`,
+      preheader: `Thank you for applying for ${position}. ${encouragement}`,
+      eyebrow: content.eyebrow,
+      heading,
+      banner: content.image
+        ? { cid: EMAIL_BANNER.cid, alt: content.image.alt, width: EMAIL_BANNER.width, height: EMAIL_BANNER.height }
+        : undefined,
       body: [
-        paragraph(`We have received your application for <strong>${escapeHtml(position)}</strong> at ${BRAND}, along with your resume.`),
-        paragraph("<strong>What happens next</strong>"),
-        `<ol style="margin:0 0 16px;padding-left:20px;">
-  <li style="margin-bottom:6px;">Our team reviews applications within 3 working days.</li>
-  <li style="margin-bottom:6px;">If your profile matches the role, we will call you to arrange an interview.</li>
-  <li>Keep your phone handy; we will contact you on ${escapeHtml(formatPhone(values.phone))}.</li>
-</ol>`,
+        paragraph(escapeHtml(content.intro)),
+        paragraph(`We have received your application for <strong>${escapeHtml(position)}</strong>, along with your resume.`),
+        encouragement ? pill(encouragement) : "",
+        stepsPanel(content.stepsHeading ?? "What happens next", steps),
+        `<p style="margin:0 0 20px;">${button(absoluteUrl(Routes.ABOUT), "Learn about us")}</p>`,
         paragraph(`Questions in the meantime? Call us on <a href="tel:${SITE.contact.phoneHref}" style="color:${COLORS.primary};">${SITE.contact.phone}</a> or simply reply to this email.`),
         paragraph(`Warm regards,<br><strong>The ${BRAND} team</strong>`),
       ].join(""),
     }),
     text: [
-      `Thank you for applying, ${name}`,
+      heading,
       "",
-      `We have received your application for ${position} at ${BRAND}, along with your resume.`,
+      content.intro,
+      `We have received your application for ${position}, along with your resume.`,
       "",
-      "What happens next",
-      "1. Our team reviews applications within 3 working days.",
-      "2. If your profile matches the role, we will call you to arrange an interview.",
-      `3. Keep your phone handy; we will contact you on ${formatPhone(values.phone)}.`,
+      encouragement,
       "",
+      content.stepsHeading ?? "What happens next",
+      ...(content.steps ?? []).map((step, index) => `${index + 1}. ${step}`),
+      `${(content.steps?.length ?? 0) + 1}. Keep your phone handy; we will call you on ${phone}.`,
+      "",
+      `Learn about us: ${absoluteUrl(Routes.ABOUT)}`,
       `Questions in the meantime? Call us on ${SITE.contact.phone} or simply reply to this email.`,
       "",
       "Warm regards,",

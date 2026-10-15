@@ -34,7 +34,7 @@ export async function submitApplication(formData: FormData): Promise<Application
   }
 
   try {
-    const company = applicationCompanyEmail(values, resumeFile.name);
+    const company = applicationCompanyEmail(values, { name: resumeFile.name, size: resumeFile.size });
     await sendMail({
       to: companyInbox(),
       replyTo: values.email.trim(),

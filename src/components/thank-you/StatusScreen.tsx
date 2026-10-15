@@ -10,11 +10,14 @@ import { cn } from "@@/lib/utils";
 
 const enter = "animate-in fade-in-0 slide-in-from-bottom-2 fill-mode-both duration-700 motion-reduce:animate-none";
 
-function StatusBadge({ status, centered }: { status: SubmitStatus; centered: boolean }) {
+function StatusBadge({ status, overlap }: { status: SubmitStatus; overlap: boolean }) {
   const success = status === "success";
   return (
     <span
-      className={cn("relative flex size-24 items-center justify-center", centered && "mx-auto")}
+      className={cn(
+        "relative mx-auto flex size-24 items-center justify-center",
+        overlap && "-mt-12 rounded-full bg-surface",
+      )}
       aria-hidden="true"
     >
       <span
@@ -39,42 +42,41 @@ export default function StatusScreen({ status, form }: { status: SubmitStatus; f
   const content = THANK_YOU_CONTENT[form][status];
   const success = status === "success";
   const image = content.image;
-  const centered = !image;
 
   return (
     <section aria-labelledby="status-heading" className="brand-wash py-14 sm:py-20">
       <div className="container">
         <div
           className={cn(
-            "mx-auto overflow-hidden rounded-2xl border bg-surface shadow-card",
+            "mx-auto overflow-hidden rounded-2xl border bg-surface text-center shadow-card",
             success ? "border-primary/15" : "border-destructive/20",
-            image ? "max-w-5xl lg:grid lg:grid-cols-[5fr_7fr]" : "max-w-2xl text-center",
+            image ? "max-w-3xl" : "max-w-2xl",
             enter,
           )}
         >
           {image ? (
-            <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-full">
+            <div className="relative aspect-[16/9] sm:aspect-[16/7]">
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
                 priority
-                sizes="(min-width: 1024px) 420px, 100vw"
-                className="object-cover object-[30%_center]"
+                sizes="(min-width: 768px) 768px, 100vw"
+                className="object-cover object-center"
               />
               <div
-                className="absolute inset-0 bg-gradient-to-t from-primary-deep/80 via-primary-deep/10 to-transparent"
+                className="absolute inset-0 bg-gradient-to-t from-primary-deep/60 via-transparent to-transparent"
                 aria-hidden="true"
               />
-              <p className="absolute bottom-5 left-5 right-5 inline-flex w-fit items-center gap-2 rounded-pill bg-surface/95 px-4 py-2 text-sm font-semibold text-primary-deep shadow-card motion-safe:animate-float">
+              <p className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-pill bg-surface/95 px-4 py-2 text-sm font-semibold text-primary-deep shadow-card">
                 <HeartPulse className="size-4 text-gold-ink" aria-hidden="true" />
                 {image.badge}
               </p>
             </div>
           ) : null}
 
-          <div className="p-6 sm:p-10">
-            <StatusBadge status={status} centered={centered} />
+          <div className={cn("p-6 sm:p-10", image && "pt-0 sm:pt-0")}>
+            <StatusBadge status={status} overlap={Boolean(image)} />
 
             <p
               className={cn(
@@ -84,15 +86,16 @@ export default function StatusScreen({ status, form }: { status: SubmitStatus; f
             >
               {content.eyebrow}
             </p>
-            <span className={cn("gold-rule mt-3", centered && "mx-auto")} aria-hidden="true" />
+            <span className="gold-rule mx-auto mt-3" aria-hidden="true" />
             <h1
               id="status-heading"
               className={cn("mt-4 text-3xl font-bold text-primary-deep sm:text-4xl", enter, "delay-100")}
             >
               {content.heading}
             </h1>
-            <p className={cn("mt-4 max-w-xl text-lg text-ink-muted", centered && "mx-auto", enter, "delay-200")}>
+            <p className={cn("mx-auto mt-4 max-w-xl text-lg text-ink-muted", enter, "delay-200")}>
               {content.intro}
+              {content.confirmation ? ` ${content.confirmation}` : null}
             </p>
             {content.encouragement ? (
               <p
@@ -134,7 +137,7 @@ export default function StatusScreen({ status, form }: { status: SubmitStatus; f
             <div
               className={cn(
                 "mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap",
-                centered && "justify-center",
+                "justify-center",
                 enter,
                 "delay-300",
               )}
@@ -203,7 +206,7 @@ export default function StatusScreen({ status, form }: { status: SubmitStatus; f
               <ul
                 className={cn(
                   "mt-3 flex flex-col gap-x-6 gap-y-2 text-sm sm:flex-row sm:flex-wrap",
-                  centered && "items-center justify-center",
+                  "items-center justify-center",
                 )}
               >
                 <li>
