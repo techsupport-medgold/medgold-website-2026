@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition, type ChangeEvent, type FormEvent } 
 import { useRouter } from "next/navigation";
 import { ChevronDown, Loader2, RotateCcw, Send } from "lucide-react";
 import { submitEnquiry } from "@@/app/(site)/contact-us/actions";
+import SubmittingOverlay from "@@/components/common/SubmittingOverlay";
 import { Button } from "@@/components/ui/button";
 import { enquiryTypes } from "@@/data/contact";
 import {
@@ -134,6 +135,7 @@ export default function EnquiryForm() {
       aria-busy={isPending || undefined}
       className="relative rounded-lg border border-border-muted bg-surface p-6 shadow-card sm:p-8"
     >
+      <SubmittingOverlay open={isPending} title="Sending your enquiry..." />
       <h2 id="enquiry-heading" className="text-2xl font-bold">
         Send an enquiry
       </h2>

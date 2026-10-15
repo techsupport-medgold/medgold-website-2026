@@ -9,7 +9,12 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const WIDTH = 420;
 
 const svg = await readFile(`${root}public/images/logo-medgold.svg`);
-const png = await sharp(svg, { density: 300 }).resize({ width: WIDTH }).png({ compressionLevel: 9 }).toBuffer();
+const png = await sharp(svg, { density: 300 })
+  .trim()
+  .resize({ width: WIDTH })
+  // The logo is flat teal, gold and red, so 16 colours without dithering keeps it crisp at about 4 KB.
+  .png({ palette: true, colours: 16, dither: 0, compressionLevel: 9, effort: 10 })
+  .toBuffer();
 const { height } = await sharp(png).metadata();
 
 await writeFile(

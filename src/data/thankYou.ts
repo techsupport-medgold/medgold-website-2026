@@ -10,6 +10,8 @@ export type StatusContent = {
   heading: string;
   intro: string;
   note?: string;
+  encouragement?: string;
+  image?: { src: string; alt: string; badge: string };
   stepsHeading?: string;
   steps?: readonly string[];
   primary: Link;
@@ -49,9 +51,15 @@ export const THANK_YOU_CONTENT: Record<FormKind, Record<SubmitStatus, StatusCont
     success: {
       title: "Application Received",
       eyebrow: "Application received",
-      heading: "Thank you! Your application has been received",
+      heading: "Your next great opportunity is on its way",
       intro:
-        "We've emailed a confirmation to the address you gave. Our team will review your resume and contact you if your profile matches the role.",
+        "Thank you for choosing MedGold Healthcare. Healthcare professionals like you make every patient's day better, and we're excited to help you find a role where you can grow and thrive. We've emailed you a confirmation.",
+      encouragement: "A wonderful opportunity could be just a call away.",
+      image: {
+        src: "/images/staffing/nursing.jpg",
+        alt: "MedGold Healthcare nurses caring for a patient",
+        badge: "Caring careers start here",
+      },
       stepsHeading: "What happens next",
       steps: applicationSteps.steps.slice(1),
       primary: { href: Routes.HOME, label: "Back to home" },

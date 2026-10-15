@@ -23,6 +23,7 @@ import {
   X,
 } from "lucide-react";
 import { submitApplication } from "@@/app/(site)/careers/actions";
+import SubmittingOverlay from "@@/components/common/SubmittingOverlay";
 import { Button } from "@@/components/ui/button";
 import { experienceLevels, positions } from "@@/data/careers";
 import {
@@ -247,6 +248,7 @@ export default function ApplicationForm() {
       aria-busy={isPending || undefined}
       className="relative rounded-lg border border-border-muted bg-surface p-6 shadow-card sm:p-8"
     >
+      <SubmittingOverlay open={isPending} title="Uploading your application..." />
       <h2 id="application-heading" className="text-2xl font-bold">
         Apply for a job
       </h2>
