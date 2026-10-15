@@ -9,6 +9,7 @@ export const Routes = {
   CASE_STUDIES: "/case-studies",
   CAREERS: "/careers",
   CONTACT: "/contact-us",
+  THANK_YOU: "/thank-you",
   PRIVACY: "/privacy-policy",
   TERMS: "/terms-of-service",
   STYLE_GUIDE: "/style-guide",

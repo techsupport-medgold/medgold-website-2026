@@ -36,7 +36,7 @@ export const SITE = {
     phoneAlt: "+91 82480 60804",
     phoneAltHref: "+918248060804",
     whatsapp: "919150937804",
-    email: "care@medgoldhealthcare.com",
+    email: "sundharmedgold@gmail.com",
   },
   address: {
     street: "Santosh Nagar, Janaki Raman Nagar, Teacher Colony",
