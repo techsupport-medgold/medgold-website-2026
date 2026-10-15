@@ -1,7 +1,26 @@
 "use client";
 
-import { useRef, useState, useTransition, type ChangeEvent, type FormEvent, type InputHTMLAttributes } from "react";
-import { CheckCircle2, ChevronDown, FileText, Loader2, MessageCircle, Phone, Send, X } from "lucide-react";
+import {
+  useRef,
+  useState,
+  useTransition,
+  type ChangeEvent,
+  type DragEvent,
+  type FormEvent,
+  type InputHTMLAttributes,
+} from "react";
+import {
+  CheckCircle2,
+  ChevronDown,
+  FileText,
+  Loader2,
+  MessageCircle,
+  Phone,
+  RefreshCw,
+  Send,
+  UploadCloud,
+  X,
+} from "lucide-react";
 import { submitApplication } from "@@/app/(site)/careers/actions";
 import { Button } from "@@/components/ui/button";
 import { SITE, whatsappUrl } from "@@/config/site";
@@ -60,6 +79,7 @@ const controlClass =
 export default function ApplicationForm() {
   const [values, setValues] = useState<ApplicationValues>(EMPTY);
   const [resume, setResume] = useState<File | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [showSummary, setShowSummary] = useState(false);
   const [sendError, setSendError] = useState<string | null>(null);
@@ -78,10 +98,24 @@ export default function ApplicationForm() {
     );
   };
 
-  const onResumeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ?? null;
-    setResume(file);
-    setErrors((current) => ({ ...current, resume: file ? (validateResume(file) ?? undefined) : current.resume }));
+  const pickResume = (file: File | undefined) => {
+    if (!file) {
+      return;
+    }
+    const error = validateResume(file);
+    setResume(error ? null : file);
+    setErrors((current) => ({ ...current, resume: error ?? undefined }));
+    if (error && resumeInputRef.current) {
+      resumeInputRef.current.value = "";
+    }
+  };
+
+  const onResumeChange = (event: ChangeEvent<HTMLInputElement>) => pickResume(event.target.files?.[0]);
+
+  const onResumeDrop = (event: DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    setIsDragging(false);
+    pickResume(event.dataTransfer.files[0]);
   };
 
   const clearResume = () => {
@@ -287,9 +321,9 @@ export default function ApplicationForm() {
         <div>{textField("city", false, { type: "text", autoComplete: "address-level2", placeholder: "e.g. Chennai" })}</div>
 
         <div className="sm:col-span-2">
-          {label("resume", true)}
-          <p id="application-resume-hint" className="mt-1 text-sm text-ink-subtle">
-            PDF, DOC or DOCX, up to 4 MB.
+          <p id="application-resume-label" className="block text-sm font-semibold text-ink">
+            {LABELS.resume}
+            <span className="text-destructive" aria-hidden="true"> *</span>
           </p>
           <input
             ref={resumeInputRef}
@@ -297,31 +331,99 @@ export default function ApplicationForm() {
             type="file"
             accept={RESUME_ACCEPT}
             onChange={onResumeChange}
+            aria-labelledby="application-resume-label"
             aria-required="true"
             aria-invalid={errors.resume ? true : undefined}
             aria-describedby={errors.resume ? "application-resume-hint application-resume-error" : "application-resume-hint"}
-            className={cn(
-              controlClass,
-              "cursor-pointer border-dashed py-2.5 text-sm text-ink-muted file:mr-4 file:min-h-9 file:cursor-pointer file:rounded-md file:border-0 file:bg-primary/10 file:px-4 file:text-sm file:font-semibold file:text-primary-deep file:transition-colors hover:file:bg-primary hover:file:text-white",
-              resume && "hidden",
-            )}
+            className="peer sr-only"
           />
           {resume ? (
-            <div className="mt-2 flex items-center gap-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2 animate-in fade-in-0 duration-300 motion-reduce:animate-none">
-              <FileText className="size-5 shrink-0 text-primary" aria-hidden="true" />
+            <div className="mt-2 flex flex-wrap items-center gap-3 rounded-lg border border-primary/30 bg-surface p-4 shadow-sm animate-in fade-in-0 slide-in-from-bottom-1 duration-300 motion-reduce:animate-none sm:flex-nowrap">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <FileText className="size-5" aria-hidden="true" />
+              </span>
               <p className="min-w-0 flex-1 text-sm">
                 <span className="block truncate font-semibold text-ink">{resume.name}</span>
-                <span className="text-ink-subtle">{formatFileSize(resume.size)}</span>
+                <span className="mt-0.5 flex flex-wrap items-center gap-x-2 text-ink-subtle">
+                  {formatFileSize(resume.size)}
+                  <span className="inline-flex items-center gap-1 font-medium text-emerald-700">
+                    <CheckCircle2 className="size-3.5" aria-hidden="true" />
+                    Ready to send
+                  </span>
+                </span>
               </p>
-              <button
-                type="button"
-                onClick={clearResume}
-                className="inline-flex min-h-11 items-center gap-1 rounded-md px-3 text-sm font-medium text-link hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-              >
-                <X className="size-4" aria-hidden="true" />
-                Remove<span className="sr-only"> {resume.name}</span>
-              </button>
+              <div className="flex shrink-0 gap-1">
+                <button
+                  type="button"
+                  onClick={() => resumeInputRef.current?.click()}
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-md px-3 text-sm font-medium text-link hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                >
+                  <RefreshCw className="size-4" aria-hidden="true" />
+                  Replace<span className="sr-only"> {resume.name}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={clearResume}
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-md px-3 text-sm font-medium text-ink-muted hover:bg-destructive/10 hover:text-destructive focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                >
+                  <X className="size-4" aria-hidden="true" />
+                  Remove<span className="sr-only"> {resume.name}</span>
+                </button>
+              </div>
             </div>
+          ) : (
+            <label
+              htmlFor="application-resume"
+              onDragOver={(event) => {
+                event.preventDefault();
+                setIsDragging(true);
+              }}
+              onDragLeave={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                  setIsDragging(false);
+                }
+              }}
+              onDrop={onResumeDrop}
+              className={cn(
+                "group mt-2 flex min-h-36 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-6 text-center transition-colors duration-300",
+                "peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/50",
+                isDragging
+                  ? "border-solid border-primary bg-primary/10"
+                  : errors.resume
+                    ? "border-destructive/60 bg-destructive/5 hover:bg-destructive/10"
+                    : "border-primary/40 bg-primary/[0.04] hover:border-primary hover:bg-primary/[0.08] peer-focus-visible:border-primary peer-focus-visible:bg-primary/[0.08]",
+              )}
+            >
+              <span
+                className={cn(
+                  "flex size-12 items-center justify-center rounded-full bg-primary text-white shadow-sm transition-transform duration-300 ease-spring group-hover:-translate-y-1 motion-reduce:transform-none",
+                  isDragging && "-translate-y-1 scale-110",
+                )}
+                aria-hidden="true"
+              >
+                <UploadCloud className="size-6" />
+              </span>
+              <span className="text-base text-ink" aria-hidden="true">
+                {isDragging ? (
+                  <strong className="font-semibold text-primary-deep">Drop your resume here</strong>
+                ) : (
+                  <>
+                    <strong className="font-semibold text-primary-deep underline-offset-4 group-hover:underline">
+                      Click to upload your resume
+                    </strong>{" "}
+                    <span className="text-ink-muted">or drag and drop it here</span>
+                  </>
+                )}
+              </span>
+              <span id="application-resume-hint" className="text-sm text-ink-subtle">
+                PDF, DOC or DOCX - up to 4 MB
+              </span>
+            </label>
+          )}
+          {resume ? (
+            <span id="application-resume-hint" className="sr-only">
+              PDF, DOC or DOCX - up to 4 MB
+            </span>
           ) : null}
           {fieldError("resume")}
         </div>
