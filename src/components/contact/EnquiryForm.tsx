@@ -1,13 +1,12 @@
 "use client";
 
-import { useRef, useState, useTransition, type ChangeEvent, type FormEvent } from "react";
-import { CheckCircle2, ChevronDown, Loader2, MessageCircle, Phone, Send } from "lucide-react";
+import { useEffect, useState, useTransition, type ChangeEvent, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { ChevronDown, Loader2, RotateCcw, Send } from "lucide-react";
 import { submitEnquiry } from "@@/app/(site)/contact-us/actions";
 import { Button } from "@@/components/ui/button";
-import { SITE, whatsappUrl } from "@@/config/site";
 import { enquiryTypes } from "@@/data/contact";
 import {
-  buildEnquiryMessage,
   ENQUIRY_MESSAGE_MIN,
   validateEnquiry,
   type EnquiryErrors,
@@ -15,6 +14,7 @@ import {
   type EnquiryValues,
 } from "@@/lib/enquiry";
 import { HONEYPOT_FIELD } from "@@/lib/form-action";
+import { clearDraft, saveDraft, takeDraft, thankYouUrl, type SubmitStatus } from "@@/lib/thank-you";
 import { cn } from "@@/lib/utils";
 
 const EMPTY: EnquiryValues = { name: "", phone: "", email: "", type: "", message: "" };
@@ -34,11 +34,17 @@ export default function EnquiryForm() {
   const [values, setValues] = useState<EnquiryValues>(EMPTY);
   const [errors, setErrors] = useState<EnquiryErrors>({});
   const [showSummary, setShowSummary] = useState(false);
-  const [sendError, setSendError] = useState<string | null>(null);
-  const [sent, setSent] = useState<{ email: string } | null>(null);
+  const [restored, setRestored] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const successRef = useRef<HTMLDivElement>(null);
-  const sendErrorRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const draft = takeDraft<EnquiryValues>("enquiry");
+    if (draft) {
+      setValues({ ...EMPTY, ...draft });
+      setRestored(true);
+    }
+  }, []);
 
   const onChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const field = event.target.name as EnquiryField;
@@ -64,62 +70,33 @@ export default function EnquiryForm() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSendError(null);
     if (showErrors(validateEnquiry(values))) {
       return;
     }
 
     const formData = new FormData(event.currentTarget);
     startTransition(async () => {
+      let status: SubmitStatus = "failed";
       try {
         const result = await submitEnquiry(formData);
-        if (result.ok) {
-          setShowSummary(false);
-          setSent({ email: values.email.trim() });
-          setValues(EMPTY);
-          requestAnimationFrame(() => successRef.current?.focus());
+        if (!result.ok && result.fieldErrors && showErrors(result.fieldErrors)) {
           return;
         }
-        if (result.fieldErrors && showErrors(result.fieldErrors)) {
-          return;
-        }
-        setSendError(result.error);
+        status = result.ok ? "success" : "failed";
       } catch {
-        setSendError(
-          `We couldn't send your enquiry right now. Please try again, or reach us on WhatsApp or call ${SITE.contact.phone}.`,
-        );
+        status = "failed";
       }
-      requestAnimationFrame(() => sendErrorRef.current?.focus());
+      if (status === "success") {
+        clearDraft("enquiry");
+      } else {
+        saveDraft("enquiry", values);
+      }
+      router.push(thankYouUrl(status, "enquiry"));
     });
   };
 
   const errorList = FIELD_ORDER.filter((field) => errors[field]);
   const messageLength = values.message.trim().length;
-
-  if (sent) {
-    return (
-      <div
-        ref={successRef}
-        tabIndex={-1}
-        role="status"
-        className="rounded-lg border border-primary/30 bg-primary/5 p-6 animate-in fade-in-0 slide-in-from-bottom-2 duration-700 fill-mode-both focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 motion-reduce:animate-none sm:p-8"
-      >
-        <CheckCircle2 className="size-8 text-primary" aria-hidden="true" />
-        <h2 className="mt-4 text-2xl font-bold">Enquiry sent</h2>
-        <p className="mt-3 text-ink-muted">
-          Thank you for contacting us. Our team will get back to you soon. We&apos;ve emailed a copy of your enquiry
-          to <strong className="break-all text-ink">{sent.email}</strong>.
-        </p>
-        <button
-          type="button"
-          onClick={() => setSent(null)}
-          className="mt-6 inline-flex min-h-11 items-center text-sm font-medium text-link underline-offset-4 hover:underline"
-        >
-          Send another enquiry
-        </button>
-      </div>
-    );
-  }
 
   const fieldProps = (field: EnquiryField) => ({
     id: `enquiry-${field}`,
@@ -164,6 +141,16 @@ export default function EnquiryForm() {
         Fields marked <span className="text-destructive" aria-hidden="true">*</span>
         <span className="sr-only">with an asterisk</span> are required.
       </p>
+
+      {restored ? (
+        <p
+          role="status"
+          className="mt-6 flex items-start gap-3 rounded-md border border-gold/40 bg-gold/10 p-4 text-sm text-ink animate-in fade-in-0 duration-500 motion-reduce:animate-none"
+        >
+          <RotateCcw className="mt-0.5 size-4 shrink-0 text-gold-ink" aria-hidden="true" />
+          We&apos;ve restored the details you entered. Check them and press Send enquiry to try again.
+        </p>
+      ) : null}
 
       {showSummary && errorList.length > 0 && (
         <div role="alert" className="mt-6 rounded-md border border-destructive/40 bg-destructive/5 p-4">
@@ -274,32 +261,6 @@ export default function EnquiryForm() {
           {fieldError("message")}
         </div>
       </div>
-
-      {sendError ? (
-        <div
-          ref={sendErrorRef}
-          tabIndex={-1}
-          role="alert"
-          className="mt-6 rounded-md border border-destructive/40 bg-destructive/5 p-4 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-        >
-          <p className="font-semibold text-destructive">{sendError}</p>
-          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-            <Button asChild size="sm" variant="outline" className="border-primary/40 text-primary hover:bg-primary/5">
-              <a href={whatsappUrl(buildEnquiryMessage(values))} target="_blank" rel="noopener noreferrer">
-                <MessageCircle aria-hidden="true" />
-                Send on WhatsApp
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </Button>
-            <Button asChild size="sm" variant="outline" className="border-primary/40 text-primary hover:bg-primary/5">
-              <a href={`tel:${SITE.contact.phoneHref}`}>
-                <Phone aria-hidden="true" />
-                Call {SITE.contact.phone}
-              </a>
-            </Button>
-          </div>
-        </div>
-      ) : null}
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-ink-subtle">We&apos;ll email you a copy of your enquiry.</p>
