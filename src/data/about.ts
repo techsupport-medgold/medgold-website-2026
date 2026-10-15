@@ -145,7 +145,7 @@ export type Founder = Trainer & { about: string[]; expertise: string[] };
 
 export const founder: Founder = {
   name: "Mr. Sundaramoorthy",
-  role: "Founder | Mentor | Author | Startup Coach",
+  role: "Founder | Mentor",
   experienceYears: 36,
   photo: {
     src: "/images/careers/sundaramoorthy-founder-medgold-healthcare.avif",
@@ -153,17 +153,9 @@ export const founder: Founder = {
   },
   about: [
     "Mr. Sundaramoorthy is the visionary leader behind MedGold Healthcare. With a career spanning more than 36 years in the healthcare industry, he brings deep, hands-on experience in hospital operations, leadership and business growth to every partnership we build.",
-    "As a professional speaker, mentor and startup coach, he has guided healthcare professionals and entrepreneurs to build stronger teams and sustainable organisations. He is also the creator of the Money Workshop, a practical program on financial growth and personal success that he has run worldwide for over 23 years.",
+    "As a professional speaker and mentor, he has guided healthcare professionals and entrepreneurs to build stronger teams and sustainable organisations.",
   ],
-  expertise: [
-    "Healthcare Leadership",
-    "Hospital Operations",
-    "Business Coaching",
-    "Leadership Skills",
-    "Wealth Creation",
-    "Social Media Marketing",
-    "Startup Mentoring",
-  ],
+  expertise: ["Healthcare Leadership", "Hospital Operations", "Leadership Skills"],
 };
 
 export const trainers = {
