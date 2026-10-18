@@ -29,15 +29,15 @@ export async function submitEnquiry(formData: FormData): Promise<EnquiryResult> 
   const email = values.email.trim();
   try {
     await sendMail({ to: companyInbox(), replyTo: email, ...enquiryCompanyEmail(values) });
-  } catch (error) {
-    console.error("Enquiry email to the company failed", error);
+  } catch {
+    console.error("Enquiry email to the company failed");
     return { ok: false, error: MAIL_FAILURE_MESSAGE };
   }
 
   try {
     await sendMail({ to: email, ...enquiryAcknowledgementEmail(values) });
-  } catch (error) {
-    console.error("Enquiry acknowledgement email failed", error);
+  } catch {
+    console.error("Enquiry acknowledgement email failed");
   }
 
   return { ok: true };

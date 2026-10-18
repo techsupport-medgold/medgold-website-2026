@@ -54,15 +54,15 @@ export async function submitApplication(formData: FormData): Promise<Application
         },
       ],
     });
-  } catch (error) {
-    console.error("Application email to the company failed", error);
+  } catch {
+    console.error("Application email to the company failed");
     return { ok: false, error: MAIL_FAILURE_MESSAGE };
   }
 
   try {
     await sendMail({ to: values.email.trim(), ...applicationCandidateEmail(values) });
-  } catch (error) {
-    console.error("Application acknowledgement email failed", error);
+  } catch {
+    console.error("Application acknowledgement email failed");
   }
 
   return { ok: true };
