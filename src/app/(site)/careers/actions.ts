@@ -2,6 +2,7 @@
 
 import {
   resumeContentType,
+  safeAttachmentName,
   validateApplication,
   validateResume,
   type ApplicationField,
@@ -9,7 +10,9 @@ import {
 } from "@@/lib/application";
 import { applicationCandidateEmail, applicationCompanyEmail } from "@@/lib/email-templates";
 import { isBot, readFields, type FormActionResult } from "@@/lib/form-action";
+import { isRateLimited } from "@@/lib/form-rate";
 import { MAIL_FAILURE_MESSAGE, companyInbox, sendMail } from "@@/lib/mailer";
+import { RATE_LIMIT_MESSAGE } from "@@/lib/rate-limit";
 
 const FIELDS = ["name", "phone", "email", "position", "experience", "qualification", "city", "note"] as const;
 
@@ -18,6 +21,10 @@ export type ApplicationResult = FormActionResult<ApplicationField | "resume">;
 export async function submitApplication(formData: FormData): Promise<ApplicationResult> {
   if (isBot(formData)) {
     return { ok: true };
+  }
+
+  if (await isRateLimited("application")) {
+    return { ok: false, error: RATE_LIMIT_MESSAGE };
   }
 
   const values: ApplicationValues = readFields(formData, FIELDS);
@@ -41,7 +48,7 @@ export async function submitApplication(formData: FormData): Promise<Application
       ...company,
       attachments: [
         {
-          filename: resumeFile.name,
+          filename: safeAttachmentName(resumeFile.name),
           content: Buffer.from(await resumeFile.arrayBuffer()),
           contentType: resumeContentType(resumeFile.name) ?? undefined,
         },

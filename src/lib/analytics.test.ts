@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { shouldLoadClarity } from "@@/lib/analytics";
+import { CLARITY_ID_PATTERN, GTM_ID_PATTERN, resolvePublicId, shouldLoadClarity } from "@@/lib/analytics";
 
 const live = { hostname: "medgoldhealthcare.com", nodeEnv: "production", vercelEnv: "production" };
 
@@ -22,5 +22,18 @@ describe("shouldLoadClarity", () => {
 
   it("skips Vercel preview deployments", () => {
     expect(shouldLoadClarity({ ...live, vercelEnv: "preview" })).toBe(false);
+  });
+});
+
+describe("resolvePublicId", () => {
+  it("keeps a well-formed override", () => {
+    expect(resolvePublicId("GTM-ABCDEF", "GTM-P8G73P5Q", GTM_ID_PATTERN)).toBe("GTM-ABCDEF");
+    expect(resolvePublicId("abc123def", "yoaflrji2q", CLARITY_ID_PATTERN)).toBe("abc123def");
+  });
+
+  it("falls back when the override is empty or could break out of a script", () => {
+    expect(resolvePublicId("", "GTM-P8G73P5Q", GTM_ID_PATTERN)).toBe("GTM-P8G73P5Q");
+    expect(resolvePublicId("');alert(1)//", "GTM-P8G73P5Q", GTM_ID_PATTERN)).toBe("GTM-P8G73P5Q");
+    expect(resolvePublicId("not an id", "yoaflrji2q", CLARITY_ID_PATTERN)).toBe("yoaflrji2q");
   });
 });

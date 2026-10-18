@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@@/components/common/Breadcrumb";
+import PageSchema from "@@/components/common/PageSchema";
 import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import StatsBar from "@@/components/services/StatsBar";
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
 export default function StaffingServicePage() {
   return (
     <>
+      <PageSchema path={Routes.STAFFING} name={STAFFING_SEO.title} description={STAFFING_SEO.description} />
       <Breadcrumb path={Routes.STAFFING} current={breadcrumb.current} />
       <StaffingHero />
       <StatsBar label="Staffing impact" stats={impactStats} />

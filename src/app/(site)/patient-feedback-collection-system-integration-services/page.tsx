@@ -6,6 +6,7 @@ import FeedbackEstimator from "@@/components/patient-feedback/FeedbackEstimator"
 import FeedbackHero from "@@/components/patient-feedback/FeedbackHero";
 import WorkflowSection from "@@/components/patient-feedback/WorkflowSection";
 import Breadcrumb from "@@/components/common/Breadcrumb";
+import PageSchema from "@@/components/common/PageSchema";
 import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import StatsBar from "@@/components/services/StatsBar";
@@ -20,6 +21,11 @@ export const metadata: Metadata = {
 export default function PatientFeedbackServicePage() {
   return (
     <>
+      <PageSchema
+        path={Routes.PATIENT_FEEDBACK}
+        name={PATIENT_FEEDBACK_SEO.title}
+        description={PATIENT_FEEDBACK_SEO.description}
+      />
       <Breadcrumb path={Routes.PATIENT_FEEDBACK} current={breadcrumb.current} />
       <FeedbackHero />
       <StatsBar label="Patient feedback results" stats={stats} alternate />

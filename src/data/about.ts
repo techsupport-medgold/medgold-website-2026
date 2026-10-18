@@ -5,8 +5,9 @@ import { Routes } from "@@/config/routes";
 export const ABOUT_PAGE_URL = absoluteUrl(Routes.ABOUT);
 
 export const ABOUT_SEO = {
-  title: "About Us",
-  description: "Learn about MedGold Healthcare, our mission, values, and integrated services",
+  title: "Learn About MedGold Healthcare, Chennai",
+  description:
+    "Learn how MedGold Healthcare helps Chennai hospitals with pharmacy audits, clinical staffing, nursing training, patient feedback and daily operations.",
 };
 
 export const hero = {

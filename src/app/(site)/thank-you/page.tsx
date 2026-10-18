@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import StatusScreen from "@@/components/thank-you/StatusScreen";
+import { NOINDEX_FOLLOW } from "@@/config/indexing";
 import { Routes } from "@@/config/routes";
 import { THANK_YOU_CONTENT, THANK_YOU_DESCRIPTION } from "@@/data/thankYou";
 import { FORM_COOKIE, parseForm, parseStatus } from "@@/lib/thank-you";
@@ -19,7 +20,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     title: THANK_YOU_CONTENT[form][status].title,
     description: THANK_YOU_DESCRIPTION,
     alternates: { canonical: Routes.THANK_YOU },
-    robots: { index: false, follow: true },
+    robots: NOINDEX_FOLLOW,
   };
 }
 

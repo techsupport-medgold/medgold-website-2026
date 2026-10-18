@@ -54,8 +54,9 @@ src/
 ## Pages
 
 Every public page lives in `src/app/(site)/<slug>/page.tsx` and is served at `/<slug>`.
-All pages are `index, follow` and listed in `src/app/sitemap.ts`, except the internal
-`/style-guide`, which is `noindex`.
+Indexable pages are `index, follow` and listed in `src/app/sitemap.ts`. Thank-you
+(success and failure), the case-studies placeholder, the style guide and the 404
+are `noindex, follow` and stay out of the sitemap.
 
 - New page: create `src/app/(site)/<slug>/page.tsx`, add the path to `Routes` in
   `src/config/routes.ts`, and add it to `ROUTES` in `src/app/sitemap.ts`.
@@ -101,7 +102,7 @@ The repo deploys from GitHub (`techsupport-medgold/website`, branch `main`).
 
 1. In [Vercel](https://vercel.com/new), import the GitHub repo and keep the Next.js preset
    (build `next build`, no output directory override).
-2. Add environment variables for Production: `NEXT_PUBLIC_SITE_URL` (e.g. `https://medgold.com`),
+2. Add environment variables for Production: `NEXT_PUBLIC_SITE_URL` (e.g. `https://medgoldhealthcare.com`),
    plus verification/analytics IDs when available, and the form email keys (see Form emails).
 3. Under Settings > Domains, add the apex domain and `www`. The app redirects `www` to the apex.
 4. Every push to `main` deploys to production; other branches get preview URLs, which Vercel

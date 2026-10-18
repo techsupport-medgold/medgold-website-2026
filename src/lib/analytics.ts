@@ -1,3 +1,16 @@
+export const GTM_ID_PATTERN = /^GTM-[A-Z0-9]+$/;
+export const CLARITY_ID_PATTERN = /^[a-z0-9]{6,32}$/;
+
+/**
+ * Public analytics IDs are interpolated into script tags. An override that
+ * does not match the expected shape falls back to the known-good id.
+ */
+export function resolvePublicId(override: string | undefined, fallback: string, pattern: RegExp): string {
+  const value = override?.trim();
+  if (!value || !pattern.test(value)) return fallback;
+  return value;
+}
+
 type ClarityEnv = {
   hostname: string;
   nodeEnv: string | undefined;

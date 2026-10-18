@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ArrowRight, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import StatsBar from "@@/components/services/StatsBar";
+import { NOINDEX_FOLLOW } from "@@/config/indexing";
 import { Routes } from "@@/config/routes";
 import Accordion from "@@/components/ui/accordion";
 import { Button } from "@@/components/ui/button";
@@ -18,7 +19,7 @@ import { colors, faqDemo, imageRules, motionRules, statsDemo, STYLE_GUIDE_SEO, t
 export const metadata: Metadata = {
   title: STYLE_GUIDE_SEO.title,
   description: STYLE_GUIDE_SEO.description,
-  robots: { index: false, follow: false },
+  robots: NOINDEX_FOLLOW,
 };
 
 const CARD_VARIANTS = ["default", "elevated", "outline", "soft"] as const;

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@@/components/common/Breadcrumb";
+import { NOINDEX_FOLLOW } from "@@/config/indexing";
 import { Routes } from "@@/config/routes";
 
 export const metadata: Metadata = {
   title: "Case Studies",
   description: "Hospital operations, audit and growth case studies from Med Gold. This page is in development.",
   alternates: { canonical: Routes.CASE_STUDIES },
-  robots: { index: false, follow: true },
+  robots: NOINDEX_FOLLOW,
 };
 
 export default function CaseStudiesPage() {

@@ -1,12 +1,12 @@
 import { Routes } from "@@/config/routes";
-import { absoluteUrl } from "@@/config/site";
+import { SITE, absoluteUrl } from "@@/config/site";
 
 /** Copy for the homepage. */
 export const HOME_PAGE_URL = absoluteUrl(Routes.HOME);
 
 export const HOME_SEO = {
-  title: "Hospital Operations Management and Maintenance Company",
-  description: "MedGold Healthcare offers hospital operations management and maintenance services in Chennai India",
+  title: SITE.title,
+  description: SITE.description,
 };
 
 export const homeHero = {

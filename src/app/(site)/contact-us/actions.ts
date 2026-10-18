@@ -3,7 +3,9 @@
 import { enquiryAcknowledgementEmail, enquiryCompanyEmail } from "@@/lib/email-templates";
 import { validateEnquiry, type EnquiryField, type EnquiryValues } from "@@/lib/enquiry";
 import { isBot, readFields, type FormActionResult } from "@@/lib/form-action";
+import { isRateLimited } from "@@/lib/form-rate";
 import { MAIL_FAILURE_MESSAGE, companyInbox, sendMail } from "@@/lib/mailer";
+import { RATE_LIMIT_MESSAGE } from "@@/lib/rate-limit";
 
 const FIELDS = ["name", "phone", "email", "type", "message"] as const;
 
@@ -12,6 +14,10 @@ export type EnquiryResult = FormActionResult<EnquiryField>;
 export async function submitEnquiry(formData: FormData): Promise<EnquiryResult> {
   if (isBot(formData)) {
     return { ok: true };
+  }
+
+  if (await isRateLimited("enquiry")) {
+    return { ok: false, error: RATE_LIMIT_MESSAGE };
   }
 
   const values: EnquiryValues = readFields(formData, FIELDS);
