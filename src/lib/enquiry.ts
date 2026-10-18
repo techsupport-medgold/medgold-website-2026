@@ -1,3 +1,5 @@
+import { enquiryTypes } from "@@/data/contact";
+
 export type EnquiryValues = {
   name: string;
   phone: string;
@@ -10,6 +12,7 @@ export type EnquiryField = keyof EnquiryValues;
 export type EnquiryErrors = Partial<Record<EnquiryField, string>>;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ENQUIRY_TYPES = new Set<string>(enquiryTypes);
 
 export const ENQUIRY_MESSAGE_MIN = 20;
 
@@ -35,7 +38,7 @@ export function validateEnquiry(values: EnquiryValues): EnquiryErrors {
   } else if (!EMAIL_PATTERN.test(values.email.trim())) {
     errors.email = "Enter a valid email address, for example name@example.com.";
   }
-  if (!values.type) {
+  if (!values.type || !ENQUIRY_TYPES.has(values.type)) {
     errors.type = "Choose an enquiry type.";
   }
   if (values.message.trim().length < ENQUIRY_MESSAGE_MIN) {

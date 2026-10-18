@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
+import { NOINDEX_PATHS } from "./src/config/indexing";
 import { Routes } from "./src/config/routes";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://medgold.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://medgoldhealthcare.com";
 const apexHost = new URL(siteUrl).host.replace(/^www\./, "");
 
 const nextConfig: NextConfig = {
@@ -48,6 +49,23 @@ const nextConfig: NextConfig = {
                 {
                   key: "Cache-Control",
                   value: "public, max-age=31536000, immutable",
+                },
+              ],
+            },
+          ]),
+      ...NOINDEX_PATHS.map((source) => ({
+        source,
+        headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      })),
+      ...(process.env.NODE_ENV === "development"
+        ? []
+        : [
+            {
+              source: "/images/:path*",
+              headers: [
+                {
+                  key: "Cache-Control",
+                  value: "public, max-age=86400, stale-while-revalidate=604800",
                 },
               ],
             },

@@ -54,8 +54,9 @@ src/
 ## Pages
 
 Every public page lives in `src/app/(site)/<slug>/page.tsx` and is served at `/<slug>`.
-All pages are `index, follow` and listed in `src/app/sitemap.ts`, except the internal
-`/style-guide`, which is `noindex`.
+Indexable pages are `index, follow` and listed in `src/app/sitemap.ts`. Thank-you
+(success and failure), the case-studies placeholder, the style guide and the 404
+are `noindex, follow` and stay out of the sitemap.
 
 - New page: create `src/app/(site)/<slug>/page.tsx`, add the path to `Routes` in
   `src/config/routes.ts`, and add it to `ROUTES` in `src/app/sitemap.ts`.
@@ -84,16 +85,25 @@ Setup (currently `sundharmedgold@gmail.com`):
 
 4. Restart `npm run dev` and submit a test application (with a PDF) and a test enquiry.
 5. In Vercel, open Project Settings > Environment Variables, add the same three keys for
-   Production and Preview, then redeploy.
+   Production and Preview, then redeploy. The names are exactly `SMTP_USER`,
+   `SMTP_APP_PASSWORD` and `MAIL_TO`. A normal Gmail password will not work.
 
-Moving to Google Workspace later (for example `care@medgoldhealthcare.com`): turn on 2-Step
-Verification for that user, create an App Password for it, and update `SMTP_USER`,
-`SMTP_APP_PASSWORD` and `MAIL_TO`. No code changes are needed. If App Passwords are not offered,
-a Workspace admin must allow 2-Step Verification under Admin console > Security >
-Authentication > 2-Step Verification.
+The From address is `SMTP_USER`. Gmail sends as that mailbox, so `medgoldhealthcare.com` does
+not need SPF, DKIM, or a custom From address. The mailer uses `smtp.gmail.com` port 465.
+Vercel allows 465 and 587 and blocks port 25.
 
-If email is not configured or Gmail rejects the login, the forms show an error with WhatsApp and
-call buttons as a backup, and the server logs the reason.
+After the first production send, open Google Account Security and approve any new sign-in
+alert. Gmail often refuses SMTP from a new Vercel address until that login is allowed.
+Sending as `care@medgoldhealthcare.com` later needs Gmail "Send mail as" (or a Workspace
+mailbox) for that address, plus a new App Password in the three variables above. If App
+Passwords are not offered, a Workspace admin must allow 2-Step Verification under Admin
+console > Security > Authentication > 2-Step Verification.
+
+If `SMTP_USER` or `SMTP_APP_PASSWORD` is missing, or Gmail rejects the login, the form stays
+on the page and shows the error. The server log names the missing variable, or the SMTP
+code and response, and never the password. The hidden anti-spam field is `medgold_hp`. Do
+not rename it to a real field such as `company_website`: browsers autofill those, the action
+treats the visitor as a bot, and the form reports success without sending.
 
 ## Deploying to Vercel
 
@@ -101,7 +111,7 @@ The repo deploys from GitHub (`techsupport-medgold/website`, branch `main`).
 
 1. In [Vercel](https://vercel.com/new), import the GitHub repo and keep the Next.js preset
    (build `next build`, no output directory override).
-2. Add environment variables for Production: `NEXT_PUBLIC_SITE_URL` (e.g. `https://medgold.com`),
+2. Add environment variables for Production: `NEXT_PUBLIC_SITE_URL` (e.g. `https://medgoldhealthcare.com`),
    plus verification/analytics IDs when available, and the form email keys (see Form emails).
 3. Under Settings > Domains, add the apex domain and `www`. The app redirects `www` to the apex.
 4. Every push to `main` deploys to production; other branches get preview URLs, which Vercel

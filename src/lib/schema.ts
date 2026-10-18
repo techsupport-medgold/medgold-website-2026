@@ -32,6 +32,16 @@ export const organizationSchema = {
     longitude: SITE.geo.lng,
   },
   hasMap: SITE.mapUrl,
+  areaServed: [
+    { "@type": "City", name: "Chennai" },
+    { "@type": "City", name: "Kanchipuram" },
+    { "@type": "AdministrativeArea", name: "Tamil Nadu" },
+  ],
+  founder: {
+    "@type": "Person",
+    name: SITE.contact.person,
+    jobTitle: "Founder",
+  },
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer service",

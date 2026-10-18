@@ -1,6 +1,6 @@
 /** Copy for the careers page. */
 export const CAREERS_SEO = {
-  title: "Careers",
+  title: "Careers with MedGold Healthcare, Chennai",
   description:
     "Apply for nursing, medical, technician and hospital operations jobs at MedGold Healthcare in Chennai. Send your application and our team will contact you.",
 };

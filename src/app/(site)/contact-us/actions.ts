@@ -3,7 +3,9 @@
 import { enquiryAcknowledgementEmail, enquiryCompanyEmail } from "@@/lib/email-templates";
 import { validateEnquiry, type EnquiryField, type EnquiryValues } from "@@/lib/enquiry";
 import { isBot, readFields, type FormActionResult } from "@@/lib/form-action";
+import { isRateLimited } from "@@/lib/form-rate";
 import { MAIL_FAILURE_MESSAGE, companyInbox, sendMail } from "@@/lib/mailer";
+import { RATE_LIMIT_MESSAGE } from "@@/lib/rate-limit";
 
 const FIELDS = ["name", "phone", "email", "type", "message"] as const;
 
@@ -12,6 +14,10 @@ export type EnquiryResult = FormActionResult<EnquiryField>;
 export async function submitEnquiry(formData: FormData): Promise<EnquiryResult> {
   if (isBot(formData)) {
     return { ok: true };
+  }
+
+  if (await isRateLimited("enquiry")) {
+    return { ok: false, error: RATE_LIMIT_MESSAGE };
   }
 
   const values: EnquiryValues = readFields(formData, FIELDS);
@@ -23,15 +29,15 @@ export async function submitEnquiry(formData: FormData): Promise<EnquiryResult> 
   const email = values.email.trim();
   try {
     await sendMail({ to: companyInbox(), replyTo: email, ...enquiryCompanyEmail(values) });
-  } catch (error) {
-    console.error("Enquiry email to the company failed", error);
+  } catch {
+    console.error("Enquiry email to the company failed");
     return { ok: false, error: MAIL_FAILURE_MESSAGE };
   }
 
   try {
     await sendMail({ to: email, ...enquiryAcknowledgementEmail(values) });
-  } catch (error) {
-    console.error("Enquiry acknowledgement email failed", error);
+  } catch {
+    console.error("Enquiry acknowledgement email failed");
   }
 
   return { ok: true };

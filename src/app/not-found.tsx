@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Logo from "@@/components/common/Logo";
 import { Button } from "@@/components/ui/button";
+import { NOINDEX_FOLLOW } from "@@/config/indexing";
+import { Routes } from "@@/config/routes";
 
 export const metadata: Metadata = {
   title: "Page not found",
   description: "The page you are looking for does not exist.",
-  robots: { index: false, follow: true },
+  robots: NOINDEX_FOLLOW,
 };
 
 export default function NotFound() {
@@ -22,7 +24,7 @@ export default function NotFound() {
         to explore our healthcare operations services.
       </p>
       <Button asChild size="lg" className="mt-8">
-        <Link href="/">Back to home</Link>
+        <Link href={Routes.HOME}>Back to home</Link>
       </Button>
     </main>
   );

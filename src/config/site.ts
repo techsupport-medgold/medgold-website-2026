@@ -1,7 +1,9 @@
+import { CLARITY_ID_PATTERN, GTM_ID_PATTERN, resolvePublicId } from "@@/lib/analytics";
+
 /** Single source of truth for brand, URL, and contact data used by pages, metadata, and JSON-LD. */
 
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://medgold.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://medgoldhealthcare.com"
 ).replace(/\/$/, "");
 
 export const SITE = {
@@ -9,19 +11,19 @@ export const SITE = {
   legalName: "Med Gold",
   shortName: "Med Gold",
   url: SITE_URL,
-  title: "Hospital Healthcare Operations Management and Maintenance Company Chennai India",
+  title: "Hospital Operations Management and Maintenance Company",
   tagline: "Gold-standard healthcare, built around you.",
   description:
-    "Med Gold is a Chennai hospital operations partner: NABH clinical audits, facility staffing, pharmacy stock audits, nursing training and hospital branding.",
+    "MedGold Healthcare runs hospital operations in Chennai: NABH audits, facility staffing, pharmacy stock control, nursing training and patient feedback.",
   keywords: [
-    "Med Gold",
-    "healthcare",
-    "medical care",
-    "doctors",
-    "clinic",
-    "diagnostics",
-    "health checkup",
-    "patient care",
+    "MedGold Healthcare",
+    "hospital operations Chennai",
+    "NABH audit",
+    "healthcare facility staffing",
+    "pharmacy stock audit",
+    "nursing training Chennai",
+    "patient feedback system",
+    "hospital branding",
   ],
   locale: "en_IN",
   language: "en",
@@ -51,11 +53,15 @@ export const SITE = {
   social: [] as string[],
 } as const;
 
-/** Public Microsoft Clarity project ID; NEXT_PUBLIC_CLARITY_ID overrides it. */
-export const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "yoaflrji2q";
+/** Public Microsoft Clarity project ID; NEXT_PUBLIC_CLARITY_ID overrides it when the value is a real project id. */
+export const CLARITY_PROJECT_ID = resolvePublicId(
+  process.env.NEXT_PUBLIC_CLARITY_ID,
+  "yoaflrji2q",
+  CLARITY_ID_PATTERN,
+);
 
-/** Public Google Tag Manager container ID; NEXT_PUBLIC_GTM_ID overrides it. */
-export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-P8G73P5Q";
+/** Public Google Tag Manager container ID; NEXT_PUBLIC_GTM_ID overrides it when the value is a GTM id. */
+export const GTM_ID = resolvePublicId(process.env.NEXT_PUBLIC_GTM_ID, "GTM-P8G73P5Q", GTM_ID_PATTERN);
 
 export const whatsappUrl = (message?: string) =>
   `https://wa.me/${SITE.contact.whatsapp}${

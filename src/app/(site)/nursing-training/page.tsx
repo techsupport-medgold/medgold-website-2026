@@ -7,6 +7,7 @@ import TrainingComparison from "@@/components/nursing-training/TrainingCompariso
 import TrainingHero from "@@/components/nursing-training/TrainingHero";
 import TrainingPillars from "@@/components/nursing-training/TrainingPillars";
 import Breadcrumb from "@@/components/common/Breadcrumb";
+import PageSchema from "@@/components/common/PageSchema";
 import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { breadcrumb, NURSING_TRAINING_SEO, requisition, type AssuranceIcon } from "@@/data/nursingTraining";
@@ -26,6 +27,7 @@ const ASSURANCE_ICONS: Record<AssuranceIcon, LucideIcon> = {
 export default function NursingTrainingPage() {
   return (
     <>
+      <PageSchema path={Routes.NURSING_TRAINING} name={NURSING_TRAINING_SEO.title} description={NURSING_TRAINING_SEO.description} />
       <Breadcrumb path={Routes.NURSING_TRAINING} current={breadcrumb.current} />
       <TrainingHero />
       <TraineeProfiles />

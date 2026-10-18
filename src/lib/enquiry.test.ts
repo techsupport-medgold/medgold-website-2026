@@ -45,6 +45,10 @@ describe("validateEnquiry", () => {
     expect(validateEnquiry({ ...valid, email: "not-an-email" }).email).toContain("valid email");
   });
 
+  it("rejects an enquiry type that is not on the form", () => {
+    expect(validateEnquiry({ ...valid, type: "Free crypto" }).type).toBe("Choose an enquiry type.");
+  });
+
   it("requires a message of at least 20 characters", () => {
     expect(validateEnquiry({ ...valid, message: "a".repeat(19) }).message).toContain("at least 20 characters");
     expect(validateEnquiry({ ...valid, message: `  ${"a".repeat(20)}  ` }).message).toBeUndefined();
