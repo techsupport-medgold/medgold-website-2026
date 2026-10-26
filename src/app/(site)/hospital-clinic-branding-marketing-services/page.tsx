@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteSchema from "@@/components/common/SiteSchema";
 import { Rocket } from "lucide-react";
 import BrandingHero from "@@/components/branding/BrandingHero";
 import EcosystemBanner from "@@/components/branding/EcosystemBanner";
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 export default function BrandingServicePage() {
   return (
     <>
+      <SiteSchema />
       <PageSchema path={BRANDING_PAGE_URL} name={BRANDING_SEO.title} description={BRANDING_SEO.description} />
       <Breadcrumb path={Routes.BRANDING} current={breadcrumb.current} />
       <BrandingHero />

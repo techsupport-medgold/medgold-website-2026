@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, CircleCheck, ShieldCheck } from "lucide-react";
+import { ArrowRight, BadgeCheck, BriefcaseBusiness, CircleCheck, ShieldCheck } from "lucide-react";
 import { Button } from "@@/components/ui/button";
 import ResponsiveImage from "@@/components/ui/responsive-image";
 import { Routes } from "@@/config/routes";
@@ -27,6 +27,17 @@ export default function HomeHero() {
                 <ShieldCheck aria-hidden="true" />
                 {homeHero.primaryCta}
                 <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="h-auto min-h-12 shrink whitespace-normal px-6 py-3 font-semibold"
+            >
+              <Link href={Routes.CAREERS}>
+                <BriefcaseBusiness aria-hidden="true" />
+                {homeHero.careersCta}
               </Link>
             </Button>
           </div>

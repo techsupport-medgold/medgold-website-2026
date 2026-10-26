@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteSchema from "@@/components/common/SiteSchema";
 import { CalendarCheck } from "lucide-react";
 import BenefitsSection from "@@/components/patient-feedback/BenefitsSection";
 import CaptureTouchpoints from "@@/components/patient-feedback/CaptureTouchpoints";
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 export default function PatientFeedbackServicePage() {
   return (
     <>
+      <SiteSchema />
       <PageSchema
         path={Routes.PATIENT_FEEDBACK}
         name={PATIENT_FEEDBACK_SEO.title}

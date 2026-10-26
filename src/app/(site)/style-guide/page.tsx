@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteSchema from "@@/components/common/SiteSchema";
 import { ArrowRight, HeartPulse, ShieldCheck, Stethoscope } from "lucide-react";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import StatsBar from "@@/components/services/StatsBar";
@@ -27,6 +28,7 @@ const CARD_VARIANTS = ["default", "elevated", "outline", "soft"] as const;
 export default function StyleGuidePage() {
   return (
     <>
+      <SiteSchema />
       <Breadcrumb current="Style Guide" path={Routes.STYLE_GUIDE} />
       <Section tone="wash" aria-labelledby="style-guide-heading">
         <SectionHeader

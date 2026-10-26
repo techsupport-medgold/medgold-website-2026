@@ -1,12 +1,13 @@
 import { Routes } from "@@/config/routes";
-import { SITE, absoluteUrl } from "@@/config/site";
+import { absoluteUrl } from "@@/config/site";
 
 /** Copy for the homepage. */
 export const HOME_PAGE_URL = absoluteUrl(Routes.HOME);
 
 export const HOME_SEO = {
-  title: SITE.title,
-  description: SITE.description,
+  title: "Hospital Consultant in Chennai India | Ops Management",
+  description:
+    "MedGold Healthcare offers hospital consultancy services in Chennai India for operations excellence, management, staffing audits, and NABH-aligned support.",
 };
 
 export const homeHero = {
@@ -14,6 +15,7 @@ export const homeHero = {
   intro:
     "From NABH-compliant clinical audits to clinical facility staffing, nursing aide upskilling, and digital medical records, we power healthcare continuity across Chennai and Kanchipuram with zero operational disruptions.",
   primaryCta: "Schedule Operations Audit",
+  careersCta: "Careers at Med Gold",
   compliance: ["NABH 5th Edition Aligned", "ISO 9001:2015 Clinical Quality", "BMWM 2016 Certification"],
   image: {
     src: "/images/home/home-hero.jpg",

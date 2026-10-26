@@ -3,7 +3,13 @@ import { SITE } from "@@/config/site";
 /** Shape returned by the careers and contact server actions. */
 export type FormActionResult<Field extends string> =
   | { ok: true }
-  | { ok: false; error: string; fieldErrors?: Partial<Record<Field, string>> };
+  | {
+      ok: false;
+      error: string;
+      fieldErrors?: Partial<Record<Field, string>>;
+      /** Lets the form stay on the page (expired, rate-limited, verification) instead of the failure page. */
+      code?: "invalid" | "expired" | "rate-limited" | "verification" | "send-failed";
+    };
 
 /**
  * Shown when the company copy of a form could not be sent.
@@ -18,6 +24,8 @@ export const MAIL_FAILURE_MESSAGE = `We couldn't send your details right now. Pl
  * success, and never send the email.
  */
 export const HONEYPOT_FIELD = "medgold_hp";
+export const TOKEN_FIELD = "form_token";
+export const TURNSTILE_FIELD = "cf-turnstile-response";
 
 export function readFields<Field extends string>(formData: FormData, fields: readonly Field[]): Record<Field, string> {
   return Object.fromEntries(

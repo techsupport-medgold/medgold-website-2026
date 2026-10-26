@@ -256,3 +256,46 @@ export const requisition = {
   confidential: "Confidential Hospital Assessment",
   cta: "Request Hospital Assessment",
 } as const;
+
+export const NURSING_TRAINING_SERVICE = {
+  name: "Nursing Training & Skills Development Program",
+  serviceType: "Nursing training and skills development",
+  areaServed: "Tamil Nadu",
+} as const;
+
+export const overview = {
+  eyebrow: "PROGRAM OVERVIEW",
+  heading: "About the Nursing Training & Skills Development Program",
+  paragraphs: [
+    "Med Gold Healthcare runs a nursing training and skills development program from Kolathur in Chennai for hospitals and for people building a healthcare career. Training takes place in a real hospital environment with live ward clinical rotations, so trainees practise on the floor and not only in a classroom. Sessions are led by experienced faculty that includes chief nursing officers, senior nurse educators and certified instructors.",
+    "The program is open to diploma nurses, A.N.M and G.N.M graduates, B.Sc nursing graduates, nursing aides, general duty assistants and ward staff across Tamil Nadu. The syllabus is built on four core pillars. The clinical masterclass covers ventilator management, ICU protocols and critical care. The certification pillar prepares trainees for Basic Life Support (BLS) and Advanced Cardiac Life Support (ACLS). Skills development covers IV and IO line insertion, aseptic wound care, EKG interpretation and EMR use. Emergency response covers Code Blue simulations, trauma care protocols and crisis communication.",
+    "For hospitals, Med Gold also delivers structured on-the-job training on the hospital premises. Before instructors are deployed, our clinical training team carries out a ward walkthrough and a baseline appraisal of aide skills. The curriculum is adapted to the hospital's HIS and shift rosters. An institutional NDA is signed before any ward floor presence and each certified aide receives a laminated individual competency card. Trainees who complete the program also get job placement assistance through our partner hospital tie-ups.",
+  ],
+  faqHeading: "Nursing training FAQs",
+  faqs: [
+    {
+      question: "Who can enroll in the nursing training program?",
+      answer:
+        "Diploma nurses, A.N.M and G.N.M graduates, B.Sc nursing graduates, nursing aides, general duty assistants and ward staff can enroll. Admission is open to clinical staff and healthcare aspirants across Tamil Nadu.",
+    },
+    {
+      question: "Where does the training take place?",
+      answer:
+        "Training is based at our nursing training and skills development center in Kolathur, Chennai and includes live ward clinical rotations in a real hospital environment. Hospitals can also book on-premise cohorts for their own staff.",
+    },
+    {
+      question: "Which certifications does the program cover?",
+      answer:
+        "The program prepares trainees for Basic Life Support (BLS) and Advanced Cardiac Life Support (ACLS) with certified instructors. The curriculum is ISO 9001:2015 certified.",
+    },
+    {
+      question: "Do you help trainees find jobs?",
+      answer: "Yes. Trainees get job placement assistance through Med Gold partner hospital tie-ups.",
+    },
+    {
+      question: "How can a hospital book an on-site training cohort?",
+      answer:
+        "Use the hospital assessment request on this page or contact us. We start with a ward walkthrough and a skill baseline of your aides, then plan the cohort around your shift rosters.",
+    },
+  ],
+} as const;

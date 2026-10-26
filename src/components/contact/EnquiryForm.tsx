@@ -1,21 +1,33 @@
 "use client";
 
-import { useEffect, useState, useTransition, type ChangeEvent, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition, type ChangeEvent, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, Loader2, RotateCcw, Send } from "lucide-react";
-import { submitEnquiry } from "@@/app/(site)/contact-us/actions";
+import { getEnquiryToken, submitEnquiry } from "@@/app/(site)/contact-us/actions";
+import Turnstile from "@@/components/contact/Turnstile";
 import SubmittingOverlay from "@@/components/common/SubmittingOverlay";
 import { Button } from "@@/components/ui/button";
 import { enquiryTypes } from "@@/data/contact";
 import {
+  ENQUIRY_EMAIL_MAX,
+  ENQUIRY_MESSAGE_MAX,
   ENQUIRY_MESSAGE_MIN,
+  ENQUIRY_NAME_MAX,
+  ENQUIRY_PHONE_MAX,
   validateEnquiry,
   type EnquiryErrors,
   type EnquiryField,
   type EnquiryValues,
 } from "@@/lib/enquiry";
-import { HONEYPOT_FIELD, MAIL_FAILURE_MESSAGE } from "@@/lib/form-action";
-import { clearDraft, rememberForm, saveDraft, takeDraft, thankYouUrl } from "@@/lib/thank-you";
+import { HONEYPOT_FIELD, TOKEN_FIELD } from "@@/lib/form-action";
+import {
+  clearDraft,
+  rememberForm,
+  saveDraft,
+  takeDraft,
+  thankYouUrl,
+  type SubmitStatus,
+} from "@@/lib/thank-you";
 import { cn } from "@@/lib/utils";
 
 const EMPTY: EnquiryValues = { name: "", phone: "", email: "", type: "", message: "" };
@@ -35,10 +47,24 @@ export default function EnquiryForm() {
   const [values, setValues] = useState<EnquiryValues>(EMPTY);
   const [errors, setErrors] = useState<EnquiryErrors>({});
   const [showSummary, setShowSummary] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
   const [restored, setRestored] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [token, setToken] = useState("");
+  const [serverError, setServerError] = useState("");
+  const [captchaReset, setCaptchaReset] = useState(0);
+  const statusRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  // The signed render token comes from a server action, so the page itself stays static.
+  const refreshToken = useCallback(() => {
+    getEnquiryToken()
+      .then(setToken)
+      .catch(() => setToken(""));
+  }, []);
+
+  useEffect(() => {
+    refreshToken();
+  }, [refreshToken]);
 
   useEffect(() => {
     const draft = takeDraft<EnquiryValues>("enquiry");
@@ -72,31 +98,37 @@ export default function EnquiryForm() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitError(null);
     if (showErrors(validateEnquiry(values))) {
       return;
     }
 
+    setServerError("");
     const formData = new FormData(event.currentTarget);
     startTransition(async () => {
+      let status: SubmitStatus = "failed";
       try {
         const result = await submitEnquiry(formData);
-        if (!result.ok) {
-          if (result.fieldErrors && showErrors(result.fieldErrors)) {
-            return;
-          }
-          saveDraft("enquiry", values);
-          setSubmitError(result.error || MAIL_FAILURE_MESSAGE);
+        if (!result.ok && result.fieldErrors && showErrors(result.fieldErrors)) {
           return;
         }
+        if (!result.ok && (result.code === "expired" || result.code === "rate-limited" || result.code === "verification")) {
+          if (result.code === "expired") refreshToken();
+          setCaptchaReset((n) => n + 1);
+          setServerError(result.error);
+          requestAnimationFrame(() => statusRef.current?.focus());
+          return;
+        }
+        status = result.ok ? "success" : "failed";
       } catch {
-        saveDraft("enquiry", values);
-        setSubmitError(MAIL_FAILURE_MESSAGE);
-        return;
+        status = "failed";
       }
-      clearDraft("enquiry");
+      if (status === "success") {
+        clearDraft("enquiry");
+      } else {
+        saveDraft("enquiry", values);
+      }
       rememberForm("enquiry");
-      router.push(thankYouUrl("success"));
+      router.push(thankYouUrl(status));
     });
   };
 
@@ -137,7 +169,7 @@ export default function EnquiryForm() {
       onSubmit={onSubmit}
       aria-labelledby="enquiry-heading"
       aria-busy={isPending || undefined}
-      className="relative rounded-lg border border-border-muted bg-surface p-6 shadow-card sm:p-8"
+      className="relative scroll-mt-28 rounded-lg border border-border-muted bg-surface p-6 shadow-card sm:p-8"
     >
       <SubmittingOverlay open={isPending} title="Sending your enquiry..." />
       <h2 id="enquiry-heading" className="text-2xl font-bold">
@@ -158,24 +190,26 @@ export default function EnquiryForm() {
         </p>
       ) : null}
 
-      {submitError ? (
-        <p
+      {serverError ? (
+        <div
+          ref={statusRef}
           role="alert"
-          className="mt-6 rounded-md border border-destructive/40 bg-destructive/5 p-4 text-sm font-medium text-destructive"
+          tabIndex={-1}
+          className="mt-6 scroll-mt-28 rounded-md border border-destructive/40 bg-destructive/5 p-4 font-semibold text-destructive focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
         >
-          {submitError}
-        </p>
+          {serverError}
+        </div>
       ) : null}
 
       {showSummary && errorList.length > 0 && (
-        <div role="alert" className="mt-6 rounded-md border border-destructive/40 bg-destructive/5 p-4">
+        <div role="alert" className="mt-6 scroll-mt-28 rounded-md border border-destructive/40 bg-destructive/5 p-4">
           <p className="font-semibold text-destructive">
             Please fix {errorList.length === 1 ? "1 problem" : `${errorList.length} problems`}:
           </p>
-          <ul className="mt-2 list-disc pl-5 text-sm">
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
             {errorList.map((field) => (
               <li key={field}>
-                <a href={`#enquiry-${field}`} className="text-destructive underline underline-offset-2">
+                <a href={`#enquiry-${field}`} className="inline-flex min-h-6 items-center py-0.5 text-destructive underline underline-offset-2">
                   {LABELS[field]}: {errors[field]}
                 </a>
               </li>
@@ -186,25 +220,14 @@ export default function EnquiryForm() {
 
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor={HONEYPOT_FIELD}>Leave this field empty</label>
-        <input
-          id={HONEYPOT_FIELD}
-          name={HONEYPOT_FIELD}
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          autoCapitalize="off"
-          autoCorrect="off"
-          spellCheck={false}
-          data-1p-ignore="true"
-          data-lpignore="true"
-          data-form-type="other"
-        />
+        <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" />
       </div>
+      <input type="hidden" name={TOKEN_FIELD} value={token} readOnly />
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
           {label("name", true)}
-          <input type="text" autoComplete="name" aria-required="true" {...fieldProps("name")} />
+          <input type="text" autoComplete="name" aria-required="true" maxLength={ENQUIRY_NAME_MAX} {...fieldProps("name")} />
           {fieldError("name")}
         </div>
 
@@ -216,6 +239,7 @@ export default function EnquiryForm() {
             autoComplete="tel-national"
             placeholder="98765 43210"
             aria-required="true"
+            maxLength={ENQUIRY_PHONE_MAX}
             {...fieldProps("phone")}
           />
           {fieldError("phone")}
@@ -228,6 +252,7 @@ export default function EnquiryForm() {
             autoComplete="email"
             placeholder="name@example.com"
             aria-required="true"
+            maxLength={ENQUIRY_EMAIL_MAX}
             {...fieldProps("email")}
           />
           {fieldError("email")}
@@ -281,6 +306,7 @@ export default function EnquiryForm() {
           <textarea
             rows={5}
             aria-required="true"
+            maxLength={ENQUIRY_MESSAGE_MAX}
             {...fieldProps("message")}
             aria-describedby={`enquiry-message-hint enquiry-message-count${errors.message ? " enquiry-message-error" : ""}`}
             className={cn(controlClass, "resize-y")}
@@ -289,8 +315,10 @@ export default function EnquiryForm() {
         </div>
       </div>
 
+      <Turnstile resetKey={captchaReset} />
+
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-ink-subtle">We&apos;ll email you a copy of your enquiry.</p>
+        <p className="text-sm text-ink-subtle">We&apos;ll reply to the email address you give us.</p>
         <Button type="submit" size="lg" disabled={isPending} className="hover:bg-primary-deep">
           {isPending ? (
             <Loader2 className="animate-spin motion-reduce:animate-none" aria-hidden="true" />

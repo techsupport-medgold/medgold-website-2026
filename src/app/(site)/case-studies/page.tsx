@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteSchema from "@@/components/common/SiteSchema";
 import Link from "next/link";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import { NOINDEX_FOLLOW } from "@@/config/indexing";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function CaseStudiesPage() {
   return (
     <>
+      <SiteSchema />
       <Breadcrumb current="Case Studies" path={Routes.CASE_STUDIES} />
       <section aria-labelledby="case-studies-heading" className="py-20 sm:py-24">
         <div className="container max-w-3xl">

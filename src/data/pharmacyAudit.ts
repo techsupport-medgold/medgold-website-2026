@@ -2,7 +2,7 @@
 export const PHARMACY_AUDIT_SEO = {
   title: "Pharmacy Stock Audit & Profit Consulting",
   description:
-    "We help hospital and retail pharmacies eliminate dead stock, halt expiry leakage, enforce SOPs and KPI/KRA frameworks, and build high-profit operations.",
+    "We help hospital and retail pharmacies eliminate dead stock, halt expiry leakage, enforce SOPs and KPI/KRA frameworks and build high-profit operations.",
 };
 
 export const breadcrumb = {
@@ -274,3 +274,44 @@ export const booking = {
   confidentiality: "Complete business confidentiality assured. Strict NDA guaranteed.",
   cta: "Book Diagnostic Consultation",
 };
+
+export const PHARMACY_AUDIT_SERVICE = {
+  name: "Pharmacy Stock Audit & Profit Consulting",
+  serviceType: "Pharmacy stock audit and business consulting",
+} as const;
+
+export const overview = {
+  eyebrow: "Service overview",
+  heading: "About Our Pharmacy Stock Audit & Growth Services",
+  paragraphs: [
+    "Med Gold Healthcare helps hospital pharmacies and retail pharmacies find the profit they are losing to dead stock, expired medicines and weak daily systems. Many owners track sales closely but cannot see the leakage behind them: capital tied up in slow moving inventory, missed return-to-vendor deadlines, unbilled items, uneven shifts and purchase plans that over-order non-essentials while high-demand staples run out.",
+    "Every engagement follows our five-step transformation framework. It starts with a pharmacy health check that covers operations, inventory turnover, purchase patterns, sales, margin leakage and working capital. A full stock audit with 100% physical verification follows, along with expiry management, dead stock identification and A/B/C analysis of fast moving products. We then put standard operating procedures in place for purchasing, sales and customer handling, billing and cash counter audits, storage and cold-chain maintenance and statutory compliance.",
+    "Next come clear KPI and KRA frameworks. Owner KPIs track revenue growth, gross margin, net profit and inventory turnover. Staff KPIs track sales productivity, customer service, stock accuracy, attendance and discipline. The final step is a growth strategy that can include new wellness lines, generic conversion, product mix optimization, local digital outreach, customer refill loyalty and multi-outlet planning. Throughout the engagement we analyze, strategize, implement, monitor and improve, so the new systems run without depending on the owner being present every day. All business information is handled under a strict NDA.",
+  ],
+  faqHeading: "Pharmacy audit FAQs",
+  faqs: [
+    {
+      question: "Which pharmacies do you work with?",
+      answer: "We work with hospital pharmacies and community or retail pharmacies. Med Gold has consulted for more than 100 pharmacies.",
+    },
+    {
+      question: "What does the stock audit include?",
+      answer:
+        "It includes 100% physical stock verification, expiry management with early alerts, dead stock identification and returns, A/B/C analysis of fast moving products and steps to improve inventory turnover.",
+    },
+    {
+      question: "How long does the first diagnostic take?",
+      answer:
+        "Our rapid diagnostic audit is completed in under 48 hours. It gives you a clear view of stock, purchasing and margin leakage before the full engagement begins.",
+    },
+    {
+      question: "Will the audit disrupt daily operations?",
+      answer:
+        "No. Our consulting approach is designed to install systems with zero operational downtime, so your counter keeps serving customers during the audit.",
+    },
+    {
+      question: "Is our business data kept confidential?",
+      answer: "Yes. Complete business confidentiality is assured and a strict NDA is signed before the work starts.",
+    },
+  ],
+} as const;

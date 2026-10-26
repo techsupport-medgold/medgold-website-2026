@@ -6,6 +6,7 @@ import {
   applicationCompanyEmail,
   enquiryAcknowledgementEmail,
   enquiryCompanyEmail,
+  EMAIL_LOGO_PLATE,
   escapeHtml,
 } from "@@/lib/email-templates";
 
@@ -44,11 +45,11 @@ describe("email layout", () => {
     enquiryAcknowledgementEmail(enquiry),
   ];
 
-  it("shows the centred inline logo in every template", () => {
+  it("shows the centred light-plate logo in every template", () => {
     for (const email of emails()) {
-      expect(email.html).toContain('src="cid:medgold-logo"');
+      expect(email.html).toContain(`src="${EMAIL_LOGO_PLATE.src}"`);
       expect(email.html).toContain('alt="MedGold Healthcare"');
-      expect(email.html).toMatch(/<td align="center"[^>]*>\s*<img src="cid:medgold-logo"/);
+      expect(email.html).toMatch(/<td class="x-header" align="center"[^>]*>\s*<img src="https:\/\/medgoldhealthcare\.com\//);
     }
   });
 
@@ -116,5 +117,46 @@ describe("enquiry emails", () => {
     const email = enquiryAcknowledgementEmail(enquiry);
     expect(email.subject).toBe("We received your enquiry - MedGold Healthcare");
     expect(email.text).toContain("Your message: Please share the next batch dates.");
+  });
+});
+
+describe("dark/light-safe email layout", () => {
+  const sample: EnquiryValues = {
+    name: "Priya Raman",
+    phone: "98765 43210",
+    email: "priya@example.com",
+    type: "Appointment",
+    message: `Hi <b>team</b> & "friends"\nSecond line`,
+  };
+  const { html, text } = enquiryCompanyEmail(sample);
+
+  it("declares light and dark colour schemes with Outlook rules", () => {
+    expect(html).toContain('<meta name="color-scheme" content="light dark">');
+    expect(html).toContain('<meta name="supported-color-schemes" content="light dark">');
+    expect(html).toContain(":root{color-scheme:light dark;");
+    expect(html).toContain("@media (prefers-color-scheme: dark)");
+    expect(html).toContain("[data-ogsc]");
+    expect(html).toContain("[data-ogsb]");
+  });
+  it("uses the light-plate logo by absolute https URL with size and alt", () => {
+    expect(EMAIL_LOGO_PLATE.src).toBe("https://medgoldhealthcare.com/images/email/medgold-logo-plate.png");
+    expect(html).toContain(`src="${EMAIL_LOGO_PLATE.src}" width="240" height="100" alt="MedGold Healthcare"`);
+    expect(html).not.toContain("cid:medgold-logo");
+  });
+  it("uses presentation tables", () => {
+    expect(html).toContain('role="presentation"');
+  });
+  it("escapes user input and keeps line breaks", () => {
+    expect(html).toContain("Hi &lt;b&gt;team&lt;/b&gt; &amp; &quot;friends&quot;<br>Second line");
+  });
+  it("has a plain-text part with the message and no tags", () => {
+    expect(text).toContain("Second line");
+    expect(text).not.toMatch(/<\/?(p|td|table|br|a)\b/i);
+  });
+  it("renders the auto-reply subject and body", () => {
+    const reply = enquiryAcknowledgementEmail(sample);
+    expect(reply.subject).toBe("We received your enquiry - MedGold Healthcare");
+    expect(reply.html).toContain("Thank you, Priya Raman");
+    expect(reply.html).toContain("prefers-color-scheme: dark");
   });
 });

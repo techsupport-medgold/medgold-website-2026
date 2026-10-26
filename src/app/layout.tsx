@@ -2,9 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "@@/styles/globals.scss";
 import Analytics, { AnalyticsNoScript, gtmSnippet } from "@@/components/common/Analytics";
-import JsonLd from "@@/components/common/JsonLd";
 import { BRAND_COLORS, GTM_ID, SITE, SITE_URL } from "@@/config/site";
-import { organizationSchema, websiteSchema } from "@@/lib/schema";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -89,8 +87,6 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <AnalyticsNoScript />
         {children}
-        <JsonLd id="organization-schema" data={organizationSchema} />
-        <JsonLd id="website-schema" data={websiteSchema} />
         <Analytics />
       </body>
     </html>
