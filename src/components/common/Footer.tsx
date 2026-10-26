@@ -114,11 +114,11 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-border-muted">
-        <div className="container flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="py-2 text-sm text-ink-muted">
+        <div className="container grid gap-1 py-3 sm:grid-cols-3 sm:items-center">
+          <p className="py-2 text-sm text-ink-muted sm:justify-self-start">
             &copy; {SITE.launchYear} {SITE.legalName}. All rights reserved.
           </p>
-          <nav aria-label="Legal">
+          <nav aria-label="Legal" className="sm:justify-self-center">
             <ul className="flex flex-wrap gap-x-6">
               {LEGAL_NAV.map((item) => (
                 <li key={item.href}>
@@ -129,6 +129,18 @@ export default function Footer() {
               ))}
             </ul>
           </nav>
+          <p className="text-sm text-ink-muted sm:justify-self-end">
+            Technology partner{" "}
+            <a
+              href="https://lasmind.com/"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              className="inline-flex min-h-6 min-w-6 items-center font-semibold text-primary-deep underline decoration-1 underline-offset-4 transition-colors hover:text-primary"
+            >
+              LasMind
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </p>
         </div>
       </div>
     </footer>
