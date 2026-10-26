@@ -12,26 +12,12 @@ import Breadcrumb from "@@/components/common/Breadcrumb";
 import JsonLd from "@@/components/common/JsonLd";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { Routes } from "@@/config/routes";
-import { SITE } from "@@/config/site";
 import { ABOUT_SEO, cta } from "@@/data/about";
 
 export const metadata: Metadata = {
   title: ABOUT_SEO.title,
   description: ABOUT_SEO.description,
   alternates: { canonical: Routes.ABOUT },
-  openGraph: {
-    title: `${ABOUT_SEO.title} | ${SITE.name}`,
-    description: ABOUT_SEO.description,
-    url: Routes.ABOUT,
-    siteName: SITE.name,
-    locale: SITE.locale,
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${ABOUT_SEO.title} | ${SITE.name}`,
-    description: ABOUT_SEO.description,
-  },
 };
 
 export default function AboutPage() {

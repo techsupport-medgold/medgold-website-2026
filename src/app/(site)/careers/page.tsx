@@ -3,6 +3,7 @@ import SiteSchema from "@@/components/common/SiteSchema";
 import { GraduationCap, HeartHandshake, TrendingUp } from "lucide-react";
 import ApplicationForm from "@@/components/careers/ApplicationForm";
 import Breadcrumb from "@@/components/common/Breadcrumb";
+import PageSchema from "@@/components/common/PageSchema";
 import Card from "@@/components/ui/card";
 import Reveal from "@@/components/ui/reveal";
 import { Routes } from "@@/config/routes";
@@ -20,6 +21,7 @@ export default function CareersPage() {
   return (
     <>
       <SiteSchema />
+      <PageSchema path={Routes.CAREERS} name={CAREERS_SEO.title} description={CAREERS_SEO.description} />
       <Breadcrumb current="Careers" path={Routes.CAREERS} />
       <section aria-labelledby="careers-heading" className="brand-wash py-16 sm:py-20">
         <div className="container max-w-3xl">

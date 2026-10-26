@@ -36,7 +36,13 @@ export default function NursingTrainingPage() {
       <SiteSchema />
       <JsonLd
         id="service-schema"
-        data={serviceSchema({ url: PAGE_URL, name: NURSING_TRAINING_SERVICE.name, serviceType: NURSING_TRAINING_SERVICE.serviceType, description: NURSING_TRAINING_SEO.description, areaServed: NURSING_TRAINING_SERVICE.areaServed })}
+        data={serviceSchema({
+          url: PAGE_URL,
+          name: NURSING_TRAINING_SERVICE.name,
+          serviceType: NURSING_TRAINING_SERVICE.serviceType,
+          description: NURSING_TRAINING_SEO.description,
+          areaServed: NURSING_TRAINING_SERVICE.areaServed,
+        })}
       />
       <JsonLd id="faq-schema" data={faqPageSchema(PAGE_URL, overview.faqs)} />
       <Breadcrumb path={Routes.NURSING_TRAINING} current={breadcrumb.current} />

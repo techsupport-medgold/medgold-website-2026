@@ -37,7 +37,12 @@ export default function PharmacyAuditPage() {
       <SiteSchema />
       <JsonLd
         id="service-schema"
-        data={serviceSchema({ url: PAGE_URL, name: PHARMACY_AUDIT_SERVICE.name, serviceType: PHARMACY_AUDIT_SERVICE.serviceType, description: PHARMACY_AUDIT_SEO.description })}
+        data={serviceSchema({
+          url: PAGE_URL,
+          name: PHARMACY_AUDIT_SERVICE.name,
+          serviceType: PHARMACY_AUDIT_SERVICE.serviceType,
+          description: PHARMACY_AUDIT_SEO.description,
+        })}
       />
       <JsonLd id="faq-schema" data={faqPageSchema(PAGE_URL, overview.faqs)} />
       <Breadcrumb path={Routes.PHARMACY_AUDIT} current={breadcrumb.current} />

@@ -24,13 +24,13 @@ const contactList: LegalListItem[] = [
 ];
 
 export const PRIVACY_SEO = {
-  title: "Privacy Policy",
+  title: "Privacy at MedGold Healthcare in Chennai",
   description:
     "Read MedGold Healthcare's Privacy Policy to learn how we collect, use, protect, and share personal and health data across our healthcare services.",
 };
 
 export const TERMS_SEO = {
-  title: "Terms & Conditions",
+  title: "Terms of Service for MedGold Healthcare",
   description:
     "Review MedGold Healthcare's Terms & Conditions governing use of our website and services, including pharmacy audit, staffing, training, and feedback systems.",
 };

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { NOINDEX_PATHS } from "@@/config/indexing";
 import { absoluteUrl } from "@@/config/site";
 import { Routes } from "@@/config/routes";
 
@@ -27,6 +28,12 @@ export const ROUTES: SitemapRoute[] = [
   { path: Routes.PRIVACY, lastModified: "2026-10-11", priority: 0.3, changeFrequency: "yearly" },
   { path: Routes.TERMS, lastModified: "2026-10-11", priority: 0.3, changeFrequency: "yearly" },
 ];
+
+const NOINDEX = new Set<string>(NOINDEX_PATHS);
+
+if (ROUTES.some((route) => NOINDEX.has(route.path))) {
+  throw new Error("Sitemap includes a noindex path. Remove it from ROUTES.");
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return ROUTES.map(({ path, lastModified, priority, changeFrequency }) => ({

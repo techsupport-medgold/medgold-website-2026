@@ -34,15 +34,8 @@ import {
   type ApplicationField,
   type ApplicationValues,
 } from "@@/lib/application";
-import { HONEYPOT_FIELD } from "@@/lib/form-action";
-import {
-  clearDraft,
-  rememberForm,
-  saveDraft,
-  takeDraft,
-  thankYouUrl,
-  type SubmitStatus,
-} from "@@/lib/thank-you";
+import { HONEYPOT_FIELD, MAIL_FAILURE_MESSAGE } from "@@/lib/form-action";
+import { clearDraft, rememberForm, saveDraft, takeDraft, thankYouUrl } from "@@/lib/thank-you";
 import { cn } from "@@/lib/utils";
 
 type FormField = ApplicationField | "resume";
@@ -90,6 +83,7 @@ export default function ApplicationForm() {
   const [isDragging, setIsDragging] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [showSummary, setShowSummary] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [restored, setRestored] = useState(false);
   const [isPending, startTransition] = useTransition();
   const resumeInputRef = useRef<HTMLInputElement>(null);
@@ -153,6 +147,7 @@ export default function ApplicationForm() {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSubmitError(null);
     const resumeError = validateResume(resume);
     const nextErrors: FormErrors = { ...validateApplication(values), ...(resumeError ? { resume: resumeError } : {}) };
     if (showErrors(nextErrors) || !resume) {
@@ -163,23 +158,24 @@ export default function ApplicationForm() {
     formData.set("resume", resume);
 
     startTransition(async () => {
-      let status: SubmitStatus = "failed";
       try {
         const result = await submitApplication(formData);
-        if (!result.ok && result.fieldErrors && showErrors(result.fieldErrors)) {
+        if (!result.ok) {
+          if (result.fieldErrors && showErrors(result.fieldErrors)) {
+            return;
+          }
+          saveDraft("application", values);
+          setSubmitError(result.error || MAIL_FAILURE_MESSAGE);
           return;
         }
-        status = result.ok ? "success" : "failed";
       } catch {
-        status = "failed";
-      }
-      if (status === "success") {
-        clearDraft("application");
-      } else {
         saveDraft("application", values);
+        setSubmitError(MAIL_FAILURE_MESSAGE);
+        return;
       }
+      clearDraft("application");
       rememberForm("application");
-      router.push(thankYouUrl(status));
+      router.push(thankYouUrl("success"));
     });
   };
 
@@ -278,6 +274,15 @@ export default function ApplicationForm() {
         </p>
       ) : null}
 
+      {submitError ? (
+        <p
+          role="alert"
+          className="mt-6 rounded-md border border-destructive/40 bg-destructive/5 p-4 text-sm font-medium text-destructive"
+        >
+          {submitError}
+        </p>
+      ) : null}
+
       {showSummary && errorList.length > 0 && (
         <div role="alert" className="mt-6 rounded-md border border-destructive/40 bg-destructive/5 p-4">
           <p className="font-semibold text-destructive">
@@ -297,7 +302,19 @@ export default function ApplicationForm() {
 
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor={HONEYPOT_FIELD}>Leave this field empty</label>
-        <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" />
+        <input
+          id={HONEYPOT_FIELD}
+          name={HONEYPOT_FIELD}
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck={false}
+          data-1p-ignore="true"
+          data-lpignore="true"
+          data-form-type="other"
+        />
       </div>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">

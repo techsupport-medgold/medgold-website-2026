@@ -1,3 +1,4 @@
+import { experienceLevels, positions } from "@@/data/careers";
 import { normalizeIndianMobile } from "@@/lib/enquiry";
 
 export type ApplicationValues = {
@@ -15,6 +16,8 @@ export type ApplicationField = keyof ApplicationValues;
 export type ApplicationErrors = Partial<Record<ApplicationField, string>>;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const POSITIONS = new Set<string>(positions);
+const EXPERIENCE_LEVELS = new Set<string>(experienceLevels);
 
 export function validateApplication(values: ApplicationValues): ApplicationErrors {
   const errors: ApplicationErrors = {};
@@ -32,10 +35,10 @@ export function validateApplication(values: ApplicationValues): ApplicationError
   } else if (!EMAIL_PATTERN.test(values.email.trim())) {
     errors.email = "Enter a valid email address, for example name@example.com.";
   }
-  if (!values.position) {
+  if (!values.position || !POSITIONS.has(values.position)) {
     errors.position = "Choose the position you are applying for.";
   }
-  if (!values.experience) {
+  if (!values.experience || !EXPERIENCE_LEVELS.has(values.experience)) {
     errors.experience = "Choose your years of experience.";
   }
   if (values.qualification.trim().length < 2) {
@@ -68,6 +71,13 @@ export function validateResume(file: ResumeFile | null | undefined): string | nu
     return `Your resume is ${formatFileSize(file.size)}. Upload a file of 4 MB or less.`;
   }
   return null;
+}
+
+/** Drops path segments and header characters from an uploaded file name. */
+export function safeAttachmentName(fileName: string): string {
+  const base = fileName.split(/[/\\]/).pop() ?? "";
+  const cleaned = base.replace(/[^\w.\- ()]+/g, "").replace(/^\.+/, "").slice(0, 120);
+  return cleaned || "resume";
 }
 
 export function resumeContentType(fileName: string): string | null {

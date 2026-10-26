@@ -4,6 +4,7 @@ import {
   buildApplicationMessage,
   formatFileSize,
   resumeContentType,
+  safeAttachmentName,
   validateApplication,
   validateResume,
   type ApplicationValues,
@@ -39,6 +40,11 @@ describe("validateApplication", () => {
     expect(Object.keys(errors).sort()).toEqual(["email", "experience", "name", "phone", "position", "qualification"]);
   });
 
+  it("rejects a position or experience level that is not on the form", () => {
+    expect(validateApplication({ ...valid, position: "CEO of everything" }).position).toBeDefined();
+    expect(validateApplication({ ...valid, experience: "100 years" }).experience).toBeDefined();
+  });
+
   it("rejects an invalid mobile number and an invalid email", () => {
     const errors = validateApplication({ ...valid, phone: "12345", email: "not-an-email" });
     expect(errors.phone).toBeDefined();
@@ -61,6 +67,12 @@ describe("validateResume", () => {
   it("rejects other file types and files over 4 MB", () => {
     expect(validateResume({ name: "photo.jpg", size: 1024 })).toContain("PDF, DOC or DOCX");
     expect(validateResume({ name: "cv.pdf", size: RESUME_MAX_BYTES + 1 })).toContain("4 MB or less");
+  });
+
+  it("strips path and header characters from a resume file name", () => {
+    expect(safeAttachmentName("../../secret.pdf")).toBe("secret.pdf");
+    expect(safeAttachmentName("cv.pdf\r\nBcc: evil@example.com")).toBe("cv.pdfBcc evilexample.com");
+    expect(safeAttachmentName("...")).toBe("resume");
   });
 
   it("maps extensions to content types", () => {

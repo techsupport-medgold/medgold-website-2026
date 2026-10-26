@@ -46,17 +46,12 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: SITE.title,
-    description: SITE.description,
-    url: "/",
     siteName: SITE.name,
     locale: SITE.locale,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE.title,
-    description: SITE.description,
   },
   formatDetection: {
     telephone: false,

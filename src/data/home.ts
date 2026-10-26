@@ -5,8 +5,9 @@ import { absoluteUrl } from "@@/config/site";
 export const HOME_PAGE_URL = absoluteUrl(Routes.HOME);
 
 export const HOME_SEO = {
-  title: "Hospital Consultant in Chennai India | Operations & Management Consultancy Services",
-  description: "MedGold Healthcare offers hospital consultancy services in Chennai India for 360 Operation Excellence and Management",
+  title: "Hospital Consultant in Chennai India | Ops Management",
+  description:
+    "MedGold Healthcare offers hospital consultancy services in Chennai India for operations excellence, management, staffing audits, and NABH-aligned support.",
 };
 
 export const homeHero = {

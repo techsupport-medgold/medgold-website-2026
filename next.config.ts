@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
+import { NOINDEX_PATHS } from "./src/config/indexing";
 import { Routes } from "./src/config/routes";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://medgold.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://medgoldhealthcare.com";
 const apexHost = new URL(siteUrl).host.replace(/^www\./, "");
 
 const nextConfig: NextConfig = {
@@ -53,11 +54,28 @@ const nextConfig: NextConfig = {
               ],
             },
           ]),
+      ...NOINDEX_PATHS.map((source) => ({
+        source,
+        headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      })),
       // Generated image, icon and manifest routes are assets, not pages: keep them
       // crawlable (so pages can reference them) but out of the search index.
       ...["/opengraph-image(.*)", "/twitter-image(.*)", "/icon(.*)", "/apple-icon(.*)", "/manifest.webmanifest"].map(
         (source) => ({ source, headers: [{ key: "X-Robots-Tag", value: "noindex" }] }),
       ),
+      ...(process.env.NODE_ENV === "development"
+        ? []
+        : [
+            {
+              source: "/images/:path*",
+              headers: [
+                {
+                  key: "Cache-Control",
+                  value: "public, max-age=86400, stale-while-revalidate=604800",
+                },
+              ],
+            },
+          ]),
       {
         source: "/(.*)",
         headers: [

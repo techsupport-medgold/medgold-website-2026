@@ -7,6 +7,7 @@ import GrowthProcess from "@@/components/branding/GrowthProcess";
 import GrowthServices from "@@/components/branding/GrowthServices";
 import WhyChooseSection from "@@/components/branding/WhyChooseSection";
 import Breadcrumb from "@@/components/common/Breadcrumb";
+import PageSchema from "@@/components/common/PageSchema";
 import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { BRANDING_PAGE_URL, BRANDING_SEO, breadcrumb, cta } from "@@/data/branding";
@@ -21,6 +22,7 @@ export default function BrandingServicePage() {
   return (
     <>
       <SiteSchema />
+      <PageSchema path={BRANDING_PAGE_URL} name={BRANDING_SEO.title} description={BRANDING_SEO.description} />
       <Breadcrumb path={Routes.BRANDING} current={breadcrumb.current} />
       <BrandingHero />
       <EcosystemBanner />
