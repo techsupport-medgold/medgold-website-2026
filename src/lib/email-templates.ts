@@ -2,7 +2,7 @@ import { Routes } from "@@/config/routes";
 import { SITE, absoluteUrl } from "@@/config/site";
 import { THANK_YOU_CONTENT } from "@@/data/thankYou";
 import { formatFileSize, type ApplicationValues } from "@@/lib/application";
-import { EMAIL_BANNER, EMAIL_LOGO } from "@@/lib/email-assets";
+import { EMAIL_BANNER } from "@@/lib/email-assets";
 import { normalizeIndianMobile, type EnquiryValues } from "@@/lib/enquiry";
 
 export type EmailContent = { subject: string; html: string; text: string };
@@ -19,6 +19,45 @@ const COLORS = {
   border: "#E5E7EB",
 };
 const SITE_LINK = SITE.url;
+
+/**
+ * Email clients invert backgrounds but never images, so the logo is baked onto a light plate
+ * (public/images/email/medgold-logo-plate.png, 480x200 shown at 240x100) and loaded from the
+ * production domain. It only shows in inboxes after it is deployed.
+ */
+export const EMAIL_ASSET_ORIGIN = (process.env.EMAIL_ASSET_ORIGIN?.trim() || "https://medgoldhealthcare.com").replace(/\/$/, "");
+export const EMAIL_LOGO_PLATE = {
+  src: `${EMAIL_ASSET_ORIGIN}/images/email/medgold-logo-plate.png`,
+  width: 240,
+  height: 100,
+} as const;
+
+const DARK = { bg: "#0F172A", header: "#1E293B", card: "rgba(248,250,252,.06)", text: "#F8FAFC", muted: "#CBD5E1", link: "#93C5FD" };
+const HOOKS: Array<[string, string]> = [
+  ["x-bg", `background-color:${DARK.bg} !important;`],
+  ["x-container", `background-color:${DARK.bg} !important;`],
+  ["x-header", `background-color:${DARK.header} !important;`],
+  ["x-card", `background-color:${DARK.card} !important;`],
+  ["x-text", `color:${DARK.text} !important;`],
+  ["x-muted", `color:${DARK.muted} !important;`],
+  ["x-link", `color:${DARK.link} !important;`],
+];
+const DARK_RULES = HOOKS.map(([cls, rule]) => `.${cls}{${rule}}`).join("");
+const OUTLOOK_RULES = HOOKS.map(([cls, rule]) => `[data-ogs${rule.startsWith("color") ? "c" : "b"}] .${cls}{${rule}}`).join("");
+
+export const EMAIL_HEAD_STYLE = `<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<style>
+:root{color-scheme:light dark;supported-color-schemes:light dark;}
+@media (prefers-color-scheme: dark){${DARK_RULES}}
+${OUTLOOK_RULES}
+@media (max-width:600px){.x-container{width:100% !important;}}
+</style>`;
+
+/** Escapes, then keeps the visitor's line breaks. */
+function escapeMultiline(value: string): string {
+  return escapeHtml(value).replace(/\r?\n/g, "<br>");
+}
 
 export function escapeHtml(value: string): string {
   return value
@@ -48,12 +87,12 @@ function detailsTable(rows: Row[]): string {
   const body = rows
     .map(
       ([label, value]) => `<tr>
-  <td style="padding:10px 12px;border-bottom:1px solid ${COLORS.border};color:${COLORS.muted};font-size:14px;width:38%;vertical-align:top;">${escapeHtml(label)}</td>
-  <td style="padding:10px 12px;border-bottom:1px solid ${COLORS.border};color:${COLORS.ink};font-size:14px;font-weight:600;white-space:pre-wrap;">${escapeHtml(value)}</td>
+  <td class="x-muted" style="padding:10px 12px;border-bottom:1px solid ${COLORS.border};color:${COLORS.muted};font-size:14px;width:38%;vertical-align:top;">${escapeHtml(label)}</td>
+  <td class="x-text" style="padding:10px 12px;border-bottom:1px solid ${COLORS.border};color:${COLORS.ink};font-size:14px;font-weight:600;">${escapeMultiline(value)}</td>
 </tr>`,
     )
     .join("");
-  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:${COLORS.surface};border-radius:8px;margin:20px 0;">${body}</table>`;
+  return `<table class="x-card" role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:${COLORS.surface};border-radius:8px;margin:20px 0;">${body}</table>`;
 }
 
 function detailsText(rows: Row[]): string {
@@ -61,7 +100,8 @@ function detailsText(rows: Row[]): string {
 }
 
 function button(href: string, label: string): string {
-  return `<a href="${escapeHtml(href)}" style="display:inline-block;background:${COLORS.primary};color:#ffffff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 20px;border-radius:8px;">${escapeHtml(label)}</a>`;
+  // Bulletproof button: a solid-colour table cell keeps its colour in light and dark mode.
+  return `<table role="presentation" cellpadding="0" cellspacing="0" style="display:inline-table;border-collapse:separate;"><tr><td bgcolor="${COLORS.primary}" style="background-color:${COLORS.primary};border-radius:8px;"><a href="${escapeHtml(href)}" style="display:inline-block;color:#ffffff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 20px;border-radius:8px;">${escapeHtml(label)}</a></td></tr></table>`;
 }
 
 type Banner = { cid: string; alt: string; width: number; height: number };
@@ -82,14 +122,16 @@ function layout({
   const footerLink = "color:#ffffff;text-decoration:underline;";
   return `<!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(heading)}</title></head>
-<body style="margin:0;padding:0;background:#EEF3F4;font-family:Arial,Helvetica,sans-serif;">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+${EMAIL_HEAD_STYLE}
+<title>${escapeHtml(heading)}</title></head>
+<body class="x-bg" style="margin:0;padding:0;background:#EEF3F4;font-family:Arial,Helvetica,sans-serif;">
 <div style="display:none;max-height:0;overflow:hidden;">${escapeHtml(preheader)}</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF3F4;padding:24px 12px;">
+<table class="x-bg" role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF3F4;padding:24px 12px;">
 <tr><td align="center">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;">
-<tr><td align="center" style="background:#ffffff;padding:24px 28px;border-top:4px solid ${COLORS.primary};border-bottom:4px solid ${COLORS.gold};text-align:center;">
-  <img src="cid:${EMAIL_LOGO.cid}" width="${EMAIL_LOGO.width}" height="${EMAIL_LOGO.height}" alt="${BRAND}" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;height:auto;max-width:100%;">
+<table class="x-container" role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;">
+<tr><td class="x-header" align="center" style="background:${COLORS.deep};padding:24px 28px;border-bottom:4px solid ${COLORS.gold};text-align:center;">
+  <img src="${EMAIL_LOGO_PLATE.src}" width="${EMAIL_LOGO_PLATE.width}" height="${EMAIL_LOGO_PLATE.height}" alt="${BRAND}" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;width:${EMAIL_LOGO_PLATE.width}px;height:auto;max-width:100%;">
 </td></tr>
 ${
   banner
@@ -98,14 +140,14 @@ ${
 </td></tr>
 `
     : ""
-}<tr><td style="padding:28px;color:${COLORS.ink};font-size:15px;line-height:1.6;">
+}<tr><td class="x-text" style="padding:28px;color:${COLORS.ink};font-size:15px;line-height:1.6;">
   ${
     eyebrow
-      ? `<p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${COLORS.goldInk};">${escapeHtml(eyebrow)}</p>
+      ? `<p class="x-muted" style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${COLORS.goldInk};">${escapeHtml(eyebrow)}</p>
   <div style="width:40px;height:3px;background:${COLORS.gold};border-radius:2px;margin:0 0 14px;"></div>
   `
       : ""
-  }<h1 style="margin:0 0 12px;font-size:22px;color:${COLORS.deep};">${escapeHtml(heading)}</h1>
+  }<h1 class="x-text" style="margin:0 0 12px;font-size:22px;color:${COLORS.deep};">${escapeHtml(heading)}</h1>
   ${body}
 </td></tr>
 <tr><td align="center" style="padding:22px 28px;background:${COLORS.deep};border-top:3px solid ${COLORS.gold};color:#D6E4E7;font-size:12px;line-height:1.7;text-align:center;">
@@ -133,7 +175,7 @@ function textFooter(): string {
 }
 
 function paragraph(text: string): string {
-  return `<p style="margin:0 0 12px;">${text}</p>`;
+  return `<p class="x-text" style="margin:0 0 12px;">${text}</p>`;
 }
 
 function applicationRows(values: ApplicationValues): Row[] {
@@ -251,7 +293,7 @@ export function applicationCandidateEmail(values: ApplicationValues): EmailConte
         encouragement ? pill(encouragement) : "",
         stepsPanel(content.stepsHeading ?? "What happens next", steps),
         `<p style="margin:0 0 20px;">${button(absoluteUrl(Routes.ABOUT), "Learn about us")}</p>`,
-        paragraph(`Questions in the meantime? Call us on <a href="tel:${SITE.contact.phoneHref}" style="color:${COLORS.primary};">${SITE.contact.phone}</a> or simply reply to this email.`),
+        paragraph(`Questions in the meantime? Call us on <a href="tel:${SITE.contact.phoneHref}" class="x-link" style="color:${COLORS.primary};">${SITE.contact.phone}</a> or simply reply to this email.`),
         paragraph(`Warm regards,<br><strong>The ${BRAND} team</strong>`),
       ].join(""),
     }),
@@ -334,7 +376,7 @@ export function enquiryAcknowledgementEmail(values: EnquiryValues): EmailContent
         paragraph(`Thank you for contacting ${BRAND}. Our team will review your enquiry and get back to you soon.`),
         paragraph("Here is a copy of what you sent us:"),
         detailsTable(rows),
-        paragraph(`Need us sooner? Call <a href="tel:${SITE.contact.phoneHref}" style="color:${COLORS.primary};">${SITE.contact.phone}</a> or simply reply to this email.`),
+        paragraph(`Need us sooner? Call <a href="tel:${SITE.contact.phoneHref}" class="x-link" style="color:${COLORS.primary};">${SITE.contact.phone}</a> or simply reply to this email.`),
         paragraph(`Warm regards,<br><strong>The ${BRAND} team</strong>`),
       ].join(""),
     }),

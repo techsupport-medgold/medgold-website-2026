@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { homeSchemaGraph } from "@@/lib/page-schemas";
 import { ClipboardCheck, FileCheck2, Handshake, Timer, type LucideIcon } from "lucide-react";
 import AdvantageSection from "@@/components/home/AdvantageSection";
 import HomeHero from "@@/components/home/HomeHero";
@@ -9,7 +10,6 @@ import JsonLd from "@@/components/common/JsonLd";
 import { Routes } from "@@/config/routes";
 import { SITE } from "@@/config/site";
 import { auditCta, HOME_PAGE_URL, HOME_SEO, type AuditBenefitIcon } from "@@/data/home";
-import { webPageSchema } from "@@/lib/schema";
 
 export const metadata: Metadata = {
   title: { absolute: HOME_SEO.title },
@@ -39,10 +39,7 @@ const AUDIT_ICONS: Record<AuditBenefitIcon, LucideIcon> = {
 export default function HomePage() {
   return (
     <>
-      <JsonLd
-        id="webpage-schema"
-        data={webPageSchema({ url: HOME_PAGE_URL, name: HOME_SEO.title, description: HOME_SEO.description })}
-      />
+      <JsonLd id="page-schema" data={homeSchemaGraph()} />
       <HomeHero />
       <TrustMetrics />
       <ServicePillars />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteSchema from "@@/components/common/SiteSchema";
 import LegalPage from "@@/components/legal/LegalPage";
 import { Routes } from "@@/config/routes";
 import { PRIVACY_LAST_UPDATED, PRIVACY_SEO, privacySections } from "@@/data/legal";
@@ -11,11 +12,14 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <LegalPage
-      title="Privacy Policy"
-      path={Routes.PRIVACY}
-      lastUpdated={PRIVACY_LAST_UPDATED}
-      sections={privacySections}
-    />
+    <>
+      <SiteSchema />
+      <LegalPage
+        title="Privacy Policy"
+        path={Routes.PRIVACY}
+        lastUpdated={PRIVACY_LAST_UPDATED}
+        sections={privacySections}
+      />
+    </>
   );
 }

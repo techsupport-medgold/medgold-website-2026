@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { contactSchemaGraph } from "@@/lib/page-schemas";
+import JsonLd from "@@/components/common/JsonLd";
 import { ExternalLink, Mail, MapPin, MessageCircle, Navigation, Phone, UserRound } from "lucide-react";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import EnquiryForm from "@@/components/contact/EnquiryForm";
@@ -19,7 +21,8 @@ const cardClass =
 export default function ContactPage() {
   return (
     <>
-      <Breadcrumb current="Contact Us" path={Routes.CONTACT} />
+      <JsonLd id="page-schema" data={contactSchemaGraph()} />
+      <Breadcrumb current="Contact Us" path={Routes.CONTACT} schema={false} />
       <section aria-labelledby="contact-page-heading" className="brand-wash">
         <div className="container pb-12 pt-16 sm:pb-16 sm:pt-20">
           <div className="max-w-2xl">

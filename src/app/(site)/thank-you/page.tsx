@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteSchema from "@@/components/common/SiteSchema";
 import { cookies } from "next/headers";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import StatusScreen from "@@/components/thank-you/StatusScreen";
@@ -28,6 +29,7 @@ export default async function ThankYouPage({ searchParams }: Props) {
 
   return (
     <>
+      <SiteSchema />
       <Breadcrumb current={status === "success" ? "Thank you" : "Not sent"} path={Routes.THANK_YOU} />
       <StatusScreen status={status} form={form} />
     </>

@@ -5,8 +5,8 @@ import { absoluteUrl } from "@@/config/site";
 export const HOME_PAGE_URL = absoluteUrl(Routes.HOME);
 
 export const HOME_SEO = {
-  title: "Hospital Operations Management and Maintenance Company",
-  description: "MedGold Healthcare offers hospital operations management and maintenance services in Chennai India",
+  title: "Hospital Consultant in Chennai India | Operations & Management Consultancy Services",
+  description: "MedGold Healthcare offers hospital consultancy services in Chennai India for 360 Operation Excellence and Management",
 };
 
 export const homeHero = {
@@ -14,6 +14,7 @@ export const homeHero = {
   intro:
     "From NABH-compliant clinical audits to clinical facility staffing, nursing aide upskilling, and digital medical records, we power healthcare continuity across Chennai and Kanchipuram with zero operational disruptions.",
   primaryCta: "Schedule Operations Audit",
+  careersCta: "Careers at Med Gold",
   compliance: ["NABH 5th Edition Aligned", "ISO 9001:2015 Clinical Quality", "BMWM 2016 Certification"],
   image: {
     src: "/images/home/home-hero.jpg",

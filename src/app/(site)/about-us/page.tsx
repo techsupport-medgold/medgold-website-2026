@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { aboutSchemaGraph } from "@@/lib/page-schemas";
 import { Send } from "lucide-react";
 import AboutHero from "@@/components/about/AboutHero";
 import ApproachSection from "@@/components/about/ApproachSection";
@@ -12,8 +13,7 @@ import JsonLd from "@@/components/common/JsonLd";
 import ServiceCta from "@@/components/services/ServiceCta";
 import { Routes } from "@@/config/routes";
 import { SITE } from "@@/config/site";
-import { ABOUT_PAGE_URL, ABOUT_SEO, cta } from "@@/data/about";
-import { webPageSchema } from "@@/lib/schema";
+import { ABOUT_SEO, cta } from "@@/data/about";
 
 export const metadata: Metadata = {
   title: ABOUT_SEO.title,
@@ -37,11 +37,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <JsonLd
-        id="webpage-schema"
-        data={webPageSchema({ url: ABOUT_PAGE_URL, name: ABOUT_SEO.title, description: ABOUT_SEO.description })}
-      />
-      <Breadcrumb current="About Us" path={Routes.ABOUT} />
+      <JsonLd id="page-schema" data={aboutSchemaGraph()} />
+      <Breadcrumb current="About Us" path={Routes.ABOUT} schema={false} />
       <AboutHero />
       <WhoWeAre />
       <TeamSection />

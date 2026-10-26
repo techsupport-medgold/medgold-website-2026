@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { staffingSchemaGraph } from "@@/lib/page-schemas";
+import JsonLd from "@@/components/common/JsonLd";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
@@ -19,7 +21,8 @@ export const metadata: Metadata = {
 export default function StaffingServicePage() {
   return (
     <>
-      <Breadcrumb path={Routes.STAFFING} current={breadcrumb.current} />
+      <JsonLd id="page-schema" data={staffingSchemaGraph()} />
+      <Breadcrumb path={Routes.STAFFING} current={breadcrumb.current} schema={false} />
       <StaffingHero />
       <StatsBar label="Staffing impact" stats={impactStats} />
       <DualValueSection />

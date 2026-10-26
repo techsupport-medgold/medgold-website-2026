@@ -88,3 +88,39 @@ export function breadcrumbSchema(items: readonly BreadcrumbItem[]) {
     })),
   };
 }
+
+type ServiceSchemaInput = {
+  url: string;
+  name: string;
+  serviceType: string;
+  description: string;
+  areaServed?: string;
+};
+
+export function serviceSchema({ url, name, serviceType, description, areaServed }: ServiceSchemaInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    url,
+    name,
+    serviceType,
+    description,
+    provider: { "@id": ORGANIZATION_ID },
+    ...(areaServed ? { areaServed: { "@type": "AdministrativeArea", name: areaServed } } : {}),
+  };
+}
+
+export function faqPageSchema(url: string, faqs: readonly { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    url,
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
+}

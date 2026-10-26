@@ -1,7 +1,7 @@
 // Renders the inline email images and stores them as base64 in src/lib/email-assets.ts,
 // so the server bundle carries them without any file tracing. Email clients don't show SVG,
 // so the logo becomes a PNG. Run `npm run email:assets` whenever the source images change.
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
@@ -17,6 +17,26 @@ const logo = await sharp(svg, { density: 300 })
   .png({ palette: true, colours: 16, dither: 0, compressionLevel: 9, effort: 10 })
   .toBuffer();
 const { height: logoHeight = 0 } = await sharp(logo).metadata();
+
+// Dark-mode-safe header logo: the full-colour logo on a rounded light plate, rendered at 2x
+// (480x200, shown at 240x100) and served from the production domain by absolute URL.
+const PLATE = { width: 480, height: 200, padX: 40, padY: 28, radius: 24 };
+const plateLogo = await sharp(svg, { density: 300 })
+  .trim()
+  .resize({ width: PLATE.width - PLATE.padX * 2, height: PLATE.height - PLATE.padY * 2, fit: "inside" })
+  .png()
+  .toBuffer();
+const plate = await sharp(
+  Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${PLATE.width}" height="${PLATE.height}"><rect width="100%" height="100%" rx="${PLATE.radius}" fill="#FFFFFF"/></svg>`,
+  ),
+)
+  .composite([{ input: plateLogo, gravity: "centre" }])
+  .png({ compressionLevel: 9, palette: true, colours: 64 })
+  .toBuffer();
+await mkdir(`${root}public/images/email`, { recursive: true });
+await writeFile(`${root}public/images/email/medgold-logo-plate.png`, plate);
+console.log(`email logo plate: ${PLATE.width}x${PLATE.height}px, ${(plate.length / 1024).toFixed(1)} KB`);
 
 const banner = await sharp(`${root}public/images/staffing/nursing.jpg`)
   .resize({ ...BANNER, fit: "cover", position: "centre" })

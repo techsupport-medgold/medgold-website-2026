@@ -9,9 +9,11 @@ const crumbLinkClass = "link-underline inline-flex min-h-11 items-center hover:t
 type BreadcrumbProps = {
   current: string;
   path: string;
+  /** Set false when the page's own @graph already carries the BreadcrumbList. */
+  schema?: boolean;
 };
 
-export default function Breadcrumb({ current, path }: BreadcrumbProps) {
+export default function Breadcrumb({ current, path, schema = true }: BreadcrumbProps) {
   const trail = [
     { name: "Home", path: Routes.HOME },
     { name: current, path },
@@ -19,7 +21,7 @@ export default function Breadcrumb({ current, path }: BreadcrumbProps) {
 
   return (
     <div className="border-b border-primary/10 bg-surface-raised">
-      <JsonLd id="breadcrumb-schema" data={breadcrumbSchema(trail)} />
+      {schema ? <JsonLd id="breadcrumb-schema" data={breadcrumbSchema(trail)} /> : null}
       <div className="container py-2.5">
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-1 text-xs font-semibold text-ink-muted">

@@ -1,38 +1,38 @@
 "use server";
 
-import { enquiryAcknowledgementEmail, enquiryCompanyEmail } from "@@/lib/email-templates";
-import { validateEnquiry, type EnquiryField, type EnquiryValues } from "@@/lib/enquiry";
-import { isBot, readFields, type FormActionResult } from "@@/lib/form-action";
+import { headers } from "next/headers";
+import { handleEnquiry, type EnquiryResult } from "@@/lib/enquiry-handler";
+import {
+  clientIp,
+  createRateLimiter,
+  formTokenSecret,
+  isAllowedOrigin,
+  issueToken,
+  verifyTurnstile,
+} from "@@/lib/form-security";
 import { MAIL_FAILURE_MESSAGE, companyInbox, sendMail } from "@@/lib/mailer";
 
-const FIELDS = ["name", "phone", "email", "type", "message"] as const;
+const limiter = createRateLimiter({ limit: 5, windowMs: 10 * 60 * 1000 });
 
-export type EnquiryResult = FormActionResult<EnquiryField>;
+/** Called by the form on mount, so the contact page itself stays static. */
+export async function getEnquiryToken(): Promise<string> {
+  return issueToken(formTokenSecret());
+}
 
 export async function submitEnquiry(formData: FormData): Promise<EnquiryResult> {
-  if (isBot(formData)) {
-    return { ok: true };
-  }
-
-  const values: EnquiryValues = readFields(formData, FIELDS);
-  const fieldErrors = validateEnquiry(values);
-  if (Object.keys(fieldErrors).length > 0) {
-    return { ok: false, error: "Please fix the highlighted fields and try again.", fieldErrors };
-  }
-
-  const email = values.email.trim();
-  try {
-    await sendMail({ to: companyInbox(), replyTo: email, ...enquiryCompanyEmail(values) });
-  } catch (error) {
-    console.error("Enquiry email to the company failed", error);
-    return { ok: false, error: MAIL_FAILURE_MESSAGE };
-  }
-
-  try {
-    await sendMail({ to: email, ...enquiryAcknowledgementEmail(values) });
-  } catch (error) {
-    console.error("Enquiry acknowledgement email failed", error);
-  }
-
-  return { ok: true };
+  return handleEnquiry(
+    formData,
+    {
+      headers: await headers(),
+      secret: formTokenSecret(),
+      isAllowedOrigin: (h) => isAllowedOrigin(h),
+      clientIp,
+      rateLimit: (ip) => limiter.hit(ip),
+      verifyTurnstile: (response, ip) => verifyTurnstile(response, ip),
+      sendMail,
+      companyInbox,
+      autoReply: process.env.CONTACT_AUTO_REPLY?.trim().toLowerCase() === "true",
+    },
+    MAIL_FAILURE_MESSAGE,
+  );
 }

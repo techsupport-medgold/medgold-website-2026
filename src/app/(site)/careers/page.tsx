@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteSchema from "@@/components/common/SiteSchema";
 import { GraduationCap, HeartHandshake, TrendingUp } from "lucide-react";
 import ApplicationForm from "@@/components/careers/ApplicationForm";
 import Breadcrumb from "@@/components/common/Breadcrumb";
@@ -18,6 +19,7 @@ const WHY_ICONS = { growth: TrendingUp, training: GraduationCap, support: HeartH
 export default function CareersPage() {
   return (
     <>
+      <SiteSchema />
       <Breadcrumb current="Careers" path={Routes.CAREERS} />
       <section aria-labelledby="careers-heading" className="brand-wash py-16 sm:py-20">
         <div className="container max-w-3xl">

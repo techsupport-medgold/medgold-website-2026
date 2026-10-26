@@ -4,25 +4,32 @@ import { Routes } from "@@/config/routes";
 
 type SitemapRoute = {
   path: string;
+  /** Date the page's content last changed (YYYY-MM-DD). Update it when you edit the page or its copy. */
+  lastModified: string;
   priority: number;
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
 };
 
-/** Every indexable page. Noindex pages (style guide, case studies placeholder, 404) stay out. */
-const ROUTES: SitemapRoute[] = [
-  { path: Routes.HOME, priority: 1, changeFrequency: "weekly" },
-  ...[Routes.STAFFING, Routes.PHARMACY_AUDIT, Routes.BRANDING, Routes.PATIENT_FEEDBACK, Routes.NURSING_TRAINING].map(
-    (path): SitemapRoute => ({ path, priority: 0.9, changeFrequency: "monthly" }),
-  ),
-  ...[Routes.ABOUT, Routes.CAREERS, Routes.CONTACT].map(
-    (path): SitemapRoute => ({ path, priority: 0.7, changeFrequency: "monthly" }),
-  ),
-  ...[Routes.PRIVACY, Routes.TERMS].map((path): SitemapRoute => ({ path, priority: 0.3, changeFrequency: "yearly" })),
+/**
+ * Every indexable page with the date its content last changed.
+ * Noindex pages (thank-you, style guide, case studies placeholder, 404) stay out.
+ */
+export const ROUTES: SitemapRoute[] = [
+  { path: Routes.HOME, lastModified: "2026-10-26", priority: 1, changeFrequency: "weekly" },
+  { path: Routes.STAFFING, lastModified: "2026-10-11", priority: 0.9, changeFrequency: "monthly" },
+  { path: Routes.PHARMACY_AUDIT, lastModified: "2026-10-26", priority: 0.9, changeFrequency: "monthly" },
+  { path: Routes.BRANDING, lastModified: "2026-10-11", priority: 0.9, changeFrequency: "monthly" },
+  { path: Routes.PATIENT_FEEDBACK, lastModified: "2026-10-11", priority: 0.9, changeFrequency: "monthly" },
+  { path: Routes.NURSING_TRAINING, lastModified: "2026-10-26", priority: 0.9, changeFrequency: "monthly" },
+  { path: Routes.ABOUT, lastModified: "2026-10-15", priority: 0.7, changeFrequency: "monthly" },
+  { path: Routes.CAREERS, lastModified: "2026-10-15", priority: 0.7, changeFrequency: "monthly" },
+  { path: Routes.CONTACT, lastModified: "2026-10-26", priority: 0.7, changeFrequency: "monthly" },
+  { path: Routes.PRIVACY, lastModified: "2026-10-11", priority: 0.3, changeFrequency: "yearly" },
+  { path: Routes.TERMS, lastModified: "2026-10-11", priority: 0.3, changeFrequency: "yearly" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-  return ROUTES.map(({ path, priority, changeFrequency }) => ({
+  return ROUTES.map(({ path, lastModified, priority, changeFrequency }) => ({
     url: absoluteUrl(path),
     lastModified,
     changeFrequency,

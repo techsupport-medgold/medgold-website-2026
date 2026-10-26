@@ -9,9 +9,16 @@ export type EnquiryValues = {
 export type EnquiryField = keyof EnquiryValues;
 export type EnquiryErrors = Partial<Record<EnquiryField, string>>;
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { enquiryTypes } from "@@/data/contact";
+
+const EMAIL_PATTERN = /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*\.[A-Za-z]{2,}$/;
+const LINE_BREAK = /[\r\n]|%0a|%0d|\\r|\\n/i;
 
 export const ENQUIRY_MESSAGE_MIN = 20;
+export const ENQUIRY_MESSAGE_MAX = 2000;
+export const ENQUIRY_NAME_MAX = 100;
+export const ENQUIRY_EMAIL_MAX = 254;
+export const ENQUIRY_PHONE_MAX = 20;
 
 /** Returns the 10-digit Indian mobile number, or null. Accepts spaces, dashes, +91, 91, or a leading 0. */
 export function normalizeIndianMobile(input: string): string | null {
@@ -22,24 +29,36 @@ export function normalizeIndianMobile(input: string): string | null {
 export function validateEnquiry(values: EnquiryValues): EnquiryErrors {
   const errors: EnquiryErrors = {};
 
-  if (values.name.trim().length < 2) {
+  const name = values.name.trim();
+  if (name.length < 2) {
     errors.name = "Enter your full name.";
+  } else if (name.length > ENQUIRY_NAME_MAX) {
+    errors.name = `Keep your name under ${ENQUIRY_NAME_MAX} characters.`;
+  } else if (LINE_BREAK.test(values.name)) {
+    errors.name = "Enter your name on one line.";
   }
   if (!values.phone.trim()) {
     errors.phone = "Enter your mobile number.";
-  } else if (!normalizeIndianMobile(values.phone)) {
+  } else if (values.phone.length > ENQUIRY_PHONE_MAX || !normalizeIndianMobile(values.phone)) {
     errors.phone = "Enter a valid 10-digit mobile number, for example 98765 43210.";
   }
   if (!values.email.trim()) {
     errors.email = "Enter your email address so we can reply to you.";
-  } else if (!EMAIL_PATTERN.test(values.email.trim())) {
+  } else if (
+    values.email.trim().length > ENQUIRY_EMAIL_MAX ||
+    LINE_BREAK.test(values.email) ||
+    !EMAIL_PATTERN.test(values.email.trim())
+  ) {
     errors.email = "Enter a valid email address, for example name@example.com.";
   }
-  if (!values.type) {
+  if (!(enquiryTypes as readonly string[]).includes(values.type)) {
     errors.type = "Choose an enquiry type.";
   }
-  if (values.message.trim().length < ENQUIRY_MESSAGE_MIN) {
+  const messageLength = values.message.trim().length;
+  if (messageLength < ENQUIRY_MESSAGE_MIN) {
     errors.message = `Tell us a little more (at least ${ENQUIRY_MESSAGE_MIN} characters).`;
+  } else if (messageLength > ENQUIRY_MESSAGE_MAX) {
+    errors.message = `Keep your message under ${ENQUIRY_MESSAGE_MAX} characters.`;
   }
 
   return errors;

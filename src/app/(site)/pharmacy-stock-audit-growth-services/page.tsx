@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteSchema from "@@/components/common/SiteSchema";
 import { CalendarCheck, Cog, Smile, Sprout, TrendingUp, type LucideIcon } from "lucide-react";
 import ApproachSection from "@@/components/pharmacy-audit/ApproachSection";
 import AuditHero from "@@/components/pharmacy-audit/AuditHero";
@@ -9,7 +10,11 @@ import ProblemsSection from "@@/components/pharmacy-audit/ProblemsSection";
 import Breadcrumb from "@@/components/common/Breadcrumb";
 import { Routes } from "@@/config/routes";
 import ServiceCta from "@@/components/services/ServiceCta";
-import { booking, breadcrumb, PHARMACY_AUDIT_SEO, type BookingBenefitIcon } from "@@/data/pharmacyAudit";
+import ServiceOverview from "@@/components/services/ServiceOverview";
+import JsonLd from "@@/components/common/JsonLd";
+import { absoluteUrl } from "@@/config/site";
+import { faqPageSchema, serviceSchema } from "@@/lib/schema";
+import { booking, breadcrumb, PHARMACY_AUDIT_SEO, type BookingBenefitIcon, overview, PHARMACY_AUDIT_SERVICE } from "@@/data/pharmacyAudit";
 
 export const metadata: Metadata = {
   title: PHARMACY_AUDIT_SEO.title,
@@ -24,9 +29,17 @@ const BENEFIT_ICONS: Record<BookingBenefitIcon, LucideIcon> = {
   growth: Sprout,
 };
 
+const PAGE_URL = absoluteUrl(Routes.PHARMACY_AUDIT);
+
 export default function PharmacyAuditPage() {
   return (
     <>
+      <SiteSchema />
+      <JsonLd
+        id="service-schema"
+        data={serviceSchema({ url: PAGE_URL, name: PHARMACY_AUDIT_SERVICE.name, serviceType: PHARMACY_AUDIT_SERVICE.serviceType, description: PHARMACY_AUDIT_SEO.description })}
+      />
+      <JsonLd id="faq-schema" data={faqPageSchema(PAGE_URL, overview.faqs)} />
       <Breadcrumb path={Routes.PHARMACY_AUDIT} current={breadcrumb.current} />
       <AuditHero />
       <EvidenceBar />
@@ -34,6 +47,7 @@ export default function PharmacyAuditPage() {
       <FrameworkSection />
       <ComparisonSection />
       <ApproachSection />
+      <ServiceOverview id="audit-overview" content={overview} />
       <ServiceCta
         headingId="booking-heading"
         eyebrow={booking.eyebrow}

@@ -30,6 +30,7 @@ const nextConfig: NextConfig = {
         ["/about", Routes.ABOUT],
         ["/contact", Routes.CONTACT],
         ["/terms", Routes.TERMS],
+        ["/index.html", Routes.HOME],
       ].map(([source, destination]) => ({ source, destination, permanent: true })),
     ];
   },
@@ -52,6 +53,11 @@ const nextConfig: NextConfig = {
               ],
             },
           ]),
+      // Generated image, icon and manifest routes are assets, not pages: keep them
+      // crawlable (so pages can reference them) but out of the search index.
+      ...["/opengraph-image(.*)", "/twitter-image(.*)", "/icon(.*)", "/apple-icon(.*)", "/manifest.webmanifest"].map(
+        (source) => ({ source, headers: [{ key: "X-Robots-Tag", value: "noindex" }] }),
+      ),
       {
         source: "/(.*)",
         headers: [
