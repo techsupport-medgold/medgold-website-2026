@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import AccessibilityWidget from "@@/components/common/AccessibilityWidget";
 import Logo from "@@/components/common/Logo";
 import MobileMenu from "@@/components/common/MobileMenu";
 import NavLinks from "@@/components/common/NavLinks";
@@ -21,6 +22,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <AccessibilityWidget />
           <Button asChild size="lg" className="hidden h-11 px-5 font-semibold sm:inline-flex">
             <Link href={Routes.CONTACT}>
               Contact Us

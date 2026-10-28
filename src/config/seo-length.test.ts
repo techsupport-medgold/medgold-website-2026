@@ -12,37 +12,31 @@ import { STAFFING_SEO } from "@@/data/staffing";
 
 const BRAND_SUFFIX = " | Med Gold";
 
-/** Titles that use the root template. The rendered string is what search results show. */
-const TEMPLATED_TITLES = [ABOUT_SEO.title, CONTACT_SEO.title, CAREERS_SEO.title, PRIVACY_SEO.title, TERMS_SEO.title];
-
-const DESCRIPTIONS = [
-  HOME_SEO,
-  ABOUT_SEO,
-  CONTACT_SEO,
-  CAREERS_SEO,
-  PRIVACY_SEO,
-  TERMS_SEO,
-  STAFFING_SEO,
-  PHARMACY_AUDIT_SEO,
-  BRANDING_SEO,
-  PATIENT_FEEDBACK_SEO,
-  NURSING_TRAINING_SEO,
+/**
+ * Page titles and meta descriptions are set verbatim by the SEO expert.
+ * The final <title>: templated pages get the root " | Med Gold" suffix,
+ * the homepage uses an absolute title.
+ */
+const SHEET = [
+  { seo: HOME_SEO, templated: false, title: "Hospital Consultant in Chennai India | Operations & Management Consultancy Services", description: "MedGold Healthcare offers hospital consultancy services in Chennai India for 360 Operation Excellence and Management" },
+  { seo: PRIVACY_SEO, templated: true, title: "Privacy at MedGold Healthcare in Chennai | Med Gold", description: "Read MedGold Healthcare's Privacy Policy to learn how we collect, use, protect, and share personal and data across our healthcare services." },
+  { seo: TERMS_SEO, templated: true, title: "Terms of Service for MedGold Healthcare | Med Gold", description: "Review MedGold Healthcare's Terms & Conditions governing use of our website and services, including pharmacy audit, staffing, training, and feedback systems." },
+  { seo: ABOUT_SEO, templated: true, title: "Learn About MedGold Healthcare, Chennai | Med Gold", description: "Learn about MedGold Healthcare, our mission, values, and integrated services" },
+  { seo: CONTACT_SEO, templated: true, title: "Contact MedGold Healthcare Team, Chennai | Med Gold", description: "Contact MedGold Healthcare send an enquiry about appointments, training or careers, or call and WhatsApp our team directly." },
+  { seo: STAFFING_SEO, templated: true, title: "Hospital & Healthcare Staffing Services in Chennai | Med Gold", description: "Credentialed healthcare staffing for hospitals, clinics, labs and pharmacies across Chennai and South India, plus real hospital training for professionals." },
+  { seo: PHARMACY_AUDIT_SEO, templated: true, title: "Pharmacy Stock Audit & Profit Consulting | Med Gold", description: "We help hospital and retail pharmacies eliminate dead stock, halt expiry leakage, enforce SOPs and KPI/KRA frameworks, and build high-profit operations." },
+  { seo: BRANDING_SEO, templated: true, title: "Hospital Branding & Digital Marketing Services in Chennai | Med Gold", description: "Hospital branding and digital marketing in Chennai: Google and Meta ads, SEO, doctor branding, reputation management and patient lead generation for clinics." },
+  { seo: PATIENT_FEEDBACK_SEO, templated: true, title: "Patient Feedback System for Hospitals in Chennai | Med Gold", description: "Hospital patient feedback software in Chennai: bedside tablets, bilingual kiosks, real-time red alerts, 24-hour service recovery and NABH-ready audit reports." },
+  { seo: NURSING_TRAINING_SEO, templated: true, title: "Nursing Training & Skills Development in Chennai | Med Gold", description: "Hands-on nursing training in Chennai: ventilator handling, CPR, BLS & ACLS, ICU protocols and patient care in a real hospital, with job placement assistance." },
+  { seo: CAREERS_SEO, templated: true, title: "Careers with MedGold Healthcare, Chennai | Med Gold", description: "Apply for nursing, medical, technician and hospital operations jobs at MedGold Healthcare in Chennai. Send your application and our team will contact you." },
 ];
 
-describe("search snippet length", () => {
-  it("keeps the homepage title in the 50-60 character window", () => {
-    expect(HOME_SEO.title.length).toBeGreaterThanOrEqual(50);
-    expect(HOME_SEO.title.length).toBeLessThanOrEqual(60);
+describe("SEO expert titles and descriptions", () => {
+  it.each(SHEET)("renders $title exactly", ({ seo, templated, title }) => {
+    expect(templated ? `${seo.title}${BRAND_SUFFIX}` : seo.title).toBe(title);
   });
 
-  it.each(TEMPLATED_TITLES)("renders %s between 50 and 60 characters with the brand suffix", (title) => {
-    const rendered = `${title}${BRAND_SUFFIX}`;
-    expect(rendered.length).toBeGreaterThanOrEqual(50);
-    expect(rendered.length).toBeLessThanOrEqual(60);
-  });
-
-  it.each(DESCRIPTIONS)("keeps $title description between 140 and 160 characters", ({ description }) => {
-    expect(description.length).toBeGreaterThanOrEqual(140);
-    expect(description.length).toBeLessThanOrEqual(160);
+  it.each(SHEET)("uses the sheet description for $title", ({ seo, description }) => {
+    expect(seo.description).toBe(description);
   });
 });

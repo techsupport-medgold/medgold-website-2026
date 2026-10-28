@@ -2,7 +2,7 @@
 export const PHARMACY_AUDIT_SEO = {
   title: "Pharmacy Stock Audit & Profit Consulting",
   description:
-    "We help hospital and retail pharmacies eliminate dead stock, halt expiry leakage, enforce SOPs and KPI/KRA frameworks and build high-profit operations.",
+    "We help hospital and retail pharmacies eliminate dead stock, halt expiry leakage, enforce SOPs and KPI/KRA frameworks, and build high-profit operations.",
 };
 
 export const breadcrumb = {

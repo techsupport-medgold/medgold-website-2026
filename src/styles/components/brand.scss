@@ -157,3 +157,25 @@
     opacity: 0;
   }
 }
+
+// LasMind accessibility tool (AccessibilityWidget). The package's documented CSS
+// variables inherit into its shadow roots.
+// Header button: secondary style (teal outline, teal icon on white) so Contact Us
+// stays the primary CTA. 44px and rounded-md to sit level with Contact Us.
+.a11y-header-slot {
+  --lm-a11y-trigger-bg: hsl(var(--background));
+  --lm-a11y-trigger-ink: hsl(var(--primary));
+  --lm-a11y-trigger-border: hsl(var(--primary));
+  --lm-a11y-trigger-size: 44px;
+  --lm-a11y-trigger-radius: 6px;
+  --lm-a11y-trigger-shadow: none;
+}
+
+// Accent and focus colour inside the button and panel: the site primary teal
+// instead of the package's crimson default (which it sets inline, hence !important).
+.a11y-header-slot > *,
+[data-lasmind-a11y-portal] {
+  --lm-a11y-accent: hsl(var(--primary)) !important;
+  --lm-a11y-accent-ink: hsl(var(--primary-foreground)) !important;
+  --lm-a11y-focus: hsl(var(--primary)) !important;
+}

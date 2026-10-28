@@ -2,7 +2,7 @@
 export const CONTACT_SEO = {
   title: "Contact MedGold Healthcare Team, Chennai",
   description:
-    "Contact MedGold Healthcare in Kolathur, Chennai about staffing, pharmacy audits, nursing training or careers. Call, WhatsApp or send an enquiry.",
+    "Contact MedGold Healthcare send an enquiry about appointments, training or careers, or call and WhatsApp our team directly.",
 };
 
 export const contactHero = {

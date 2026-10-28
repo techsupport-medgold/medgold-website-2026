@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import nextConfig from "../../next.config";
 import sitemap, { ROUTES } from "@@/app/sitemap";
 import { Routes, MAIN_NAV, SERVICE_NAV } from "@@/config/routes";
-import { NURSING_TRAINING_SEO, NURSING_TRAINING_SERVICE, overview as nursingOverview } from "@@/data/nursingTraining";
-import { PHARMACY_AUDIT_SEO, PHARMACY_AUDIT_SERVICE, overview as pharmacyOverview } from "@@/data/pharmacyAudit";
+import { NURSING_TRAINING_SERVICE, overview as nursingOverview } from "@@/data/nursingTraining";
+import { PHARMACY_AUDIT_SERVICE, overview as pharmacyOverview } from "@@/data/pharmacyAudit";
 import { faqPageSchema, serviceSchema } from "@@/lib/schema";
 
 const words = (o: typeof nursingOverview | typeof pharmacyOverview) =>
@@ -72,10 +72,8 @@ describe("service page copy", () => {
     const text = [
       ...allText(nursingOverview),
       ...allText(pharmacyOverview),
-      NURSING_TRAINING_SEO.title,
-      NURSING_TRAINING_SEO.description,
-      PHARMACY_AUDIT_SEO.title,
-      PHARMACY_AUDIT_SEO.description,
+      // Page titles and meta descriptions come verbatim from the SEO expert's sheet
+      // (seo-length.test.ts) and are exempt from the house copy rules.
       ...Object.values(NURSING_TRAINING_SERVICE),
       ...Object.values(PHARMACY_AUDIT_SERVICE),
     ];

@@ -26,7 +26,7 @@ const contactList: LegalListItem[] = [
 export const PRIVACY_SEO = {
   title: "Privacy at MedGold Healthcare in Chennai",
   description:
-    "Read MedGold Healthcare's Privacy Policy to learn how we collect, use, protect, and share personal and health data across our healthcare services.",
+    "Read MedGold Healthcare's Privacy Policy to learn how we collect, use, protect, and share personal and data across our healthcare services.",
 };
 
 export const TERMS_SEO = {

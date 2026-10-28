@@ -10,8 +10,10 @@ import {
   type FormEvent,
   type InputHTMLAttributes,
 } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
+  ArrowUpRight,
   CheckCircle2,
   ChevronDown,
   FileText,
@@ -25,7 +27,7 @@ import {
 import { submitApplication } from "@@/app/(site)/careers/actions";
 import SubmittingOverlay from "@@/components/common/SubmittingOverlay";
 import { Button } from "@@/components/ui/button";
-import { experienceLevels, positions } from "@@/data/careers";
+import { experienceLevels, positions, RESUME_BUILDER_URL, resumeBuilderCta } from "@@/data/careers";
 import {
   RESUME_ACCEPT,
   formatFileSize,
@@ -335,25 +337,26 @@ export default function ApplicationForm() {
         <div>{textField("qualification", true, { type: "text", placeholder: "e.g. B.Sc Nursing, GNM, DMLT" })}</div>
         <div>{textField("city", false, { type: "text", autoComplete: "address-level2", placeholder: "e.g. Chennai" })}</div>
 
-        <div className="sm:col-span-2">
+        <div role="group" aria-labelledby="application-resume-label" className="sm:col-span-2">
           <p id="application-resume-label" className="block text-sm font-semibold text-ink">
             {LABELS.resume}
             <span className="text-destructive" aria-hidden="true"> *</span>
           </p>
+          <div className="mt-2 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-stretch">
           <input
             ref={resumeInputRef}
             id="application-resume"
             type="file"
             accept={RESUME_ACCEPT}
             onChange={onResumeChange}
-            aria-labelledby="application-resume-label"
+            aria-labelledby="application-resume-option-upload application-resume-label"
             aria-required="true"
             aria-invalid={errors.resume ? true : undefined}
             aria-describedby={errors.resume ? "application-resume-hint application-resume-error" : "application-resume-hint"}
             className="peer sr-only"
           />
           {resume ? (
-            <div className="mt-2 flex flex-wrap items-center gap-3 rounded-lg border border-primary/30 bg-surface p-4 shadow-sm animate-in fade-in-0 slide-in-from-bottom-1 duration-300 motion-reduce:animate-none sm:flex-nowrap">
+            <div className="flex h-full flex-wrap items-center gap-3 rounded-lg border border-primary/30 bg-surface p-4 shadow-sm animate-in fade-in-0 slide-in-from-bottom-1 duration-300 motion-reduce:animate-none sm:flex-nowrap">
               <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <FileText className="size-5" aria-hidden="true" />
               </span>
@@ -400,7 +403,7 @@ export default function ApplicationForm() {
               }}
               onDrop={onResumeDrop}
               className={cn(
-                "group mt-2 flex min-h-36 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-6 text-center transition-colors duration-300",
+                "group flex h-full min-h-44 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-6 text-center transition-colors duration-300",
                 "peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/50",
                 isDragging
                   ? "border-solid border-primary bg-primary/10"
@@ -418,13 +421,16 @@ export default function ApplicationForm() {
               >
                 <UploadCloud className="size-6" />
               </span>
+              <span id="application-resume-option-upload" className="text-base font-bold text-ink">
+                {resumeBuilderCta.uploadTitle}
+              </span>
               <span className="text-base text-ink" aria-hidden="true">
                 {isDragging ? (
                   <strong className="font-semibold text-primary-deep">Drop your resume here</strong>
                 ) : (
                   <>
                     <strong className="font-semibold text-primary-deep underline-offset-4 group-hover:underline">
-                      Click to upload your resume
+                      Click to choose a file
                     </strong>{" "}
                     <span className="text-ink-muted">or drag and drop it here</span>
                   </>
@@ -435,6 +441,32 @@ export default function ApplicationForm() {
               </span>
             </label>
           )}
+            <div className="flex items-center gap-3 sm:flex-col" aria-hidden="true">
+              <span className="h-px flex-1 bg-border sm:h-auto sm:w-px" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-ink-subtle">or</span>
+              <span className="h-px flex-1 bg-border sm:h-auto sm:w-px" />
+            </div>
+            <section
+              aria-labelledby="application-resume-option-build"
+              className="flex h-full min-h-44 flex-col items-center justify-center gap-2 rounded-lg border border-white/10 bg-[linear-gradient(160deg,#081429_0%,#141B2D_65%,#222FAB_170%)] px-4 py-6 text-center shadow-card"
+            >
+              <Image src="/images/partners/templatepix-logo-w.svg" alt="TemplatePix" width={653} height={161} className="h-8 w-auto" />
+              <h3 id="application-resume-option-build" className="text-base font-bold text-white">
+                {resumeBuilderCta.heading}
+              </h3>
+              <p className="text-sm text-slate-200">{resumeBuilderCta.text}</p>
+              <a
+                href={RESUME_BUILDER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-[linear-gradient(90deg,#2160FC,#5531CF)] px-4 text-sm font-semibold text-white shadow-sm transition-[filter] hover:brightness-110 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#081429]"
+              >
+                {resumeBuilderCta.linkLabel}
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+                <span className="sr-only"> on TemplatePix (opens in a new tab)</span>
+              </a>
+            </section>
+          </div>
           {resume ? (
             <span id="application-resume-hint" className="sr-only">
               PDF, DOC or DOCX - up to 4 MB

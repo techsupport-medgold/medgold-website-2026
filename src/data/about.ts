@@ -7,7 +7,7 @@ export const ABOUT_PAGE_URL = absoluteUrl(Routes.ABOUT);
 export const ABOUT_SEO = {
   title: "Learn About MedGold Healthcare, Chennai",
   description:
-    "Learn how MedGold Healthcare helps Chennai hospitals with pharmacy audits, clinical staffing, nursing training, patient feedback and daily operations.",
+    "Learn about MedGold Healthcare, our mission, values, and integrated services",
 };
 
 export const hero = {

@@ -42,3 +42,13 @@ export const nextSteps = {
     "Shortlisted candidates are invited for an interview and skills check.",
   ],
 };
+
+/** Resume builder link under the careers form's resume upload. Change this one URL to point elsewhere. */
+export const RESUME_BUILDER_URL = "https://templatepix.com/";
+
+export const resumeBuilderCta = {
+  uploadTitle: "Upload your resume",
+  heading: "Create a Professional Hospital Resume",
+  text: "Templates for Staff Nurse, Nursing Assistant, Duty Medical Officer, Lab and Radiology Technician, Pharmacist, Front Office and Hospital Operations roles. Fresher or experienced, get shortlisted faster.",
+  linkLabel: "Build My Hospital Resume",
+};
